@@ -1,0 +1,11 @@
+Captures d'écran des projets
+────────────────────────────
+Convention : un sous-dossier par projet, nommé comme le fichier .md de la fiche.
+
+  public/images/projets/science-lab/01.webp
+  public/images/projets/appa/01.webp
+  …
+
+Format conseillé : .webp (ou .png), largeur ≤ 1600 px, fichiers < 400 Ko.
+Ensuite, déclarer chaque image dans le frontmatter de la fiche
+(src/content/projets/<slug>.md) — voir CLAUDE.md, section « Ajouter des captures ».

@@ -1,0 +1,61 @@
+---
+import { url } from '../lib/paths';
+---
+
+<footer>
+  <div class="container">
+    <div class="cta" data-reveal>
+      <p class="mono-label">Contact</p>
+      <h2>Un retour, une question,<br />une suggestion&nbsp;?</h2>
+      <div class="actions">
+        <a class="btn btn--primary" href="https://github.com/Oopslurp" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn" href="https://github.com/Oopslurp" target="_blank" rel="noopener">GitHub&nbsp;↗</a>
+      </div>
+    </div>
+    <div class="meta">
+      <span>© 2026 Mathieu Chow</span>
+      <span class="heure">Shanghai&nbsp;— <span id="heure-locale">--:--</span></span>
+      <a href={url('/methode/')}>Site conçu avec l'aide de l'IA&nbsp;·&nbsp;voir la démarche</a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  footer {
+    margin-top: clamp(5rem, 10vw, 9rem);
+    border-top: 1px solid var(--line);
+  }
+  .cta {
+    padding: clamp(3.5rem, 7vw, 6rem) 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+    align-items: flex-start;
+  }
+  .cta h2 {
+    font-size: clamp(1.9rem, 4.5vw, 3.2rem);
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.7rem 2rem;
+    padding: 1.4rem 0 1.8rem;
+    border-top: 1px solid var(--line);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+  }
+  .meta a {
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.3s var(--ease);
+  }
+  .meta a:hover { color: var(--accent); }
+</style>

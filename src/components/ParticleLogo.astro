@@ -1,0 +1,46 @@
+---
+/**
+ * Logo en particules interactives — voir src/scripts/particules.ts.
+ * Décoratif (aria-hidden). Deux formes :
+ *  - "openai" : logo ChatGPT (vert le jour / blanc la nuit)
+ *  - "claude" : mascotte pixel-art Claude Code (orange le jour / blanc la nuit)
+ */
+interface Props {
+  forme?: 'openai' | 'claude';
+  legende?: string;
+}
+
+const {
+  forme = 'openai',
+  legende = 'ChatGPT · outil du quotidien — survoler ↑',
+} = Astro.props;
+---
+
+<div class="particules-wrap" data-reveal="0.15">
+  <canvas class="canvas-particules" data-forme={forme} aria-hidden="true"></canvas>
+  <p class="legende mono-label">{legende}</p>
+</div>
+
+<style>
+  .particules-wrap {
+    display: grid;
+    gap: 1rem;
+    justify-items: center;
+  }
+  canvas {
+    width: min(400px, 100%);
+    aspect-ratio: 1;
+  }
+  .legende {
+    font-size: 0.66rem;
+    opacity: 0.75;
+  }
+</style>
+
+<script>
+  import { initParticules } from '../scripts/particules';
+
+  document
+    .querySelectorAll<HTMLCanvasElement>('.canvas-particules')
+    .forEach((c) => initParticules(c));
+</script>

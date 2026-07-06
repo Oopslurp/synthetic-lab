@@ -1,0 +1,167 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import ProjectRow from '../components/ProjectRow.astro';
+import ParticleLogo from '../components/ParticleLogo.astro';
+import { url } from '../lib/paths';
+
+const projets = (
+  await getCollection('projets', ({ data }) => !data.brouillon)
+).sort((a, b) => a.data.ordre - b.data.ordre);
+
+const termines = projets.filter((p) => p.data.statut === 'termine').length;
+const pad = (n: number) => String(n).padStart(2, '0');
+---
+
+<Base
+  title="Synthetic Lab — Mathieu Chow"
+  description="Carnet de projets de Mathieu Chow : simulations scientifiques, jeux, outils d'apprentissage et expérimentations web réalisés avec l'aide de l'intelligence artificielle."
+>
+  <!-- ── Hero ─────────────────────────────────────────────────── -->
+  <section class="hero container">
+    <p class="mono-label" data-reveal>Mathieu Chow — Carnet de projets</p>
+    <h1 data-split>Synthetic Lab<span class="dot">.</span></h1>
+    <p class="lead" data-split="0.3">
+      Simulations, jeux, outils d'apprentissage et expérimentations web,
+      réalisés avec l'aide de l'intelligence artificielle.
+    </p>
+    <div class="hero-meta" data-reveal="0.55">
+      <span class="chip">Terminale · maths & physique-chimie</span>
+      <span class="chip">Shanghai</span>
+      <span class="chip chip--accent">{pad(projets.length)} projets · {pad(termines)} terminé</span>
+    </div>
+  </section>
+
+  <!-- ── Positionnement ───────────────────────────────────────── -->
+  <section class="intro container" data-reveal>
+    <hr class="rule" />
+    <p>
+      Je développe ces projets pour <strong>apprendre en réalisant</strong> :
+      approfondir les sciences par la création, et mobiliser l'IA comme un
+      outil au service du raisonnement, du prototypage et de
+      l'expérimentation. Chaque fiche documente ce que l'IA a généré, ce que
+      j'ai fait moi-même — et comment je l'ai vérifié.
+    </p>
+  </section>
+
+  <!-- ── Projets ──────────────────────────────────────────────── -->
+  <section id="projets" class="projets container">
+    <div class="section-head" data-reveal>
+      <h2>Projets <span class="count">({pad(projets.length)})</span></h2>
+      <p class="mono-label">Numériques, scientifiques & créatifs</p>
+    </div>
+    <div class="rows">
+      {
+        projets.map((p, i) => (
+          <ProjectRow
+            numero={pad(i + 1)}
+            slug={p.id}
+            titre={p.data.titre}
+            categorie={p.data.categorie}
+            periode={p.data.periode}
+            statut={p.data.statut}
+          />
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- ── Démarche ─────────────────────────────────────────────── -->
+  <section class="demarche container">
+    <div class="demarche-grille">
+      <div class="demarche-texte">
+        <p class="mono-label" data-reveal>Démarche</p>
+        <h2 data-split>L'IA est un outil,<br />pas un substitut au travail.</h2>
+        <p data-reveal>
+          Brouillon papier, plan critiqué, code testé, résultats vérifiés contre
+          le cours ou à la main : ma façon de travailler est documentée,
+          étape par étape, sur une page dédiée.
+        </p>
+        <a class="btn" href={url('/methode/')} data-reveal>Lire ma méthode&nbsp;→</a>
+      </div>
+      <ParticleLogo />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    padding: clamp(5rem, 14vh, 9rem) 0 clamp(2.5rem, 6vh, 4rem);
+  }
+  .hero h1 {
+    font-size: clamp(3.4rem, 13vw, 9rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 0.95;
+    margin: 1.2rem 0 1.6rem;
+  }
+  .hero .dot { color: var(--accent); }
+  .lead {
+    font-size: clamp(1.1rem, 2.2vw, 1.45rem);
+    line-height: 1.5;
+    color: var(--muted);
+    max-width: 34em;
+    text-wrap: balance;
+  }
+  .hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 2.2rem;
+  }
+
+  .intro { padding: clamp(1.5rem, 4vh, 3rem) 0; }
+  .intro p {
+    font-size: clamp(1.05rem, 1.8vw, 1.3rem);
+    line-height: 1.65;
+    max-width: 44em;
+    padding-top: clamp(1.8rem, 4vh, 2.8rem);
+  }
+
+  .projets { padding-top: clamp(3rem, 8vh, 5.5rem); }
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.6rem;
+  }
+  .section-head h2 {
+    font-size: clamp(1.9rem, 4.5vw, 3rem);
+  }
+  .count {
+    font-family: var(--font-mono);
+    font-size: 0.5em;
+    font-weight: 500;
+    color: var(--accent);
+    vertical-align: super;
+  }
+
+  .demarche { padding-top: clamp(5rem, 12vh, 8rem); }
+  .demarche-grille {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+  }
+  .demarche-texte {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.4rem;
+  }
+  .demarche-texte h2 {
+    font-size: clamp(2rem, 5.5vw, 3.8rem);
+    letter-spacing: -0.03em;
+  }
+  .demarche-texte p {
+    color: var(--muted);
+    max-width: 42em;
+    font-size: 1.05rem;
+  }
+
+  @media (max-width: 780px) {
+    .demarche-grille { grid-template-columns: 1fr; }
+  }
+</style>

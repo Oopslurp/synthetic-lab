@@ -1,0 +1,190 @@
+---
+import Base from '../layouts/Base.astro';
+import ParticleLogo from '../components/ParticleLogo.astro';
+
+const etapes = [
+  {
+    titre: 'Démarrer',
+    texte: `Chaque projet commence sur le papier : je clarifie l'idée, les
+    objectifs et les fonctionnalités principales avant d'écrire la moindre
+    ligne de code. Je confronte ensuite ce brouillon à une IA (Claude,
+    ChatGPT) pour comparer plusieurs pistes et aboutir à un plan cohérent.
+    Le travail est toujours découpé en trois temps : analyse et exploration,
+    réalisation, puis audit et amélioration.`,
+  },
+  {
+    titre: 'Tester',
+    texte: `J'essaie les cas simples, les cas extrêmes et les situations où
+    l'application pourrait se tromper. Pour les projets scientifiques, je
+    compare les résultats avec le cours, des calculs faits à la main ou les
+    comportements attendus des modèles. Pour les sites et les jeux, je teste
+    l'interface, les interactions et l'expérience utilisateur.`,
+  },
+  {
+    titre: 'Déboguer',
+    texte: `Quand ça ne marche pas, je commence par lire le message d'erreur
+    et j'identifie le moment où le problème apparaît. J'isole ensuite la
+    partie du code concernée et je teste une version simplifiée. Si je fais
+    appel à l'IA, je lui donne le contexte, le message d'erreur et ce que
+    j'ai déjà essayé — pas seulement « ça ne marche pas ».`,
+  },
+  {
+    titre: "Vérifier l'IA",
+    texte: `Je ne fais pas confiance aveuglément aux réponses générées : je
+    croise avec mes cours, je recalcule certains résultats à la main, je
+    teste le code étape par étape et je compare plusieurs réponses quand le
+    sujet est important. C'est la règle commune à tous mes projets — et la
+    raison d'être de la section « Transparence » de chaque fiche.`,
+  },
+];
+
+const outils = [
+  'Claude',
+  'ChatGPT',
+  'Codex',
+  'VS Code',
+  'GitHub',
+  'JavaScript / TypeScript',
+  'React',
+  'Tailwind CSS',
+  'Python',
+  'Rust',
+  'GSAP',
+  'IA locales (Llama · Mistral · Qwen)',
+];
+---
+
+<Base
+  title="Méthode — Synthetic Lab"
+  description="Comment je travaille : démarrage d'un projet, tests, débogage et vérification systématique des réponses de l'IA."
+>
+  <section class="container">
+    <header class="entete">
+      <p class="mono-label" data-reveal>Méthode de travail</p>
+      <h1 data-split>Comment je travaille<span class="dot">.</span></h1>
+      <p class="lead" data-split="0.25">
+        Utiliser l'IA ne dispense ni de comprendre, ni de vérifier.
+        Voici, concrètement, comment un projet avance — du brouillon
+        papier à la mise en ligne.
+      </p>
+    </header>
+
+    <div class="etapes-layout">
+      <div class="etapes">
+        {
+          etapes.map((e, i) => (
+            <section class="etape" data-reveal>
+              <span class="numero mono-label">{String(i + 1).padStart(2, '0')}</span>
+              <div>
+                <h2>{e.titre}</h2>
+                <p>{e.texte}</p>
+              </div>
+            </section>
+          ))
+        }
+      </div>
+      <aside class="mascotte">
+        <ParticleLogo
+          forme="claude"
+          legende="Claude Code · compagnon de travail — survoler ↑"
+        />
+      </aside>
+    </div>
+
+    <section class="outils" data-reveal>
+      <p class="mono-label">Outils du quotidien</p>
+      <div class="chips">
+        {outils.map((o) => <span class="chip">{o}</span>)}
+      </div>
+    </section>
+
+    <blockquote class="credo">
+      <p data-split>
+        «&nbsp;L'IA est un outil de travail. La responsabilité de vérifier —
+        et de comprendre — reste humaine.&nbsp;»
+      </p>
+    </blockquote>
+  </section>
+</Base>
+
+<style>
+  .entete { padding: clamp(3rem, 8vh, 5.5rem) 0 clamp(2rem, 5vh, 3.5rem); }
+  .entete h1 {
+    font-size: clamp(2.6rem, 8vw, 5.5rem);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    margin: 0.9rem 0 1.3rem;
+  }
+  .dot { color: var(--accent); }
+  .lead {
+    font-size: clamp(1.05rem, 2vw, 1.3rem);
+    color: var(--muted);
+    max-width: 38em;
+    line-height: 1.55;
+    text-wrap: balance;
+  }
+
+  .etapes-layout {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: start;
+  }
+  .mascotte {
+    position: sticky;
+    top: clamp(6rem, 22vh, 11rem);
+    padding-top: 2.5rem;
+  }
+  .etapes { display: grid; }
+  .etape {
+    display: grid;
+    grid-template-columns: 5rem 1fr;
+    gap: 1.5rem;
+    padding: clamp(2rem, 4.5vh, 3rem) 0;
+    border-top: 1px solid var(--line);
+  }
+  .etape .numero { color: var(--accent); padding-top: 0.55rem; }
+  .etape h2 {
+    font-size: clamp(1.5rem, 3.2vw, 2.2rem);
+    margin-bottom: 0.9rem;
+  }
+  .etape p {
+    max-width: 62ch;
+    line-height: 1.7;
+  }
+
+  .outils {
+    padding: clamp(2rem, 4.5vh, 3rem) 0;
+    border-top: 1px solid var(--line);
+  }
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .credo {
+    margin: clamp(3rem, 8vh, 5.5rem) 0 0;
+    padding: 0;
+    border: none;
+  }
+  .credo p {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.5rem, 4vw, 2.6rem);
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    max-width: 26em;
+    text-wrap: balance;
+  }
+
+  @media (max-width: 860px) {
+    .etapes-layout { grid-template-columns: 1fr; }
+    .mascotte { position: static; padding-top: 1rem; }
+  }
+  @media (max-width: 600px) {
+    .etape { grid-template-columns: 1fr; gap: 0.6rem; }
+    .etape .numero { padding-top: 0; }
+  }
+</style>

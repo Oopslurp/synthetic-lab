@@ -1,0 +1,296 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { url } from '../../lib/paths';
+
+export async function getStaticPaths() {
+  const projets = (
+    await getCollection('projets', ({ data }) => !data.brouillon)
+  ).sort((a, b) => a.data.ordre - b.data.ordre);
+
+  return projets.map((entry, i) => ({
+    params: { slug: entry.id },
+    props: {
+      entry,
+      numero: String(i + 1).padStart(2, '0'),
+      total: String(projets.length).padStart(2, '0'),
+      prec: projets[i - 1] ?? null,
+      suiv: projets[i + 1] ?? null,
+    },
+  }));
+}
+
+const { entry, numero, total, prec, suiv } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+---
+
+<Base title={`${d.titre} — Synthetic Lab`} description={d.resume}>
+  <article class="container">
+    <!-- ── En-tête ────────────────────────────────────────────── -->
+    <header class="entete">
+      <a class="retour mono-label" href={url('/#projets')} data-reveal>← Tous les projets</a>
+      <p class="mono-label chemin" data-reveal>
+        {numero}&nbsp;/&nbsp;{total} · {d.periode}
+      </p>
+      <h1 data-split>{d.titre}</h1>
+      <p class="lead" data-split="0.25">{d.resume}</p>
+      <div class="actions" data-reveal="0.4">
+        {
+          d.demo ? (
+            <a class="btn btn--primary" href={d.demo} target="_blank" rel="noopener">
+              Voir la démo&nbsp;↗
+            </a>
+          ) : (
+            <span class="btn btn--disabled">Démo — à venir</span>
+          )
+        }
+        {
+          d.github ? (
+            <a class="btn" href={d.github} target="_blank" rel="noopener">
+              Code source&nbsp;↗
+            </a>
+          ) : (
+            <span class="btn btn--disabled">Code — à venir</span>
+          )
+        }
+      </div>
+    </header>
+
+    <!-- ── Bande méta ─────────────────────────────────────────── -->
+    <div class="meta" data-reveal>
+      <div class="meta-item">
+        <p class="mono-label">Catégorie</p>
+        <p>{d.categorie}</p>
+      </div>
+      <div class="meta-item">
+        <p class="mono-label">Période</p>
+        <p>{d.periode}</p>
+      </div>
+      <div class="meta-item">
+        <p class="mono-label">Statut</p>
+        <p class={d.statut === 'en-cours' ? 'statut statut--en-cours' : 'statut'}>
+          {d.statut === 'en-cours' ? 'En cours' : 'Terminé'}
+        </p>
+      </div>
+      <div class="meta-item meta-item--large">
+        <p class="mono-label">Notions mobilisées</p>
+        <p class="chips">{d.notions.map((n) => <span class="chip">{n}</span>)}</p>
+      </div>
+      <div class="meta-item meta-item--large">
+        <p class="mono-label">Stack</p>
+        <p class="chips">{d.stack.map((s) => <span class="chip chip--accent">{s}</span>)}</p>
+      </div>
+    </div>
+
+    <!-- ── Transparence IA ────────────────────────────────────── -->
+    {
+      d.ia && (
+        <aside class="ia" data-reveal>
+          <p class="mono-label ia-titre">Transparence — le rôle de l'IA</p>
+          <dl>
+            <div>
+              <dt class="mono-label">Outils</dt>
+              <dd>{d.ia.outils}</dd>
+            </div>
+            <div>
+              <dt class="mono-label">Généré avec l'IA</dt>
+              <dd>{d.ia.genere}</dd>
+            </div>
+            <div>
+              <dt class="mono-label">Ma part</dt>
+              <dd>{d.ia.humain}</dd>
+            </div>
+            <div>
+              <dt class="mono-label">Vérification</dt>
+              <dd>{d.ia.verification}</dd>
+            </div>
+          </dl>
+        </aside>
+      )
+    }
+
+    <!-- ── Corps : fiche à gauche, captures « eau » à droite ──── -->
+    <div class={d.captures.length > 0 ? 'corps corps--medias' : 'corps'}>
+      <div class="prose" data-reveal>
+        <Content />
+      </div>
+      {
+        d.captures.length > 0 && (
+          <aside class="medias">
+            {d.captures.map((c) => {
+              const video = /\.(mp4|webm)$/i.test(c.src);
+              return (
+                <figure class="media-eau">
+                  <div class="cadre" data-reveal-img>
+                    {video ? (
+                      <video
+                        src={url(c.src)}
+                        muted
+                        loop
+                        autoplay
+                        playsinline
+                        preload="metadata"
+                        aria-label={c.alt}
+                        data-eau
+                      />
+                    ) : (
+                      <img src={url(c.src)} alt={c.alt} loading="lazy" data-eau />
+                    )}
+                  </div>
+                  <figcaption class="mono-label">{c.alt}</figcaption>
+                </figure>
+              );
+            })}
+          </aside>
+        )
+      }
+    </div>
+
+    <!-- ── Projet précédent / suivant ─────────────────────────── -->
+    <nav class="pagination" aria-label="Autres projets">
+      {
+        prec ? (
+          <a href={url(`/projets/${prec.id}/`)} class="page-lien prec">
+            <span class="mono-label">← Précédent</span>
+            <span class="page-titre">{prec.data.titre}</span>
+          </a>
+        ) : (
+          <span />
+        )
+      }
+      {
+        suiv ? (
+          <a href={url(`/projets/${suiv.id}/`)} class="page-lien suiv">
+            <span class="mono-label">Suivant →</span>
+            <span class="page-titre">{suiv.data.titre}</span>
+          </a>
+        ) : (
+          <span />
+        )
+      }
+    </nav>
+  </article>
+</Base>
+
+<script>
+  import { initEaux } from '../../scripts/eau';
+  initEaux();
+</script>
+
+<style>
+  .entete {
+    padding: clamp(3rem, 8vh, 5.5rem) 0 2.5rem;
+  }
+  .retour {
+    display: inline-block;
+    text-decoration: none;
+    margin-bottom: 2.4rem;
+    transition: color 0.3s var(--ease);
+  }
+  .retour:hover { color: var(--accent); }
+  .chemin { color: var(--accent); }
+  .entete h1 {
+    font-size: clamp(2.6rem, 8vw, 5.5rem);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    margin: 0.9rem 0 1.3rem;
+  }
+  .lead {
+    font-size: clamp(1.05rem, 2vw, 1.3rem);
+    color: var(--muted);
+    max-width: 40em;
+    line-height: 1.55;
+    text-wrap: balance;
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 2rem;
+  }
+
+  .meta {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.8rem 2.5rem;
+    padding: 1.8rem 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .meta-item--large { grid-column: span 3; }
+  .meta-item .mono-label { margin-bottom: 0.45rem; }
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+
+  .ia {
+    margin: clamp(2.5rem, 6vh, 4rem) 0;
+    padding: clamp(1.5rem, 3.5vw, 2.4rem);
+    border: 1px solid color-mix(in srgb, var(--accent) 32%, transparent);
+    background: var(--accent-soft);
+    border-radius: 14px;
+  }
+  .ia-titre { color: var(--accent); margin-bottom: 1.4rem; }
+  .ia dl {
+    display: grid;
+    gap: 1.2rem;
+  }
+  .ia dt { margin-bottom: 0.3rem; }
+  .ia dd {
+    margin: 0;
+    line-height: 1.6;
+    max-width: 62ch;
+  }
+
+  .corps { margin-top: 1rem; }
+  .corps--medias {
+    display: grid;
+    grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+    gap: clamp(2.5rem, 5vw, 4.5rem);
+    align-items: start;
+  }
+  .medias {
+    display: grid;
+    gap: clamp(2.4rem, 7vh, 4rem);
+    /* aligne le premier média avec la section « 01 — Contexte » */
+    padding-top: 3.4rem;
+  }
+
+  @media (max-width: 900px) {
+    .corps--medias { grid-template-columns: 1fr; }
+    .medias { padding-top: 0; }
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: clamp(3.5rem, 8vh, 6rem);
+    padding-top: 1.8rem;
+    border-top: 1px solid var(--line);
+  }
+  .page-lien {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    text-decoration: none;
+    max-width: 45%;
+  }
+  .page-lien.suiv { text-align: right; align-items: flex-end; }
+  .page-titre {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.05rem, 2.2vw, 1.4rem);
+    letter-spacing: -0.02em;
+    transition: color 0.3s var(--ease);
+  }
+  .page-lien:hover .page-titre { color: var(--accent); }
+
+  @media (max-width: 700px) {
+    .meta { grid-template-columns: 1fr 1fr; }
+    .meta-item--large { grid-column: span 2; }
+  }
+</style>

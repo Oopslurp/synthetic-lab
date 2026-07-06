@@ -1,0 +1,271 @@
+/* ═══════════════════════════════════════════════════════════════
+   SYNTHETIC LAB — design system
+   Thème « papier » (clair) + thème sombre, accent bleu encre.
+   Une seule famille d'animations : entrées douces, ease unique.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Reset minimal ─────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+html { -webkit-text-size-adjust: 100%; }
+body { min-height: 100dvh; }
+img, svg, video { display: block; max-width: 100%; }
+input, button, textarea, select { font: inherit; color: inherit; }
+button { background: none; border: none; cursor: pointer; padding: 0; }
+a { color: inherit; }
+
+/* ── Tokens ────────────────────────────────────────────────────── */
+:root {
+  /* Thème clair « papier » (défaut) */
+  --bg: #faf8f3;
+  --bg-soft: #f1eee6;
+  --ink: #16191f;
+  --muted: #5e626b;
+  --line: rgba(22, 25, 31, 0.13);
+  --accent: #2946cf;          /* bleu encre */
+  --accent-contrast: #faf8f3;
+  --accent-soft: rgba(41, 70, 207, 0.07);
+
+  --font-sans: 'Inter Variable', system-ui, -apple-system, sans-serif;
+  --font-display: 'Space Grotesk Variable', var(--font-sans);
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, 'Cascadia Code', monospace;
+
+  --container: 1160px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1); /* équivalent CSS de power4.out */
+
+  /* Logos en particules : ChatGPT (accueil) vert le jour, blanc la nuit ;
+     Claude Code (méthode) orange le jour, blanc la nuit */
+  --particules: #10a37f;
+  --particules-claude: #d97757;
+
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  --bg: #101216;
+  --bg-soft: #171a20;
+  --ink: #eae9e4;
+  --muted: #999ea9;
+  --line: rgba(234, 233, 228, 0.13);
+  --accent: #8fa1ff;
+  --accent-contrast: #101216;
+  --accent-soft: rgba(143, 161, 255, 0.09);
+  --particules: #ffffff;
+  --particules-claude: #ffffff;
+  color-scheme: dark;
+}
+
+/* ── Base ──────────────────────────────────────────────────────── */
+body {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--ink);
+  background: var(--bg);
+  transition: background-color 0.35s var(--ease), color 0.35s var(--ease);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: var(--accent); color: var(--accent-contrast); }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+/* ── Lenis (recommandations officielles) ───────────────────────── */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+/* ── Utilitaires ───────────────────────────────────────────────── */
+.container {
+  width: min(var(--container), 100% - 3rem);
+  margin-inline: auto;
+}
+
+.mono-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+}
+
+.rule { border: none; border-top: 1px solid var(--line); }
+
+.link-accent {
+  color: var(--accent);
+  text-decoration: none;
+  background-image: linear-gradient(var(--accent), var(--accent));
+  background-size: 0% 1px;
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  transition: background-size 0.4s var(--ease);
+}
+.link-accent:hover { background-size: 100% 1px; }
+
+/* Boutons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  padding: 0.85em 1.6em;
+  border-radius: 999px;
+  border: 1px solid var(--ink);
+  color: var(--ink);
+  transition: background-color 0.3s var(--ease), color 0.3s var(--ease),
+              border-color 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.btn:hover { background: var(--ink); color: var(--bg); transform: translateY(-2px); }
+.btn--primary { background: var(--accent); border-color: var(--accent); color: var(--accent-contrast); }
+.btn--primary:hover { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+.btn--disabled {
+  border-style: dashed;
+  border-color: var(--line);
+  color: var(--muted);
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Puces (notions, stack) */
+.chip {
+  display: inline-block;
+  font-size: 0.8rem;
+  padding: 0.3em 0.85em;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.chip--accent { border-color: transparent; background: var(--accent-soft); color: var(--accent); }
+
+/* Statut : point + libellé */
+.statut {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55em;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+.statut::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.statut--en-cours::before { animation: pulse 2.2s ease-in-out infinite; }
+@keyframes pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 var(--accent-soft); }
+  50% { opacity: 0.45; box-shadow: 0 0 0 5px var(--accent-soft); }
+}
+
+/* ── Prose (corps des fiches Markdown) ─────────────────────────── */
+.prose { counter-reset: section; max-width: 70ch; }
+.prose h2 {
+  counter-increment: section;
+  font-size: clamp(1.35rem, 2.6vw, 1.8rem);
+  margin: 3.2rem 0 1.1rem;
+  padding-top: 2.2rem;
+  border-top: 1px solid var(--line);
+}
+.prose h2::before {
+  content: counter(section, decimal-leading-zero);
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  margin-bottom: 0.7rem;
+}
+.prose p, .prose li { color: var(--ink); }
+.prose p + p { margin-top: 1em; }
+.prose ul { padding-left: 1.2rem; margin: 1em 0; }
+.prose li { margin: 0.4em 0; }
+.prose li::marker { color: var(--accent); }
+.prose blockquote {
+  margin: 1.4em 0;
+  padding: 0.2em 0 0.2em 1.4rem;
+  border-left: 2px solid var(--accent);
+  color: var(--muted);
+}
+.prose strong { font-weight: 600; }
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: var(--bg-soft);
+  padding: 0.15em 0.45em;
+  border-radius: 4px;
+}
+
+/* ── Médias « eau » (captures des fiches projets) ──────────────── */
+.media-eau {
+  margin: 0;
+  display: grid;
+  gap: 0.7rem;
+}
+.media-eau .cadre {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--bg-soft);
+}
+.media-eau img,
+.media-eau video {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.media-eau .eau-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.media-eau .cadre.eau-active img,
+.media-eau .cadre.eau-active video {
+  opacity: 0;
+}
+.media-eau figcaption {
+  font-size: 0.66rem;
+  opacity: 0.8;
+}
+
+/* ── Animations : état initial (progressive enhancement) ───────── */
+/* Les éléments ne sont masqués QUE si JS est actif et que
+   l'utilisateur n'a pas demandé de réduire les animations. */
+@media (prefers-reduced-motion: no-preference) {
+  html.js [data-reveal] {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+  html.js [data-split] { visibility: hidden; }
+}
+
+/* ── Responsive de base ────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .container { width: calc(100% - 2.4rem); }
+}
