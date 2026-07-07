@@ -3,7 +3,7 @@ titre: "Tiny Chaos Town"
 ordre: 5
 categorie: "Jeu expérimental · créatif"
 periode: "2026 · T2"
-statut: "en-cours"
+statut: "termine"
 resume: "Un petit jeu volontairement chaotique où une ville miniature devient un terrain d'expérimentation visuelle et interactive."
 notions:
   - "Boucles de jeu"
@@ -14,13 +14,15 @@ notions:
 stack:
   - "JavaScript / TypeScript"
   - "Canvas"
-demo: "" # TODO : ajouter l'URL de la démo quand disponible
-github: "" # TODO : ajouter l'URL du dépôt GitHub
+demo: "https://oopslurp.github.io/tiny-chaos-town/"
+github: "https://github.com/Oopslurp/tiny-chaos-town"
 captures:
   - src: "/images/projets/tiny-chaos-town/01.webp"
     alt: "Le tableau de bord du village : gazette, niveau de chaos, interventions divines"
   - src: "/images/projets/tiny-chaos-town/02.webp"
     alt: "La vie à Tartifume-lès-Marécages, jour après jour"
+  - src: "/images/projets/tiny-chaos-town/03.webp"
+    alt: "La galerie des habitants : chacun a son métier loufoque, son humeur, sa fortune et ses amitiés ou rancunes"
 ia:
   outils: "Claude et Codex"
   genere: "Les premières structures de code, des idées de mécaniques et certaines fonctions interactives."
@@ -52,7 +54,7 @@ Du JavaScript/TypeScript et un rendu Canvas, avec une logique de jeu en boucles 
 
 ## Limites connues
 
-Le jeu reste volontairement simple et expérimental : pas encore de progression complète, de niveaux avancés ni de système d'objectifs développé. C'est un bac à sable avant d'être un jeu fini.
+Le jeu reste volontairement simple et expérimental : pas de progression complète, de niveaux avancés ni de système d'objectifs très développé. Il assume son format de bac à sable — un jouet numérique à observer plus qu'un jeu à campagne.
 
 ## Ce que ce projet m'a appris
 
