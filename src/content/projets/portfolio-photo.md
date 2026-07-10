@@ -1,10 +1,9 @@
 ---
-# TODO : nom définitif du projet à choisir (titre provisoire)
-titre: "Portfolio photographique"
+titre: "Spring26"
 ordre: 6
 categorie: "Site créatif · photographie"
 periode: "2026"
-statut: "en-cours"
+statut: "termine"
 resume: "Une galerie web sobre et immersive pour présenter une sélection de photographies comme on accrocherait une exposition."
 notions:
   - "Composition & cadrage"
@@ -18,8 +17,8 @@ stack:
   - "React"
   - "GSAP"
   - "Compression d'images"
-demo: "" # TODO : ajouter l'URL de la démo quand disponible
-github: "" # TODO : ajouter l'URL du dépôt GitHub
+demo: "https://oopslurp.github.io/pf-photo-spring26/"
+github: "https://github.com/Oopslurp/pf-photo-spring26"
 captures:
   - src: "/images/projets/portfolio-photo/01.webp"
     alt: "L'accueil : « saisir l'instant » — typographie éditoriale et sceau"
@@ -61,7 +60,7 @@ C'est aussi le projet le plus proche de ce site-ci : les deux partagent la même
 
 ## Limites connues
 
-Le site dépend de la sélection d'images disponible, encore en cours de constitution. Pas encore de système de séries, de filtres ni de commentaires par photographie.
+La sélection présentée pourra continuer à s'étoffer avec le temps. Le site n'a pas de système de séries, de filtres ni de commentaires par photographie : l'accent est mis sur la galerie et le rythme de navigation.
 
 ## Ce que ce projet m'a appris
 
