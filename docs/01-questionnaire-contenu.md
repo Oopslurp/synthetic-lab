@@ -371,6 +371,94 @@ Captures d'écran disponibles (3–5) ? Où :A AJOUTER DOSSIER
 
 Courte vidéo de démo ? nope
 
+Projet : WATT — Réseau sous tension
+Nom du projet : WATT — Réseau sous tension
+Catégorie : jeu de gestion / simulation énergétique sur navigateur
+Année / période : troisième trimestre 2026, juillet
+
+Résumé en une phrase :
+
+« Un jeu en pixel art dans lequel le joueur doit gérer le réseau électrique d’une ville en pleine croissance pendant 365 jours : produire de l’électricité, la stocker, s’endetter, traverser des crises et éviter à la fois le blackout et la faillite. »
+
+Contexte & objectif — pourquoi ce projet existe :
+
+« J’ai créé ce projet parce que je m’intéresse beaucoup aux questions liées à l’énergie depuis le lycée : les différentes formes de production, l’efficacité des transformations énergétiques, ou encore les raisons pour lesquelles il n’est pas possible de tout faire fonctionner uniquement grâce au solaire.
+Mon objectif était de transformer ces questions en véritables choix de jeu. Je voulais que le joueur puisse ressentir concrètement ce que représente l’intermittence, comprendre le rôle du stockage, mesurer le coût du nucléaire ou encore la dépendance aux combustibles fossiles. Je voulais également montrer qu’il n’existe pas une seule stratégie valable : une voie fossile, un mix énergétique ou une stratégie renouvelable peuvent toutes fonctionner, mais chacune a ses propres coûts et contraintes. »
+
+Notions scientifiques / mathématiques mobilisées :
+
+En physique de l’énergie, le projet mobilise la distinction entre puissance, mesurée en MW, et énergie, mesurée en MWh, ainsi que le facteur de charge, l’intermittence solaire et éolienne, les variations journalières et saisonnières de la demande, et la fréquence du réseau électrique à 50 Hz comme indicateur de l’équilibre entre production et consommation.
+Le jeu intègre également le principe de l’ordre de mérite, ou merit order, pour déterminer l’ordre de mobilisation des centrales, ainsi que les rendements des systèmes de stockage, avec 90 % pour les batteries et 75 % pour les stations de pompage. L’intensité carbone est exprimée en gCO₂/kWh.
+
+En mathématiques, j’ai utilisé les probabilités pour les tirages journaliers des événements météorologiques et économiques, ainsi que pour le crépitement du compteur Geiger, modélisé à la manière d’un processus de Poisson. Le projet mobilise aussi les suites et la croissance pour le calcul des intérêts journaliers sur une dette à taux croissant, les fonctions sinusoïdales pour représenter les saisons et le cycle jour-nuit, l’interpolation linéaire, ainsi que les moyennes mobiles exponentielles pour lisser les indicateurs de CO₂ et de confort de la ville.
+Un générateur pseudo-aléatoire à graine fixe permet enfin de rendre les simulations reproductibles.
+
+Sur le plan économique, le jeu prend en compte le CAPEX, l’OPEX, la dette, les intérêts composés et un prix de marché dépendant du rapport entre l’offre et la demande. Le développement du jeu m’a également conduit à une règle importante d’équilibrage : une faillite doit toujours venir des coûts fixes, et jamais d’un prélèvement calculé en pourcentage des revenus.
+
+Choix techniques & stack :
+
+Le jeu a été développé en HTML5 et JavaScript vanilla, avec Canvas 2D. Il utilise une résolution logique de 480 × 270 pixels, un rendu en nearest-neighbor et une police bitmap 3 × 5 entièrement réalisée sur mesure. La partie sonore repose sur la Web Audio API.
+
+Aucun framework, aucune bibliothèque et aucun fichier externe ne sont utilisés. Tout le jeu est contenu dans un unique fichier index.html, y compris la musique et les bruitages, qui sont générés directement en code grâce à une synthèse chiptune 8-bit.
+
+« J’ai choisi JavaScript vanilla dans un seul fichier plutôt qu’un moteur de jeu ou un framework, car je voulais que le jeu reste un fichier que l’on puisse ouvrir directement dans n’importe quel navigateur, sans installation ni compilation. L’architecture orientée données, ou data-driven, m’a également permis d’ajouter progressivement de nouvelles mécaniques sans casser le reste du jeu : les dix sources d’énergie et la quinzaine d’événements sont simplement définies sous forme de tables de données. »
+
+Rôle de l’IA :
+
+« L’IA, principalement Claude Code, avec Codex pour une relecture croisée, a généré la quasi-totalité du code, ainsi que le harnais de tests automatiques et les robots de simulation.
+
+J’ai moi-même dirigé toute la conception du jeu : les mécaniques, le double score écologie-fortune, la possibilité d’accélérer les chantiers, la dette de départ à rembourser, l’événement Tchernobyl, les choix d’équilibrage, ainsi que les retours issus de mes parties réelles, qui ont fait évoluer le projet.
+
+J’ai vérifié les résultats en jouant de nombreuses parties complètes, en testant plusieurs styles de jeu — tout fossile, mixte ou tout renouvelable — ainsi que différents cas extrêmes. Chaque nouveau réglage était ensuite vérifié à nouveau grâce à des simulations couvrant une année entière. »
+
+Difficultés rencontrées et résolution :
+
+« La difficulté principale a été de trouver un bon équilibre : le jeu ne devait être ni impossible, ni trop facile, tout en restant suffisamment intéressant pour garder l’attention du joueur. Dans les premières versions, je faisais faillite au bout d’une vingtaine de jours, quelle que soit ma stratégie.
+
+Je voulais initialement rester aussi fidèle que possible au fonctionnement réel d’un réseau électrique. Cependant, j’ai rapidement compris qu’une simulation parfaitement réaliste ne produit pas forcément un jeu amusant, lisible ou équilibré. J’ai donc dû accepter d’aller parfois à l’encontre de la réalité, en simplifiant certaines mécaniques ou en modifiant leur importance. L’objectif n’était plus de reproduire exactement un réseau électrique, mais d’en conserver les principes essentiels tout en donnant au joueur des choix compréhensibles et plusieurs possibilités de réussite.
+
+Pour résoudre les problèmes d’équilibrage, j’ai fait construire un harnais de simulation avec trois robots-joueurs, chacun suivant une stratégie différente : fossile, mixte ou renouvelable. À chaque modification, ils rejouent l’année entière en respectant plusieurs règles invariantes : un joueur passif doit perdre, un bon joueur doit pouvoir gagner de plusieurs façons, et la richesse ne doit jamais devenir infinie.
+
+La découverte la plus importante a concerné le blackout. Dans les premières versions, il fonctionnait de manière binaire : toute la production était coupée dès que la capacité ne couvrait pas 100 % de la demande. Trois jours sans vent pouvaient donc provoquer une défaite presque certaine.
+
+J’ai remplacé ce système par un délestage progressif : le réseau alimente ce qu’il peut, la fiabilité baisse proportionnellement au manque de production, puis se rétablit progressivement. Ce changement a rendu le jeu gagnable sans pour autant le rendre facile. »
+
+Tests effectués :
+
+J’ai mis en place un harnais de tests automatiques déterministe utilisant une graine aléatoire fixe, avec environ soixante vérifications.
+
+Les tests comprennent plusieurs scénarios types : un joueur passif dépassé par la croissance de la ville, un stratège qui emprunte excessivement, ou encore une stratégie reposant entièrement sur les renouvelables.
+
+J’ai également testé des cas limites, comme une banque saturée, trois jours sans soleil ni vent ou une crise du gaz, ainsi que des mécaniques unitaires : montée en puissance des centrales, stockage, délestage ou événement Tchernobyl.
+
+Après chaque changement d’équilibrage, je relançais des simulations d’une année complète, avec trois stratégies et deux graines différentes. Ces tests automatiques étaient complétés par mes propres parties réelles.
+
+Limites connues :
+
+« La stratégie 100 % renouvelable reste extrêmement difficile : mes robots ne la gagnent qu’une fois sur deux. C’est volontaire, mais la frontière entre difficulté et injustice reste assez fine.
+
+Le jeu ne possède pas encore de système de sauvegarde. Une partie doit donc être jouée d’une traite et dure environ quarante minutes à la vitesse ×3.
+
+La simulation suppose également que la ville fonctionne sur un réseau électrique isolé : il n’existe pas d’échanges d’électricité avec des pays ou régions voisins, aucune perte liée au transport n’est prise en compte, et le prix de marché est représenté par un modèle unique et simplifié.
+
+Enfin, l’interface n’est pas encore adaptée aux appareils mobiles ou tactiles. »
+
+Ce que ce projet m’a appris :
+
+Sur le plan technique, ce projet m’a permis de mieux comprendre le fonctionnement réel d’un réseau électrique : le principe de l’ordre de mérite, les raisons pour lesquelles l’intermittence pose avant tout un problème de puissance plutôt que d’énergie, ainsi que ce que les systèmes de stockage peuvent réellement faire — et ce qu’ils ne peuvent pas faire.
+
+J’ai également appris qu’il était possible de produire toute la partie sonore d’un jeu directement en code grâce à la Web Audio API.
+
+Sur le plan méthodologique, ce projet m’a appris à avancer par petites étapes enregistrées avec Git, afin de toujours pouvoir revenir en arrière. Il m’a aussi appris à ne jamais considérer un équilibrage comme valide avant de l’avoir vérifié par des tests automatiques.
+
+Enfin, j’ai appris à formuler des retours beaucoup plus précis à l’IA. Au lieu de dire simplement qu’un élément “ne fonctionne pas bien”, je décris le symptôme exact, par exemple : “je fais faillite au jour 20” ou “je n’ai pas le temps de lire les messages à la vitesse ×6”. »
+
+État des ressources (cochez) : • Démo en ligne existante ? URL : https://oopslurp.github.io/watt-reseau-sous-tension/ • Code sur GitHub ? URL : https://github.com/oopslurp/watt-reseau-sous-tension • Captures d'écran disponibles (3–5) ? Oui dans le dossier screenshots • Courte vidéo de démo ? non
+
+Retours utilisateurs :
+
+Aucun retour utilisateur externe pour le moment.
+
 Ordre du portfolio: APPA, Science Lab, Plume, Site Python, Tiny Chaos Town, Portfolio photo.
 ---
 

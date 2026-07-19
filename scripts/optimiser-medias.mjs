@@ -25,6 +25,7 @@ const CORRESPONDANCE = {
   'Python learning app': 'pyquest',
   'Science Lab': 'science-lab',
   'Tiny Chaos Town': 'tiny-chaos-town',
+  WATT: 'watt',
 };
 
 const SOURCE = 'Screenshots';

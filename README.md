@@ -21,6 +21,8 @@ Le portfolio regroupe notamment :
   cartes, exercices et plannings depuis des cours ou PDF.
 - Science Lab : laboratoire de simulations scientifiques interactives en React,
   TypeScript, SVG et Canvas.
+- WATT - Reseau sous tension : jeu de gestion d'un reseau electrique en pixel
+  art (365 jours, production, stockage, crises, equilibrage teste par robots).
 - Plume : outil de dictee intelligente et de structuration de notes avec
   transcription vocale et reformulation.
 - PyQuest : parcours ludique pour apprendre les bases de Python.

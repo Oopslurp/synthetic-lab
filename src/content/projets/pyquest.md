@@ -1,6 +1,6 @@
 ---
 titre: "PyQuest"
-ordre: 4
+ordre: 5
 categorie: "Site pédagogique · programmation"
 periode: "2026 · T3"
 statut: "en-cours"
