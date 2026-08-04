@@ -53,15 +53,15 @@ const { scene = 'accueil', sujet = '', slug = '' } = Astro.props;
 
   /* À partir de 1440 px : le panneau occupe la marge droite de la page,
      sans jamais empiéter sur le titre. */
-  /* À partir de 1440 px, le panneau sort du conteneur pour occuper la
-     marge droite de la page. Le décalage négatif compense la moitié de
-     marge (100vw − 1160px)/2, en gardant 1.5rem au bord de l'écran. */
-  @media (min-width: 1440px) {
+  /* À partir de 1400 px, le panneau déborde du conteneur vers la marge
+     droite — mais seulement d'un tiers de celle-ci, pour rester proche
+     du texte plutôt que collé au bord de l'écran. */
+  @media (min-width: 1400px) {
     .console-zone {
       position: absolute;
       top: 0;
       bottom: 0;
-      right: calc(1.5rem - (100vw - 1160px) / 2);
+      right: calc(-0.32 * (100vw - 1160px));
       width: min(25rem, 20vw);
       max-width: none;
       margin-top: 0;
