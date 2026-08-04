@@ -25,6 +25,7 @@ npm run medias    # convertit Screenshots/ → public/images/projets/ (webp + mp
 | Logos en particules (ChatGPT sur l'accueil, mascotte Claude Code sur /methode) | `src/components/ParticleLogo.astro` (prop `forme`) + `src/scripts/particules.ts` |
 | Effet « eau » sur les captures (fiches projets) | `src/scripts/eau.ts` |
 | Console « vibe coding » (en-tête de chaque page) | `src/components/ConsoleVibe.astro` (prop `scene`) + `src/scripts/console-vibe.ts` |
+| Pluie de code ambiante (marges gauche/droite, toutes les pages) | `src/components/PluieCode.astro` + `src/scripts/pluie-code.ts` |
 | Optimisation des médias (`npm run medias`) | `scripts/optimiser-medias.mjs` — source : `Screenshots/` |
 | Header / Footer / ligne projet | `src/components/` |
 | Liens internes | toujours via `url('/...')` de `src/lib/paths.ts` (base GitHub Pages) |
@@ -89,6 +90,13 @@ Dans le pool `projet`, `{sujet}` et `{slug}` sont remplacés par le projet
 affiché. Garder des séquences **vraies** (des étapes réellement vécues sur
 ce projet) : c'est le sens de la démarche du site.
 
+### Ajouter un extrait à la pluie de code
+Les colonnes des marges défilent des extraits **réels** des projets, définis
+dans la constante `BLOCS` de `src/scripts/pluie-code.ts` (`{ langue, lignes }`).
+Ajouter un bloc suffit. Ne pas inventer de code : reprendre de vraies lignes.
+La pluie n'apparaît qu'au-delà de 1500 px (marges assez larges) et reste
+derrière tout le contenu (`z-index: -1`).
+
 ### Ajouter un projet
 1. Copier `src/content/projets/_modele.md` → `<slug>.md` (minuscules, tirets)
    et remplir (les instructions sont dans le modèle).
@@ -123,8 +131,9 @@ Si seul le nom affiché change, modifier `titre:` et ne pas toucher au fichier.
 ## Règles à respecter lors des modifications
 
 - **Zones sensibles** — ne pas modifier pour des tâches de contenu :
-  `motion.ts`, `eau.ts`, `particules.ts`, `console-vibe.ts` (sauf pour
-  ajouter un scénario, voir ci-dessus), `paths.ts`, `content.config.ts`,
+  `motion.ts`, `eau.ts`, `particules.ts`, `console-vibe.ts` et `pluie-code.ts`
+  (sauf pour ajouter un scénario ou un extrait, voir ci-dessus),
+  `paths.ts`, `content.config.ts`,
   le pattern `'**/[^_]*.md'` (il exclut `_modele.md`), ni `.github/workflows/`.
   Le contenu vit dans les `.md` ; le code n'a pas besoin de changer pour ça.
 - **Motion budget** : une seule courbe (`power4.out`), on anime les entrées une

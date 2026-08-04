@@ -1,0 +1,100 @@
+---
+/**
+ * Pluie de code ambiante dans les marges gauche et droite de la page.
+ * Purement décoratif (aria-hidden, pointer-events: none), affiché
+ * uniquement quand les marges sont assez larges. Voir src/scripts/pluie-code.ts.
+ */
+---
+
+<div class="pluie" aria-hidden="true">
+  <div class="colonne colonne--g"><div class="pile"></div></div>
+  <div class="colonne colonne--d"><div class="pile"></div></div>
+</div>
+
+<style>
+  .pluie {
+    display: none;
+    position: fixed;
+    inset: 0;
+    /* derrière tout le contenu : le fond du body est propagé au canvas,
+       un z-index négatif reste donc visible sans masquer quoi que ce soit */
+    z-index: -1;
+    pointer-events: none;
+    user-select: none;
+  }
+  /* Seulement quand la marge dépasse ~170 px de chaque côté */
+  @media (min-width: 1500px) {
+    .pluie { display: block; }
+  }
+
+  .colonne {
+    position: absolute;
+    top: 0;
+    height: 100vh;
+    width: calc((100vw - 1160px) / 2 - 2.5rem);
+    overflow: hidden;
+    /* fondu haut et bas : le code émerge et se dissout */
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent,
+      #000 18%,
+      #000 82%,
+      transparent
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      transparent,
+      #000 18%,
+      #000 82%,
+      transparent
+    );
+  }
+  .colonne--g { left: 1.25rem; }
+  .colonne--d { right: 1.25rem; }
+
+  .pile {
+    position: absolute;
+    bottom: 2rem;
+    left: 0;
+    width: 100%;
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    line-height: 1.9;
+    white-space: pre;
+    opacity: var(--pluie-opacite);
+  }
+  .pile :global(.l) {
+    margin: 0;
+    color: var(--muted);
+  }
+  .pile :global(.l.entre) {
+    animation: apparait 0.85s var(--ease) both;
+  }
+  .pile :global(.tag) {
+    color: var(--accent);
+    opacity: 0.75;
+    letter-spacing: 0.08em;
+  }
+  .pile :global(.k) { color: var(--accent); }
+  .pile :global(.s) { color: var(--ink); opacity: 0.75; }
+  .pile :global(.n) { color: var(--ink); opacity: 0.6; }
+  .pile :global(.c) { opacity: 0.55; font-style: italic; }
+
+  @keyframes apparait {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pile :global(.l.entre) { animation: none; }
+  }
+</style>
+
+<script>
+  import { initPluieCode } from '../scripts/pluie-code';
+
+  const racine = document.querySelector<HTMLElement>('.pluie');
+  // On ne lance rien tant que les colonnes sont masquées (petits écrans).
+  if (racine && getComputedStyle(racine).display !== 'none') {
+    initPluieCode(racine);
+  }
+</script>

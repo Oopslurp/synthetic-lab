@@ -22,7 +22,6 @@ const { scene = 'accueil', sujet = '', slug = '' } = Astro.props;
     data-scene={scene}
     data-sujet={sujet}
     data-slug={slug}
-    data-reveal="0.4"
   >
     <div class="barre">
       <span class="feu"></span>
@@ -42,7 +41,8 @@ const { scene = 'accueil', sujet = '', slug = '' } = Astro.props;
     position: relative;
     border: 1px solid var(--line);
     border-radius: 10px;
-    background: color-mix(in srgb, var(--bg-soft) 70%, transparent);
+    /* opaque : le panneau se détache de la pluie de code des marges */
+    background: var(--bg-soft);
     font-family: var(--font-mono);
     font-size: 0.71rem;
     line-height: 1.7;

@@ -37,6 +37,8 @@ a { color: inherit; }
      Claude Code (méthode) orange le jour, blanc la nuit */
   --particules: #10a37f;
   --particules-claude: #d97757;
+  /* Pluie de code ambiante dans les marges */
+  --pluie-opacite: 0.42;
 
   color-scheme: light;
 }
@@ -52,6 +54,7 @@ a { color: inherit; }
   --accent-soft: rgba(143, 161, 255, 0.09);
   --particules: #ffffff;
   --particules-claude: #ffffff;
+  --pluie-opacite: 0.38;
   color-scheme: dark;
 }
 
