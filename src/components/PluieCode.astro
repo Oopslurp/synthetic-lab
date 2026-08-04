@@ -59,7 +59,7 @@
     width: 100%;
     font-family: var(--font-mono);
     font-size: 0.66rem;
-    line-height: 1.9;
+    line-height: 2.25;
     white-space: pre;
     opacity: var(--pluie-opacite);
   }
@@ -70,15 +70,17 @@
   .pile :global(.l.entre) {
     animation: apparait 0.85s var(--ease) both;
   }
+  /* Coloration volontairement sourde : un seul point d'accent (l'étiquette
+     de langue), le reste en nuances de gris — sinon la marge devient bruyante. */
   .pile :global(.tag) {
     color: var(--accent);
-    opacity: 0.75;
+    opacity: 0.55;
     letter-spacing: 0.08em;
   }
-  .pile :global(.k) { color: var(--accent); }
-  .pile :global(.s) { color: var(--ink); opacity: 0.75; }
-  .pile :global(.n) { color: var(--ink); opacity: 0.6; }
-  .pile :global(.c) { opacity: 0.55; font-style: italic; }
+  .pile :global(.k) { color: var(--ink); opacity: 0.5; }
+  .pile :global(.s),
+  .pile :global(.n) { color: var(--ink); opacity: 0.4; }
+  .pile :global(.c) { opacity: 0.5; font-style: italic; }
 
   @keyframes apparait {
     from { opacity: 0; }

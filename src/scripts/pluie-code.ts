@@ -38,11 +38,7 @@ const BLOCS: Bloc[] = [
     lignes: [
       '// ordre de mérite : on empile le moins cher',
       'const parc = sources.sort((a, b) => a.cout - b.cout);',
-      'let reste = demande;',
-      'for (const c of parc) {',
-      '  const p = Math.min(c.puissance, reste);',
-      '  reste -= p;',
-      '}',
+      'const p = Math.min(c.puissance, reste);',
     ],
   },
   {
@@ -61,13 +57,11 @@ const BLOCS: Bloc[] = [
       '  sin(uv.y * 14.0 + t * 0.9),',
       '  cos(uv.x * 16.0 + t * 0.7)',
       ') * 0.0016;',
-      'vec2 disp = vague + dir * bosse * 0.06;',
     ],
   },
   {
     langue: 'typescript',
     lignes: [
-      'gsap.registerPlugin(ScrollTrigger, SplitText);',
       'const split = new SplitText(el, {',
       "  type: 'lines',",
       "  mask: 'lines',",
@@ -98,7 +92,6 @@ const BLOCS: Bloc[] = [
       '  --accent: #2946cf;',
       '  --ease: cubic-bezier(.22, 1, .36, 1);',
       '}',
-      '.row:hover .titre { color: var(--accent); }',
     ],
   },
   {
@@ -115,8 +108,6 @@ const BLOCS: Bloc[] = [
     lignes: [
       'titre: "WATT — Réseau sous tension"',
       'statut: "termine"',
-      'stack:',
-      '  - "Canvas 2D · 480×270 pixel art"',
     ],
   },
   {
@@ -171,9 +162,17 @@ export function initPluieCode(racine: HTMLElement): void {
   piles.forEach((pile, index) => {
     let bloc = Math.floor(Math.random() * BLOCS.length);
     let ligne = -1; // -1 = étiquette de langue
+    let vide = Math.floor(Math.random() * 8); // lignes blanches restantes
 
-    /** Renvoie la prochaine ligne à afficher, en enchaînant les blocs. */
+    /**
+     * Renvoie la prochaine ligne. Entre deux blocs on laisse un large
+     * intervalle vide : la colonne doit respirer, pas se remplir.
+     */
     const suivante = (): { html: string; tag: boolean } => {
+      if (vide > 0) {
+        vide--;
+        return { html: '&nbsp;', tag: false };
+      }
       const b = BLOCS[bloc % BLOCS.length]!;
       if (ligne === -1) {
         ligne = 0;
@@ -182,6 +181,7 @@ export function initPluieCode(racine: HTMLElement): void {
       if (ligne >= b.lignes.length) {
         bloc = (bloc + 1 + Math.floor(Math.random() * 3)) % BLOCS.length;
         ligne = -1;
+        vide = 9 + Math.floor(Math.random() * 5);
         return { html: '&nbsp;', tag: false };
       }
       return { html: colorer(b.lignes[ligne++]!), tag: false };
@@ -205,17 +205,17 @@ export function initPluieCode(racine: HTMLElement): void {
           pile.style.transform = 'translateY(0)';
         });
       }
-      while (pile.childElementCount > 46) pile.firstElementChild!.remove();
+      while (pile.childElementCount > 34) pile.firstElementChild!.remove();
     };
 
     if (reduced) {
-      for (let i = 0; i < 26; i++) ajouter(false);
+      for (let i = 0; i < 34; i++) ajouter(false);
       return;
     }
 
     // remplissage initial, puis défilement lent et désynchronisé
-    for (let i = 0; i < 26; i++) ajouter(false);
-    const rythme = () => 900 + Math.random() * 900;
+    for (let i = 0; i < 34; i++) ajouter(false);
+    const rythme = () => 1600 + Math.random() * 1400;
     let minuteur = 0;
     const boucle = () => {
       if (!document.hidden) ajouter(true);
