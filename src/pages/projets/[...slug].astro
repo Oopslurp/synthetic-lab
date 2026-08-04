@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import ConsoleVibe from '../../components/ConsoleVibe.astro';
 import { url } from '../../lib/paths';
 
 export async function getStaticPaths() {
@@ -55,6 +56,7 @@ const d = entry.data;
           )
         }
       </div>
+      <ConsoleVibe scene="projet" sujet={d.titre.split(' —')[0]} slug={entry.id} />
     </header>
 
     <!-- ── Bande méta ─────────────────────────────────────────── -->
@@ -180,6 +182,7 @@ const d = entry.data;
 
 <style>
   .entete {
+    position: relative;
     padding: clamp(3rem, 8vh, 5.5rem) 0 2.5rem;
   }
   .retour {
@@ -288,6 +291,12 @@ const d = entry.data;
     transition: color 0.3s var(--ease);
   }
   .page-lien:hover .page-titre { color: var(--accent); }
+
+  /* Sur grand écran, la console occupe la marge droite : on borne le
+     titre pour qu'un nom long passe à la ligne au lieu de la toucher. */
+  @media (min-width: 1440px) {
+    .entete h1 { max-width: 76%; }
+  }
 
   @media (max-width: 700px) {
     .meta { grid-template-columns: 1fr 1fr; }

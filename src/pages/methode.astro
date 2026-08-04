@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import ParticleLogo from '../components/ParticleLogo.astro';
+import ConsoleVibe from '../components/ConsoleVibe.astro';
 
 const etapes = [
   {
@@ -67,6 +68,7 @@ const outils = [
         Voici, concrètement, comment un projet avance — du brouillon
         papier à la mise en ligne.
       </p>
+      <ConsoleVibe scene="methode" />
     </header>
 
     <div class="etapes-layout">
@@ -108,7 +110,10 @@ const outils = [
 </Base>
 
 <style>
-  .entete { padding: clamp(3rem, 8vh, 5.5rem) 0 clamp(2rem, 5vh, 3.5rem); }
+  .entete {
+    position: relative;
+    padding: clamp(3rem, 8vh, 5.5rem) 0 clamp(2rem, 5vh, 3.5rem);
+  }
   .entete h1 {
     font-size: clamp(2.6rem, 8vw, 5.5rem);
     font-weight: 700;

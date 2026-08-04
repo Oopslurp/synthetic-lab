@@ -1,0 +1,157 @@
+---
+/**
+ * Console « vibe coding » décorative, placée dans l'espace libre à droite
+ * des en-têtes de page. Voir src/scripts/console-vibe.ts pour les scénarios.
+ *
+ * Le parent doit être en `position: relative` (le panneau se cale à droite,
+ * au-delà du conteneur, à partir de 1440 px ; en dessous il repasse
+ * simplement dans le flux).
+ */
+interface Props {
+  scene?: 'accueil' | 'methode' | 'apropos' | 'projet';
+  sujet?: string;
+  slug?: string;
+}
+
+const { scene = 'accueil', sujet = '', slug = '' } = Astro.props;
+---
+
+<div class="console-zone" aria-hidden="true">
+  <div
+    class="console-vibe"
+    data-scene={scene}
+    data-sujet={sujet}
+    data-slug={slug}
+    data-reveal="0.4"
+  >
+    <div class="barre">
+      <span class="feu"></span>
+      <span class="onglet">claude-code — synthetic-lab</span>
+    </div>
+    <div class="flux"></div>
+    <span class="curseur">▍</span>
+  </div>
+</div>
+
+<style>
+  .console-zone {
+    margin-top: clamp(2.5rem, 5vh, 3.5rem);
+    max-width: 30rem;
+  }
+  .console-vibe {
+    position: relative;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--bg-soft) 70%, transparent);
+    font-family: var(--font-mono);
+    font-size: 0.71rem;
+    line-height: 1.7;
+    overflow: hidden;
+    transition: opacity 0.45s var(--ease);
+  }
+  .console-vibe.efface { opacity: 0; }
+
+  /* À partir de 1440 px : le panneau occupe la marge droite de la page,
+     sans jamais empiéter sur le titre. */
+  /* À partir de 1440 px, le panneau sort du conteneur pour occuper la
+     marge droite de la page. Le décalage négatif compense la moitié de
+     marge (100vw − 1160px)/2, en gardant 1.5rem au bord de l'écran. */
+  @media (min-width: 1440px) {
+    .console-zone {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: calc(1.5rem - (100vw - 1160px) / 2);
+      width: min(25rem, 20vw);
+      max-width: none;
+      margin-top: 0;
+      display: flex;
+      align-items: center;
+    }
+    .console-vibe { width: 100%; }
+  }
+
+  .barre {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.5rem 0.85rem;
+    border-bottom: 1px solid var(--line);
+    background: color-mix(in srgb, var(--ink) 4%, transparent);
+  }
+  .feu {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex: none;
+  }
+  .onglet {
+    font-size: 0.64rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .flux {
+    padding: 0.85rem 0.95rem 0.2rem;
+    min-height: 10.5em;
+  }
+  .flux :global(p) { margin: 0; }
+  .flux :global(.l-prompt) {
+    color: var(--ink);
+    margin-bottom: 0.55em !important;
+    word-break: break-word;
+  }
+  .flux :global(.chevron) {
+    color: var(--accent);
+    margin-right: 0.5em;
+  }
+  .flux :global(.l-reflexion) {
+    color: var(--muted);
+    margin-bottom: 0.55em !important;
+  }
+  .flux :global(.l-outil) {
+    color: var(--ink);
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .flux :global(.puce) {
+    color: var(--accent);
+    margin-right: 0.5em;
+  }
+  .flux :global(.l-detail) {
+    color: var(--muted);
+    padding-left: 1.15em;
+    margin-bottom: 0.4em !important;
+  }
+  .flux :global(.l-texte) {
+    color: var(--muted);
+    margin-top: 0.5em !important;
+    word-break: break-word;
+  }
+
+  .curseur {
+    display: block;
+    padding: 0 0.95rem 0.75rem;
+    color: var(--accent);
+    line-height: 1;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .curseur { animation: clignote 1.1s steps(2, start) infinite; }
+  }
+  @keyframes clignote {
+    to { opacity: 0; }
+  }
+</style>
+
+<script>
+  import { initConsole } from '../scripts/console-vibe';
+
+  document
+    .querySelectorAll<HTMLElement>('.console-vibe')
+    .forEach((el) => initConsole(el));
+</script>

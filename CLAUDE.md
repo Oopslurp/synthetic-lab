@@ -24,6 +24,7 @@ npm run medias    # convertit Screenshots/ → public/images/projets/ (webp + mp
 | Animations (budget motion strict) | `src/scripts/motion.ts` |
 | Logos en particules (ChatGPT sur l'accueil, mascotte Claude Code sur /methode) | `src/components/ParticleLogo.astro` (prop `forme`) + `src/scripts/particules.ts` |
 | Effet « eau » sur les captures (fiches projets) | `src/scripts/eau.ts` |
+| Console « vibe coding » (en-tête de chaque page) | `src/components/ConsoleVibe.astro` (prop `scene`) + `src/scripts/console-vibe.ts` |
 | Optimisation des médias (`npm run medias`) | `scripts/optimiser-medias.mjs` — source : `Screenshots/` |
 | Header / Footer / ligne projet | `src/components/` |
 | Liens internes | toujours via `url('/...')` de `src/lib/paths.ts` (base GitHub Pages) |
@@ -79,6 +80,15 @@ le reçoit (ondulation au repos, déformation liquide au survol), vidéos compri
 (détectées à l'extension `.mp4`/`.webm`, lues en boucle muette). Il n'y a **rien
 à coder** — ne pas modifier `eau.ts` pour ajouter un média.
 
+### Ajouter un scénario à la console « vibe coding »
+Les séquences rejouées dans l'en-tête des pages sont des tableaux de données
+dans `src/scripts/console-vibe.ts` (constante `SCENARIOS`), regroupés par
+page : `accueil`, `methode`, `apropos`, `projet`. Ajouter une entrée suffit,
+elle entre dans le tirage au sort — **aucun autre fichier à toucher**.
+Dans le pool `projet`, `{sujet}` et `{slug}` sont remplacés par le projet
+affiché. Garder des séquences **vraies** (des étapes réellement vécues sur
+ce projet) : c'est le sens de la démarche du site.
+
 ### Ajouter un projet
 1. Copier `src/content/projets/_modele.md` → `<slug>.md` (minuscules, tirets)
    et remplir (les instructions sont dans le modèle).
@@ -113,7 +123,8 @@ Si seul le nom affiché change, modifier `titre:` et ne pas toucher au fichier.
 ## Règles à respecter lors des modifications
 
 - **Zones sensibles** — ne pas modifier pour des tâches de contenu :
-  `motion.ts`, `eau.ts`, `particules.ts`, `paths.ts`, `content.config.ts`,
+  `motion.ts`, `eau.ts`, `particules.ts`, `console-vibe.ts` (sauf pour
+  ajouter un scénario, voir ci-dessus), `paths.ts`, `content.config.ts`,
   le pattern `'**/[^_]*.md'` (il exclut `_modele.md`), ni `.github/workflows/`.
   Le contenu vit dans les `.md` ; le code n'a pas besoin de changer pour ça.
 - **Motion budget** : une seule courbe (`power4.out`), on anime les entrées une
