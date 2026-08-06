@@ -24,6 +24,7 @@ npm run medias    # convertit Screenshots/ → public/images/projets/ (webp + mp
 | Animations (budget motion strict) | `src/scripts/motion.ts` |
 | Logos en particules (ChatGPT sur l'accueil, mascotte Claude Code sur /methode) | `src/components/ParticleLogo.astro` (prop `forme`) + `src/scripts/particules.ts` |
 | Effet « eau » sur les captures (fiches projets) | `src/scripts/eau.ts` |
+| Visionneuse (clic sur une capture → plein écran) | `src/components/Visionneuse.astro` + `src/scripts/visionneuse.ts` |
 | Console « vibe coding » (en-tête de chaque page) | `src/components/ConsoleVibe.astro` (prop `scene`) + `src/scripts/console-vibe.ts` |
 | Pluie de code ambiante (marges gauche/droite, toutes les pages) | `src/components/PluieCode.astro` + `src/scripts/pluie-code.ts` |
 | Optimisation des médias (`npm run medias`) | `scripts/optimiser-medias.mjs` — source : `Screenshots/` |
@@ -76,10 +77,16 @@ Dans `src/content/projets/<slug>.md`, remplir `demo:` et `github:`
    Relançable sans risque : l'outil ignore ce qui est déjà converti.
 3. Déclarer les nouveaux fichiers dans `captures:` du frontmatter (voir référence).
 
-**L'effet « eau » est 100 % automatique** : tout média listé dans `captures:`
-le reçoit (ondulation au repos, déformation liquide au survol), vidéos comprises
-(détectées à l'extension `.mp4`/`.webm`, lues en boucle muette). Il n'y a **rien
-à coder** — ne pas modifier `eau.ts` pour ajouter un média.
+**L'effet « eau » et la visionneuse sont 100 % automatiques** : tout média listé
+dans `captures:` reçoit l'ondulation au repos et la déformation liquide au survol,
+et devient cliquable pour s'afficher en grand (navigation entre captures, Échap
+pour fermer). Vidéos comprises (détectées à l'extension `.mp4`/`.webm`, lues en
+boucle muette). Il n'y a **rien à coder** — ne pas modifier `eau.ts` ni
+`visionneuse.ts` pour ajouter un média.
+
+⚠️ La visionneuse affiche le fichier tel quel : sa netteté dépend donc de la
+largeur produite par `npm run medias` (1600 px, réglable dans
+`scripts/optimiser-medias.mjs`).
 
 ### Ajouter un scénario à la console « vibe coding »
 Les séquences rejouées dans l'en-tête des pages sont des tableaux de données
@@ -131,7 +138,8 @@ Si seul le nom affiché change, modifier `titre:` et ne pas toucher au fichier.
 ## Règles à respecter lors des modifications
 
 - **Zones sensibles** — ne pas modifier pour des tâches de contenu :
-  `motion.ts`, `eau.ts`, `particules.ts`, `console-vibe.ts` et `pluie-code.ts`
+  `motion.ts`, `eau.ts`, `visionneuse.ts`, `particules.ts`, `console-vibe.ts`
+  et `pluie-code.ts`
   (sauf pour ajouter un scénario ou un extrait, voir ci-dessus),
   `paths.ts`, `content.config.ts`,
   le pattern `'**/[^_]*.md'` (il exclut `_modele.md`), ni `.github/workflows/`.

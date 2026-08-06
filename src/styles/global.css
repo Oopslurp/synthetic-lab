@@ -231,10 +231,46 @@ html.lenis, html.lenis body { height: auto; }
 }
 .media-eau .cadre {
   position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: 10px;
   background: var(--bg-soft);
+  cursor: zoom-in;
+  transition: border-color 0.3s var(--ease);
+}
+.media-eau .cadre:hover { border-color: var(--accent); }
+
+/* Loupe : indice discret qu'on peut agrandir la capture */
+.media-eau .loupe {
+  position: absolute;
+  right: 0.6rem;
+  bottom: 0.6rem;
+  /* au-dessus du canvas de l'effet eau, ajouté après dans le DOM */
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  color: var(--ink);
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.media-eau .cadre:hover .loupe,
+.media-eau .cadre:focus-visible .loupe {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Défilement bloqué pendant l'ouverture de la visionneuse */
+html.sans-scroll,
+html.sans-scroll body {
+  overflow: hidden;
 }
 .media-eau img,
 .media-eau video {

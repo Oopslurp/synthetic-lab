@@ -1,0 +1,140 @@
+---
+/**
+ * Visionneuse plein écran des captures d'un projet.
+ * Le balisage est inerte tant qu'aucune capture n'est ouverte
+ * (attribut `hidden`). Logique : src/scripts/visionneuse.ts.
+ */
+---
+
+<div
+  class="visionneuse"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Capture en grand"
+  aria-hidden="true"
+  hidden
+>
+  <button class="v-fermer" type="button" aria-label="Fermer (Échap)">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+      <path d="M6 6l12 12M18 6L6 18"></path>
+    </svg>
+  </button>
+
+  <button class="v-nav v-prec" type="button" aria-label="Capture précédente">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M15 5l-7 7 7 7"></path>
+    </svg>
+  </button>
+  <button class="v-nav v-suiv" type="button" aria-label="Capture suivante">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M9 5l7 7-7 7"></path>
+    </svg>
+  </button>
+
+  <figure class="v-cadre">
+    <div class="v-media"></div>
+    <figcaption class="v-legende"></figcaption>
+  </figure>
+  <p class="v-compteur mono-label"></p>
+</div>
+
+<style>
+  .visionneuse {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: grid;
+    place-items: center;
+    padding: clamp(1.5rem, 5vh, 3.5rem) clamp(1rem, 6vw, 5rem);
+    background: color-mix(in srgb, var(--bg) 88%, #000);
+    opacity: 0;
+    transition: opacity 0.3s var(--ease);
+  }
+  .visionneuse.ouverte { opacity: 1; }
+  .visionneuse[hidden] { display: none; }
+
+  .v-cadre {
+    margin: 0;
+    display: grid;
+    gap: 0.9rem;
+    justify-items: center;
+    max-width: 100%;
+  }
+  .v-media {
+    display: flex;
+    max-width: 100%;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--bg-soft);
+    transform: scale(0.985);
+    transition: transform 0.35s var(--ease);
+  }
+  .visionneuse.ouverte .v-media { transform: scale(1); }
+  .v-media :global(img),
+  .v-media :global(video) {
+    display: block;
+    max-width: 100%;
+    max-height: 78vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+  }
+  /* Légende en casse normale : les phrases longues sont illisibles en capitales */
+  .v-legende {
+    text-align: center;
+    max-width: 62ch;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    line-height: 1.6;
+  }
+
+  /* Boutons */
+  .visionneuse button {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--bg-soft) 92%, transparent);
+    color: var(--muted);
+    transition: color 0.25s var(--ease), border-color 0.25s var(--ease),
+      transform 0.25s var(--ease);
+  }
+  .visionneuse button:hover {
+    color: var(--ink);
+    border-color: var(--ink);
+  }
+  .v-fermer {
+    top: clamp(1rem, 3vh, 2rem);
+    right: clamp(1rem, 3vw, 2.5rem);
+  }
+  .v-nav { top: 50%; margin-top: -22px; }
+  .v-prec { left: clamp(0.6rem, 2vw, 2rem); }
+  .v-suiv { right: clamp(0.6rem, 2vw, 2rem); }
+  .v-prec:hover { transform: translateX(-3px); }
+  .v-suiv:hover { transform: translateX(3px); }
+  .visionneuse.v-seule .v-nav { display: none; }
+
+  .v-compteur {
+    position: absolute;
+    bottom: clamp(1rem, 3vh, 2rem);
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.68rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .visionneuse,
+    .v-media { transition: none; }
+    .v-media { transform: none; }
+  }
+</style>
+
+<script>
+  import { initVisionneuse } from '../scripts/visionneuse';
+  initVisionneuse();
+</script>

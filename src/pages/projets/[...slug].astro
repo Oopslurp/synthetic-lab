@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import ConsoleVibe from '../../components/ConsoleVibe.astro';
+import Visionneuse from '../../components/Visionneuse.astro';
 import { url } from '../../lib/paths';
 
 export async function getStaticPaths() {
@@ -124,7 +125,16 @@ const d = entry.data;
               const video = /\.(mp4|webm)$/i.test(c.src);
               return (
                 <figure class="media-eau">
-                  <div class="cadre" data-reveal-img>
+                  <button
+                    type="button"
+                    class="cadre"
+                    data-reveal-img
+                    data-ouvrir
+                    data-src={url(c.src)}
+                    data-alt={c.alt}
+                    data-type={video ? 'video' : 'image'}
+                    aria-label={`Agrandir : ${c.alt}`}
+                  >
                     {video ? (
                       <video
                         src={url(c.src)}
@@ -133,13 +143,19 @@ const d = entry.data;
                         autoplay
                         playsinline
                         preload="metadata"
-                        aria-label={c.alt}
+                        aria-hidden="true"
                         data-eau
                       />
                     ) : (
-                      <img src={url(c.src)} alt={c.alt} loading="lazy" data-eau />
+                      <img src={url(c.src)} alt="" loading="lazy" data-eau />
                     )}
-                  </div>
+                    <span class="loupe" aria-hidden="true">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                        <circle cx="11" cy="11" r="7" />
+                        <path d="M20 20l-3.5-3.5M11 8v6M8 11h6" />
+                      </svg>
+                    </span>
+                  </button>
                   <figcaption class="mono-label">{c.alt}</figcaption>
                 </figure>
               );
@@ -148,6 +164,7 @@ const d = entry.data;
         )
       }
     </div>
+    {d.captures.length > 0 && <Visionneuse />}
 
     <!-- ── Projet précédent / suivant ─────────────────────────── -->
     <nav class="pagination" aria-label="Autres projets">

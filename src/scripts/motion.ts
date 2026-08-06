@@ -55,6 +55,12 @@ if (!reduced) {
   gsap.ticker.add((time) => lenis.raf(time * 1000));
   gsap.ticker.lagSmoothing(0);
 
+  // La visionneuse met le défilement lissé en pause quand elle s'ouvre
+  document.addEventListener('visionneuse', (e) => {
+    if ((e as CustomEvent<boolean>).detail) lenis.stop();
+    else lenis.start();
+  });
+
   // Ancres internes de la même page → défilement lissé
   document.querySelectorAll<HTMLAnchorElement>('a[href*="#"]').forEach((a) => {
     const href = a.getAttribute('href') ?? '';
