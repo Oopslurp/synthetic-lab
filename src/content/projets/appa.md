@@ -3,15 +3,8 @@ titre: "APPA"
 ordre: 1
 categorie: "Outil d'apprentissage · IA locale"
 periode: "2026 · T1"
-statut: "en-cours"
+statut: "termine"
 resume: "Une application locale qui transforme cours et PDF en fiches, cartes de révision, exercices et plannings — avec des modèles d'IA qui tournent entièrement sur ma machine."
-notions:
-  - "Répétition espacée"
-  - "Planification du travail"
-  - "Traitement de documents"
-  - "Extraction d'informations"
-  - "Hiérarchisation des connaissances"
-  - "Statistiques de progression"
 stack:
   - "Application locale"
   - "Llama 3.1 · Mistral · Qwen"

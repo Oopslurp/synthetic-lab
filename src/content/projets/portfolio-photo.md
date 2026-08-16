@@ -5,13 +5,6 @@ categorie: "Site créatif · photographie"
 periode: "2026"
 statut: "termine"
 resume: "Une galerie web sobre et immersive pour présenter une sélection de photographies comme on accrocherait une exposition."
-notions:
-  - "Composition & cadrage"
-  - "Lumière & contraste"
-  - "Perception des couleurs"
-  - "Proportions"
-  - "Optimisation d'images"
-  - "Responsive design"
 stack:
   - "HTML · CSS · JavaScript"
   - "React"
