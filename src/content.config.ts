@@ -16,6 +16,7 @@ const projets = defineCollection({
     periode: z.string(),
     statut: z.enum(['termine', 'en-cours']),
     resume: z.string(),
+    notions: z.array(z.string()).default([]),
     stack: z.array(z.string()).default([]),
     demo: z.string().default(''), // '' = bouton « Démo à venir »
     github: z.string().default(''), // '' = bouton « Code à venir »

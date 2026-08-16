@@ -16,6 +16,9 @@ categorie: "Catégorie courte · sous-catégorie"
 periode: "2026 · T4"
 statut: "en-cours" # « en-cours » ou « termine »
 resume: "Une phrase qui donne envie de cliquer, sans exagérer."
+notions:
+  - "Notion 1"
+  - "Notion 2"
 stack:
   - "Techno 1"
   - "Techno 2"

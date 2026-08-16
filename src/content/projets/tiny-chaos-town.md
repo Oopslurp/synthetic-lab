@@ -5,6 +5,12 @@ categorie: "Jeu expérimental · créatif"
 periode: "2026 · T2"
 statut: "termine"
 resume: "Un petit jeu volontairement chaotique où une ville miniature devient un terrain d'expérimentation visuelle et interactive."
+notions:
+  - "Boucles de jeu"
+  - "Gestion d'événements"
+  - "Hasard contrôlé"
+  - "Coordonnées dans le plan"
+  - "Gestion d'états"
 stack:
   - "JavaScript / TypeScript"
   - "Canvas"

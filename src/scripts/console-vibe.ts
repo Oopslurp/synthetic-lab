@@ -132,7 +132,7 @@ const SCENARIOS: Record<string, Scenario[]> = {
       tokens: 1523,
       lignes: [
         { t: 'outil', c: 'Read   docs/01-questionnaire-contenu.md', d: 'source de vérité' },
-        { t: 'texte', c: 'Dates, stack et limites conformes au questionnaire.' },
+        { t: 'texte', c: 'Dates, notions et stack conformes au questionnaire.' },
       ],
     },
     {

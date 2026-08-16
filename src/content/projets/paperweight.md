@@ -5,6 +5,8 @@ categorie: "Application de bureau · local-first"
 periode: "2026 · T3"
 statut: "termine"
 resume: "Un planificateur de bureau pensé pour remplacer un mur de post-it : pas de compte, pas de serveur, pas de réseau — tout tient dans un seul fichier SQLite qui m'appartient."
+# notions : volontairement absentes ici — la liste faisait étalage.
+# Les notions restent expliquées dans le corps de la fiche.
 stack:
   - "Tauri v2 · Rust"
   - "React 19 · TypeScript · Vite"

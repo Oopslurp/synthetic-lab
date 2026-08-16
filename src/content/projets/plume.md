@@ -5,6 +5,13 @@ categorie: "Outil d'écriture · dictée intelligente"
 periode: "2026"
 statut: "en-cours"
 resume: "Un outil de capture d'idées qui transforme des notes orales ou brutes en texte clair et structuré, fidèle à l'intention de départ."
+notions:
+  - "Traitement du langage naturel"
+  - "Transcription vocale"
+  - "Reformulation"
+  - "Résumé"
+  - "Structuration de texte"
+  - "Interface homme-machine"
 stack:
   - "Application web"
   - "Reconnaissance vocale (Whisper)"

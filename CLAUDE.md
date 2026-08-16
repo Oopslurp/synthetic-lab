@@ -44,6 +44,7 @@ npm run medias    # convertit Screenshots/ → public/images/projets/ (webp + mp
 | `periode` | texte libre (ex. `"2026 · T1"`) | Affiché tel quel |
 | `statut` | ⚠️ exactement `"termine"` ou `"en-cours"` — **sans accent, avec tiret** | Badge (point pulsant si en cours) + compteur de l'accueil, tout est automatique |
 | `resume` | 1 phrase | Sous le titre de la fiche + description SEO |
+| `notions` | liste de textes (facultatif) | Puces « Notions mobilisées ». Omettre le champ masque toute la rubrique — c'est le cas de Paperweight, où la liste faisait étalage |
 | `stack` | liste de textes | Puces accentuées « Stack » |
 | `demo` / `github` | URL, ou `""` | `""` → bouton « à venir » ; URL → vrai bouton. Rien d'autre à changer |
 | `note` | phrase, ou `""` | Explication affichée sous les boutons (ex. : projet volontairement non publié). **Si `demo` et `github` sont vides, elle remplace les boutons « à venir »** |
@@ -171,9 +172,6 @@ Si seul le nom affiché change, modifier `titre:` et ne pas toucher au fichier.
 - Contenu source : `docs/01-questionnaire-contenu.md` (questionnaire rempli),
   analyse des références : `docs/00-analyse-references.md`.
 - Textes des fiches réécrits depuis le questionnaire — en cas de doute sur un
-  fait (dates, chiffres, retours utilisateurs), le questionnaire fait foi.
-- La rubrique « Notions mobilisées » a été retirée des fiches (le ton
-  paraissait vantard) : les notions restent expliquées dans le corps du texte,
-  là où elles ont un contexte.
+  fait (dates, notions, retours utilisateurs), le questionnaire fait foi.
 - Les fichiers bruts de `Screenshots/` sont la source des médias : ne pas les
   supprimer (ils permettent de régénérer `public/images/projets/`).
