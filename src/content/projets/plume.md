@@ -16,8 +16,9 @@ stack:
   - "Application web"
   - "Reconnaissance vocale (Whisper)"
   - "Modèle d'IA pour la reformulation"
-demo: "" # TODO : ajouter l'URL de la démo quand disponible
-github: "" # TODO : ajouter l'URL du dépôt GitHub
+demo: ""
+github: ""
+note: "Rien n'est publié pour l'instant, et c'est volontaire : j'ai encore la performance à régler. Entre le moment où je parle et celui où le texte s'affiche, l'attente est trop longue pour un outil censé attraper une idée au vol — et l'ordinateur chauffe. Tant que ce n'est pas réglé, je préfère continuer à travailler dessus plutôt que de mettre le code en ligne."
 captures:
   - src: "/images/projets/plume/01.mp4"
     alt: "Démonstration en vidéo : dicter, transcrire, reformuler"
@@ -56,7 +57,9 @@ Les transformations proposées sont réduites à l'essentiel : **clarifier**, **
 
 ## Limites connues
 
-L'outil peut encore mal interpréter certaines formulations orales ou ambiguës. Il ne remplace pas une relecture humaine, surtout pour les textes importants.
+La vraie limite aujourd'hui est la vitesse : la transcription met trop de temps à transformer ce que je dis en texte écrit, et la machine chauffe pendant ce temps. C'est gênant pour un outil dont l'intérêt est justement de ne pas interrompre le fil de la pensée — c'est donc le chantier en cours.
+
+L'outil peut aussi mal interpréter certaines formulations orales ou ambiguës. Il ne remplace pas une relecture humaine, surtout pour les textes importants.
 
 ## Ce que ce projet m'a appris
 
