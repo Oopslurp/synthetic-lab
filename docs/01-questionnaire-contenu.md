@@ -459,7 +459,162 @@ Retours utilisateurs :
 
 Aucun retour utilisateur externe pour le moment.
 
-Ordre du portfolio: APPA, Science Lab, Plume, Site Python, Tiny Chaos Town, Portfolio photo.
+Projet : Paperweight
+Nom du projet : Paperweight
+Catégorie : application de bureau / outil de productivité local-first
+Année / période : 2026 T3 (les commits commencent le 4 août 2026 ; j’avais initialement indiqué T2)
+
+Résumé en une phrase :
+
+« Un planificateur de bureau pensé pour remplacer mon mur de post-it : pas de compte, pas de serveur, pas besoin de réseau — toutes les données tiennent dans un seul fichier SQLite qui m’appartient, avec en bonus un mauvais jeu de mots à chaque ouverture. »
+
+Contexte & objectif :
+
+« J’ai créé Paperweight parce que j’utilisais beaucoup de post-it physiques, jusqu’au moment où mon système a commencé à atteindre ses limites : avec une quarantaine de notes sur le mur, ce n’était plus vraiment une méthode d’organisation.
+
+Je me suis surtout rendu compte d’un problème : sur un mur, toutes les notes finissent par être traitées de la même façon. Une étape liée à un projet — par exemple pousser le git / vérifier les codes / écrire le README — se retrouve mélangée avec une habitude hebdomadaire, comme quelque chose que je dois faire tous les lundis. Pourtant, ces deux types de tâches n’obéissent pas du tout à la même logique.
+
+L’idée a donc été de les séparer dès le modèle de données. Un modèle n’a pas de date : il se déclenche lorsqu’un projet arrive à une certaine étape. Une routine, elle, dépend d’un jour de la semaine, se régénère indéfiniment et n’est jamais considérée comme “en retard”.
+
+Je ne les réunis qu’à un seul endroit : l’écran Aujourd’hui, parce que c’est finalement le seul moment où j’ai besoin de voir toutes ces choses ensemble.
+
+J’avais aussi une contrainte dès le départ, que j’ai conservée jusqu’au bout : aucune donnée ne doit quitter la machine, et l’application doit pouvoir s’ouvrir immédiatement même hors ligne. »
+
+Notions scientifiques / mathématiques mobilisées :
+
+Arithmétique des dates civiles — j’utilise les algorithmes de Howard Hinnant, days_from_civil et civil_from_days, pour convertir une date en numéro de jour et inversement uniquement avec de l’arithmétique entière sur le calendrier grégorien proleptique. Toutes les dates restent sous la forme AAAA-MM-JJ, puis sont converties en entiers : je n’utilise jamais les objets Date. J’ai testé ce système sur quatre siècles, y compris les années bissextiles et les passages à l’heure d’été.
+
+Arithmétique modulaire / ordre d’un élément dans ℤ/nℤ — le mauvais jeu de mots affiché chaque jour est choisi grâce à (jour_epoch × pas) mod N, avec un pas premier avec N, ici 396. Puisque pgcd(pas, N) = 1, la suite parcourt toutes les valeurs exactement une fois avant de revenir au début. Cela permet de démontrer, et pas simplement d’espérer, qu’aucun jeu de mots ne se répète avant N jours, ce qui donne même 31 jours de marge par rapport à la promesse “aucune répétition pendant un an”.
+
+Théorie des ordres denses — pour réordonner une liste, j’utilise une insertion au point milieu. La position d’un élément est un réel : pour en insérer un entre a et b, sa nouvelle position devient simplement (a+b)/2. Cela permet de ne réécrire qu’une seule ligne au lieu de renuméroter toute la liste.
+
+Expansion de récurrences, selon la RFC 5545 — Paperweight gère les RRULE, EXDATE et les surcharges RECURRENCE-ID. Les occurrences d’une routine ne sont jamais toutes enregistrées en base : elles sont calculées à la demande, et seules les exceptions à la règle sont stockées. C’est intéressant parce que modifier une règle permet de corriger automatiquement tout le futur sans migration de données, et qu’une année entière de routine quotidienne ne coûte aucune ligne supplémentaire en base.
+
+Suite bornée pour la politique de sauvegarde — les sauvegardes suivent un système grand-père / père / fils : 7 quotidiennes, 8 hebdomadaires et 12 mensuelles. Le nombre total finit donc par plafonner autour de 27 fichiers au lieu de continuer à augmenter linéairement. Trois années d’utilisation ne prennent ainsi pas plus de fichiers de sauvegarde qu’une année.
+
+Tri topologique — lors d’un import, les tables sont d’abord vidées des enfants vers les parents, puis reconstruites dans l’ordre inverse, des parents vers les enfants. Cela garantit que les clés étrangères sont toujours satisfaites.
+
+UUIDv7 — les identifiants contiennent un horodatage dans leurs 48 premiers bits. Leur ordre lexicographique correspond donc directement à leur ordre chronologique, ce qui est pratique notamment pour les index SQLite.
+
+Choix techniques & stack :
+
+Stack : Tauri v2 avec Rust, React 19, TypeScript et Vite ; SQLite via tauri-plugin-sql et sqlx avec des migrations versionnées ; ical.js pour l’iCalendar ; et node:test avec esbuild pour les tests.
+
+Le projet représente environ 10 500 lignes de code source, 1 270 lignes de tests et 20 commits.
+
+Le choix technique que j’assume probablement le plus est assez contre-intuitif : j’ai décidé de représenter les dates comme de simples textes AAAA-MM-JJ avec de l’arithmétique entière, plutôt que d’utiliser les objets Date de JavaScript ou une bibliothèque spécialisée.
+
+La raison est qu’un agenda n’a pas réellement besoin de manipuler des instants précis : il manipule surtout des jours civils. “Le lundi” n’est pas un point exact dans le temps, c’est une case du calendrier. Utiliser Date introduit immédiatement des notions de fuseau horaire et de changement d’heure, avec toute une famille de bugs possibles : événement qui passe au jour précédent, routine qui disparaît lors d’un changement d’heure, etc.
+
+En restant uniquement sur des entiers, cette classe entière de bugs devient impossible par construction, puisqu’il n’y a tout simplement aucun fuseau horaire dans le code. Cela m’a aussi permis d’éviter une dépendance supplémentaire : les récurrences sont calculées avec de l’arithmétique entière et l’UUIDv7 tient en une quinzaine de lignes.
+
+J’ai fait deux autres choix importants. D’abord Tauri plutôt qu’Electron : l’application installée pèse environ 8 Mo au lieu d’environ 150 Mo, puisque WebView2 est déjà présent sur Windows 11.
+
+Ensuite, ical.js plutôt que rrule.js, parce qu’ical.js sait traiter ensemble RRULE, EXDATE et les surcharges, tout en utilisant les fuseaux horaires définis directement dans le fichier. Avec rrule.js, j’aurais notamment dû réimplémenter la gestion d’EXDATE moi-même.
+
+Enfin, j’ai volontairement évité plusieurs dépendances : aucun framework CSS, aucune bibliothèque d’icônes, de gestion d’état, de drag-and-drop, de dates ou d’UUID.
+
+Rôle de l’IA — honnêteté totale :
+
+« L’IA que j’ai principalement utilisée est Claude Code avec Claude Opus 5, dans VS Code. Elle a généré la quasi-totalité du code : l’architecture, environ 10 500 lignes de source, les 107 tests, les migrations SQL et la documentation.
+
+De mon côté, j’ai commencé par définir précisément le besoin et rédiger le cahier des charges. J’ai fait une vraie phase de recherche en amont avec RESEARCH.md et SPEC.md, que j’ai déclarés contraignants pour l’IA. J’avais même ajouté une règle explicite : si mon prompt et la spécification se contredisent, l’IA doit me demander quoi faire au lieu de choisir silencieusement.
+
+J’ai également tranché tous les choix produit : les fonctionnalités à garder ou à retirer, le rythme de conservation des sauvegardes, la limite de 200 Mo, l’emplacement d’installation, etc.
+
+Et surtout, l’utilisation réelle de l’application m’a permis de découvrir plusieurs bugs que l’IA n’avait pas vus : un surlignage qu’on ne pouvait plus retirer, un glisser-déposer qui, en réalité, n’avait jamais fonctionné, ou encore une note qui ne se reportait pas au lendemain.
+
+Pour vérifier le travail produit, j’ai utilisé trois méthodes : utiliser Paperweight moi-même au quotidien, faire auditer le code par une autre IA, Codex, puis transmettre ses 23 remarques à Claude, et enfin exiger qu’un bug soit d’abord reproduit par un test qui échoue avant de commencer à le corriger. »
+
+Difficultés rencontrées et résolution :
+
+1. Une fonctionnalité annoncée dans la documentation… qui n’avait en réalité jamais marché.
+
+Un jour, j’ai voulu réordonner deux tâches dans la page Semaine. Rien ne se passait : impossible de déplacer une tâche vers le haut, mais aussi impossible de l’envoyer vers un autre jour.
+
+Le problème, c’est que la fonction “glisser un élément vers un autre jour” était déjà écrite noir sur blanc dans le README depuis plusieurs semaines. Elle était donc considérée comme terminée alors qu’elle n’avait, en fait, jamais été réellement testée.
+
+En cherchant la cause, j’ai découvert deux problèmes indépendants, et chacun suffisait à casser complètement la fonctionnalité.
+
+Le premier venait de Tauri. Par défaut, Tauri active sur Windows son propre gestionnaire de glisser-déposer au niveau de la fenêtre. Celui-ci intercepte l’événement avant même que la page web puisse le recevoir. Le schéma de configuration de Tauri indique d’ailleurs explicitement qu’il faut le désactiver pour utiliser le drag-and-drop HTML5 sous Windows. Autrement dit, aucune ligne de mon système de drag-and-drop n’était forcément fausse : le problème venait d’une option activée par défaut que je n’avais jamais désactivée.
+
+Le deuxième problème venait de la zone saisie par l’utilisateur : c’était un <button>, et Chromium ignore l’attribut draggable sur les contrôles de formulaire.
+
+J’ai finalement corrigé le problème en utilisant dragDropEnabled: false et en ajoutant une poignée dédiée au déplacement. Il s’agit d’une petite grille de points dessinée en CSS plutôt que d’un caractère Unicode : j’avais déjà rencontré le problème d’un glyphe absent qui s’affichait simplement sous forme de carré vide.
+
+Cette correction a aussi eu un bénéfice secondaire : cliquer sur une ligne pour la cocher ne peut désormais plus la déplacer accidentellement.
+
+2. Des erreurs de dates qu’on ne découvre qu’avec de vrais cas d’utilisation.
+
+L’audit externe a révélé qu’un calendrier auquel l’utilisateur était abonné depuis 2020 ne renvoyait plus aucun événement pour le mois en cours.
+
+Le problème venait d’une limite de sécurité fixée à 400 occurrences par événement. Elle était comptée depuis la création de la série. Une réunion quotidienne créée en 2020 consommait donc ses 400 occurrences dès le début de 2021 et le programme arrêtait son calcul bien avant d’arriver jusqu’aux dates réellement demandées.
+
+Autrement dit, de manière assez absurde : plus le calendrier avait été utilisé longtemps, moins il fonctionnait.
+
+J’ai corrigé le problème en séparant deux limites différentes : le nombre d’occurrences que le programme est autorisé à parcourir et le nombre d’occurrences qu’il est autorisé à renvoyer.
+
+Dans la foulée, j’ai découvert un deuxième cas intéressant : un anniversaire fixé au 29 février apparaissait au 1er mars pendant les années non bissextiles. Or la RFC 5545 précise qu’une date inexistante doit être omise, et non déplacée.
+
+C’est un détail important : une mauvaise date est finalement plus dangereuse qu’une date absente, puisqu’il est impossible pour l’utilisateur de savoir qu’elle est fausse. »
+
+Tests effectués :
+
+Paperweight possède 107 tests automatisés avec node:test. Ils couvrent notamment l’arithmétique des dates sur quatre siècles, les récurrences, le cycle des jeux de mots, l’analyse des fichiers .ics, l’assainissement du HTML contenu dans les notes, la politique de rétention des sauvegardes et la liste blanche des accès réseau.
+
+J’ai adopté une méthode systématique pour les bugs : avant de corriger quoi que ce soit, j’écris un test qui reproduit le problème et qui échoue. Les erreurs concernant le 29 février et les séries très longues ont ainsi été reproduites exactement — 0 événement attendu 31, ou 2025-03-01 à la place d’aucune date — avant que le code soit modifié.
+
+J’ai aussi testé plusieurs cas limites : des domaines volontairement trompeurs comme calendar.google.com.evil.test, qui ne doit surtout pas passer le filtre ; des titres contenant des accents, du japonais ou des emoji pour vérifier que le repliement des lignes .ics est calculé en octets plutôt qu’en caractères ; des collisions d’horodatages à la seconde près ; une sauvegarde corrompue ; ou encore une base de données verrouillée par un autre programme.
+
+À cela s’ajoutent plusieurs vérifications croisées : tsc --noEmit, cargo check, construction complète de l’installeur, puis installation et lancement réels à chaque itération.
+
+Le code a également été audité en lecture seule par Codex, avec ses propres bancs d’essai.
+
+Enfin, l’application a aussi été testée par un utilisateur réel : mon fils s’en est servi.
+
+Limites connues :
+
+« Paperweight fonctionne uniquement sous Windows 10 et Windows 11 en 64 bits. Ce n’est donc pas une application “Windows d’abord” avec d’autres versions prévues derrière : aucune version macOS ou Linux n’est actuellement produite ou testée.
+
+L’installeur n’est pas signé numériquement. Windows SmartScreen affiche donc un avertissement lors du premier lancement. Un certificat de signature étant payant alors que l’application est gratuite, j’ai choisi de ne pas en utiliser pour le moment.
+
+L’accès réseau est volontairement très limité : seuls Google, iCloud et Outlook/Microsoft 365 peuvent être utilisés comme fournisseurs de calendrier. Ce choix garantit que l’application ne peut contacter que ces hôtes et ne peut donc pas facilement être transformée en programme qui “téléphone à la maison”.
+
+Une adresse Fastmail ou Nextcloud, par exemple, est directement refusée lors de la saisie, avec un message expliquant la raison, plutôt que d’être enregistrée puis de casser silencieusement plus tard.
+
+Les secrets restent stockés en clair dans le fichier SQLite, notamment la clé API optionnelle et les adresses privées des calendriers. Ils sont exclus des exports par défaut, mais ne sont pas encore placés dans le coffre-fort de Windows.
+
+Il n’existe ni synchronisation, ni application mobile, ni fonction de partage. C’est volontaire : Paperweight repose sur le principe “un fichier, une machine”.
+
+Il existe également une limite plus technique lors des imports. Une véritable transaction SQL n’est pas possible avec le greffon de base de données utilisé, car celui-ci répartit les requêtes sur un pool de connexions. Un BEGIN peut donc être exécuté sur une connexion différente de celle qui recevra les requêtes suivantes.
+
+Pour obtenir malgré tout une garantie “tout ou rien”, je restaure donc le fichier en cas d’échec au lieu de compter sur l’annulation d’une transaction SQL. »
+
+Ce que ce projet m’a appris :
+
+Sur le plan technique, Paperweight m’a surtout appris qu’un bug n’est pas forcément situé dans mon propre code. Dans le cas du glisser-déposer, par exemple, l’une des causes était simplement une option activée par défaut par la plateforme, documentée dans un fichier de schéma que l’on peut très facilement ne jamais aller lire. Depuis, j’essaie davantage de vérifier le comportement par défaut des outils que j’utilise avant de supposer que le problème vient nécessairement de ce que j’ai écrit.
+
+Sur le plan méthodologique, j’ai retenu qu’une fonctionnalité écrite dans la documentation mais jamais essayée n’existe pas vraiment. “Glisser vers un autre jour” figurait dans mon README depuis plusieurs semaines alors que cette fonction n’avait jamais fonctionné une seule fois.
+
+Depuis, je distingue beaucoup plus clairement trois étapes : “c’est codé”, “c’est testé” et “je l’ai réellement vu fonctionner”.
+
+Concernant mon travail avec l’IA, ce projet m’a appris l’importance de la faire contrôler par un autre regard. L’audit externe a découvert deux problèmes pouvant provoquer des pertes de données silencieuses : une restauration de sauvegarde susceptible d’effacer le travail le plus récent, et un import pouvant laisser la base partiellement supprimée.
+
+Ces problèmes n’avaient pas été repérés lors des relectures effectuées par le modèle qui avait lui-même développé le code.
+
+J’ai également retenu qu’il faut exiger un test qui échoue avant de corriger un bug. Sinon, il est difficile de savoir si l’on a réellement éliminé la cause du problème ou si l’on a seulement masqué son symptôme. »
+
+Retours utilisateurs :
+
+Aucun pour le moment
+
+État des ressources
+ Démo en ligne existante ? Pas de démo web possible puisqu’il s’agit d’une application de bureau ; une vidéo serait plus adaptée.
+ Code sur GitHub ? (https://github.com/Oopslurp/paperweight)
+ Captures d’écran disponibles (3–5) ? Tu peux les faire?
+ Courte vidéo de démonstration ? Pas encore.
+
+Ordre du portfolio: APPA, Science Lab, Paperweight, Plume, Site Python, Tiny Chaos Town, Portfolio photo.
 ---
 
 ## C. Page « Méthode » (la page qui vous différencie)

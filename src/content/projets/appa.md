@@ -16,8 +16,10 @@ stack:
   - "Application locale"
   - "Llama 3.1 · Mistral · Qwen"
   - "Génération depuis PDF"
-demo: "" # TODO : ajouter l'URL de la démo si l'application est publiée (app locale — à décider)
-github: "" # TODO : ajouter l'URL du dépôt GitHub
+demo: ""
+github: ""
+note: "Après un trimestre d'utilisation réelle, le verdict est net : les modèles d'IA locaux mettent trop de temps à produire une fiche ou un quiz, et ils épuisent mon ordinateur. Le code ne sera donc pas publié sur GitHub. La fonction planning, en revanche, a inspiré un autre projet :"
+note_projet: "paperweight"
 captures:
   - src: "/images/projets/appa/01.webp"
     alt: "Les documents importés — cours et notes, stockés et traités en local"
@@ -63,7 +65,9 @@ Plutôt qu'une seule grosse requête, j'ai découpé le travail de l'IA en tâch
 
 ## Limites connues
 
-L'application dépend de la qualité des documents fournis : un cours mal structuré donne des fiches moins bonnes. Les modèles locaux restent un peu lents sur ma machine. Surtout, les contenus générés peuvent contenir des erreurs : ils doivent être vérifiés avec le cours — l'application aide à réviser, elle ne révise pas à ma place.
+L'application dépend de la qualité des documents fournis : un cours mal structuré donne des fiches moins bonnes. Les contenus générés peuvent contenir des erreurs : ils doivent être vérifiés avec le cours — l'application aide à réviser, elle ne révise pas à ma place.
+
+La limite décisive est venue de l'usage : après un trimestre, la lenteur des modèles locaux et la charge qu'ils imposent à ma machine rendent l'outil moins rapide que de faire la fiche moi-même. C'est le genre de conclusion qu'on ne peut pas tirer en théorie — seulement en s'en servant vraiment.
 
 ## Ce que ce projet m'a appris
 

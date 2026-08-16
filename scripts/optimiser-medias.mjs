@@ -20,6 +20,7 @@ import path from 'node:path';
 // Dossier de captures → slug de la fiche projet
 const CORRESPONDANCE = {
   Appa: 'appa',
+  Paperweight: 'paperweight',
   Plume: 'plume',
   'Portfolio photographie': 'portfolio-photo',
   'Python learning app': 'pyquest',
