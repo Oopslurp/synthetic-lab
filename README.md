@@ -25,12 +25,12 @@ Le portfolio regroupe notamment :
   art (365 jours, production, stockage, crises, equilibrage teste par robots).
 - Plume : outil de dictee intelligente et de structuration de notes avec
   transcription vocale et reformulation.
-- Muse : bibliotheque des techniques de guitare fingerstyle ou chaque
-  information indique sa source, avec accordeur et lecteur de tablatures.
 - PyQuest : parcours ludique pour apprendre les bases de Python.
 - Tiny Chaos Town : prototype de jeu experimental en Canvas.
 - Portfolio photographique : galerie web immersive autour d'une selection de
   photographies.
+- Muse : bibliotheque des techniques de guitare fingerstyle ou chaque
+  information indique sa source, avec accordeur et lecteur de tablatures.
 
 ## Stack technique
 

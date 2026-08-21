@@ -1,6 +1,6 @@
 ---
 titre: "Tiny Chaos Town"
-ordre: 8
+ordre: 7
 categorie: "Jeu expérimental · créatif"
 periode: "2026 · T2"
 statut: "termine"

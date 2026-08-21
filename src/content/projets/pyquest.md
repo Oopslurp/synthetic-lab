@@ -1,6 +1,6 @@
 ---
 titre: "PyQuest"
-ordre: 7
+ordre: 6
 categorie: "Site pédagogique · programmation"
 periode: "2026 · T3"
 statut: "en-cours"
@@ -17,8 +17,8 @@ stack:
   - "HTML · CSS · JavaScript"
   - "React"
   - "Python"
-demo: "" # TODO : ajouter l'URL de la démo quand disponible
-github: "" # TODO : ajouter l'URL du dépôt GitHub
+demo: "https://oopslurp.github.io/pyquest/"
+github: "https://github.com/Oopslurp/pyquest"
 captures:
   - src: "/images/projets/pyquest/01.webp"
     alt: "L'écran d'ouverture de PyQuest, l'aventure Python"
