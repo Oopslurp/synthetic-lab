@@ -614,6 +614,114 @@ Aucun pour le moment
  Captures d’écran disponibles (3–5) ? Tu peux les faire?
  Courte vidéo de démonstration ? Pas encore.
 
+ # Projet : Muse
+
+* **Nom du projet** : Muse
+
+* **Catégorie** : application web — outil de référence et de pratique
+
+* **Année / période** : 2026 T3
+
+* **Résumé en une phrase** :
+
+  > « Une bibliothèque consacrée aux techniques de guitare fingerstyle où chaque information indique clairement d’où elle vient — source extérieure, déduction ou vérification — avec un accordeur chromatique, un lecteur de tablatures et un atelier de pratique, le tout fonctionnant entièrement en local. »
+
+* **Contexte & objectif — pourquoi ce projet existe** :
+
+  > « J’ai créé Muse pour tester quelque chose qui m’intéressait beaucoup : **est-ce qu’une IA peut m’aider à construire un outil de qualité réelle, et pas simplement une démo qui fonctionne cinq minutes ?** Je voulais arriver à quelque chose que j’aurais réellement envie de garder et d’utiliser pour accompagner ma propre pratique de la guitare.
+  >
+  > La guitare était justement un bon terrain d’expérimentation, parce que c’est un domaine que je connais suffisamment pour pouvoir juger moi-même si ce que produit l’IA est pertinent ou non.
+  >
+  > Mon objectif était donc de construire un outil suffisamment sérieux pour que je puisse l’utiliser moi-même, puis l’ouvrir au public. J’ai surtout voulu lui donner un principe assez inhabituel : **ne pas cacher les incertitudes**. Si une information vient d’une source, si elle a été déduite ou si elle a réellement été vérifiée, le site doit le dire au lieu de tout présenter avec le même niveau de certitude. »
+
+*Choix techniques & stack
+
+Muse utilise Astro, TypeScript strict et Tailwind 4, avec des composants React uniquement pour les parties réellement interactives. J’utilise également alphaTab pour les partitions, pitchy + Web Audio pour l’accordeur, Dexie/IndexedDB pour le stockage local et Zod pour vérifier les données.
+
+J’ai choisi Astro plutôt qu’une application entièrement en React, car environ 90 % du site est du contenu à lire. React n’est donc chargé que lorsque c’est nécessaire. Par exemple, la première version de la recherche ajoutait environ 65 Ko de JavaScript à toutes les pages ; réécrite avec le DOM natif, elle n’en utilise plus qu’environ 2 Ko.
+
+Autre choix important : les noms de notes ne sont jamais écrits manuellement. Ils sont calculés à partir de l’accordage, la corde et la case, ce qui évite les incohérences entre une tablature correcte et un nom de note mal renseigné.
+
+Rôle de l’IA
+
+« Claude Code a généré la quasi-totalité du code, soit environ 21 000 lignes, ainsi que les 32 fiches de contenu et 22 outils de vérification.
+
+Mon rôle a été de diriger le projet : définir le périmètre, prendre les décisions importantes, refuser certaines propositions et imposer les règles de fiabilité du contenu. Chaque affirmation doit notamment indiquer si elle est sourcée, déduite ou vérifiée, et l’IA ne doit jamais prétendre avoir réalisé une vérification qu’elle n’a pas réellement faite.
+
+J’ai surtout vérifié le résultat en utilisant réellement Muse. C’est ainsi que j’ai découvert des problèmes que le code seul ne révélait pas : lecteur sans son, curseur fonctionnant sans audio ou fiches trop complexes pour savoir immédiatement quoi pratiquer. J’ai également testé l’accordeur avec ma guitare. »
+
+* **Difficultés rencontrées et résolution** :
+
+  > **1. Un lecteur de tablatures qui semblait fonctionner… mais qui était complètement muet.**
+  >
+  > Lorsque j’appuyais sur « Lire », l’indicateur se mettait bien en mouvement puis finissait par s’arrêter. Visuellement, tout donnait donc l’impression que le lecteur fonctionnait. Sauf qu’aucun son ne sortait.
+  >
+  > Le problème venait de l’outil de build : il réécrivait l’adresse du *worker* chargé de la synthèse vers un fichier qui n’existait pas. Le plus trompeur était que `new Worker()` **ne déclenche aucune erreur lorsqu’on lui donne une URL inexistante**. Le worker mourait donc silencieusement, sans rien signaler.
+  >
+  > Le problème a finalement été corrigé avec un greffon dédié qui répare ces adresses.
+  >
+  > Mais ce bug m’a surtout apporté une leçon méthodologique. Le HTML était valide, la page s’affichait correctement et le bouton répondait : si je m’étais contenté de vérifier que le site se construisait sans erreur, je n’aurais rien vu.
+  >
+  > J’ai donc fait écrire un contrôle automatique qui **clique réellement sur le bouton de lecture et vérifie que le curseur avance**, puis huit autres contrôles du même type. Et pour éviter de faire confiance à des tests qui réussiraient quoi qu’il arrive, je les ai ensuite **cassés volontairement un par un** afin de vérifier qu’ils échouaient réellement lorsqu’ils devaient détecter un problème.
+  >
+  > **2. Un site très complet… dans lequel je ne savais pas quoi faire en arrivant.**
+  >
+  > Une autre difficulté n’était cette fois pas vraiment technique. En ouvrant une fiche, je me suis retrouvé devant environ **11 500 pixels de texte** : le son que l’on cherche à obtenir, une justification éditoriale, quatre sections consacrées à l’anatomie du geste… et seulement tout en bas les exercices.
+  >
+  > C’était un très bon document de référence, mais un mauvais outil de pratique. Si j’arrivais avec ma guitare et dix minutes devant moi, le site ne répondait pas à la question la plus simple : **« je commence par quoi ? »**
+  >
+  > J’ai donc ajouté en haut de chaque fiche un bloc **« Commencer »**, volontairement très simple. Il ne donne qu’une seule action : le premier palier à travailler, l’exercice correspondant avec son tempo, la durée maximale conseillée et le premier signal qui indique qu’il faut s’arrêter.
+  >
+  > Surtout, ces informations ne sont pas recopiées à la main. Elles sont **dérivées automatiquement du contenu déjà présent dans la fiche**, ce qui évite de saisir deux fois la même donnée et de créer de nouvelles incohérences. »
+
+Tests effectués
+
+Muse comporte 74 tests unitaires, notamment sur le calcul des notes, l’accordeur, les sauvegardes et plusieurs fonctions internes. Les 78 cordes des 13 accordages sont testées avec des signaux synthétiques.
+
+Les 63 tablatures sont aussi vérifiées automatiquement à chaque construction du site : une incohérence, comme deux notes placées sur la même corde dans un accord, fait échouer le build.
+
+J’ai ajouté neuf tests dans un véritable navigateur, qui vérifient le comportement réel du site : le lecteur produit-il vraiment du son ? l’accordeur reconnaît-il une note désaccordée ? la progression survit-elle à un rechargement ? le métronome fonctionne-t-il ? les contrastes restent-ils lisibles dans les deux thèmes ? aucune requête ne quitte-t-elle le site ?
+
+Enfin, j’ai volontairement fait échouer chaque garde-fou au moins une fois avant de lui faire confiance : un test qui réussit toujours ne prouve pas qu’il sait réellement détecter une erreur.
+
+* **Limites connues** :
+
+  > « **L’accordeur n’a pour l’instant été essayé que sous Chrome**, avec un signal synthétique. Son comportement sous Firefox et Safari, ainsi que son utilisation réelle avec une guitare, restent donc à confirmer.
+  >
+  > **Aucun utilisateur de lecteur d’écran n’a encore testé Muse.** Les contrastes et la taille des cibles tactiles sont mesurés automatiquement, mais cela ne remplace pas l’expérience réelle d’une personne utilisant ces outils d’accessibilité.
+  >
+  > Le corpus contient également **44 points volontairement marqués “à vérifier”**, dont neuf sont concentrés sur une seule fiche : celle consacrée au jeu percussif. Dans ce cas précis, **il n’existe aucune littérature sur les impacts répétés**.
+  >
+  > Les durées de séance proposées dans cette fiche sont donc des déductions prudentes et non des seuils mesurés expérimentalement — et le site l’indique explicitement.
+  >
+  > **Aucun professeur de guitare n’a encore relu le contenu.**
+  >
+  > Enfin, le moteur audio a lui aussi des limites : il ne reproduit ni le véritable timbre de la guitare, ni la différence entre les deux attaques de base, ni les percussions. Pour les exercices concernés, j’ai préféré conserver la lecture mais **indiquer précisément ce que le rendu ne reproduit pas**, plutôt que de désactiver complètement la fonction. »
+
+* **Ce que ce projet m’a appris** :
+
+  > **Sur le plan technique**, Muse m’a appris qu’une panne peut être presque parfaitement silencieuse. On peut avoir un HTML valide, une page qui s’affiche normalement, un bouton qui réagit… alors que la fonctionnalité principale derrière ce bouton ne marche pas du tout. Cela m’a appris à tester le **comportement réel** d’une application et pas seulement sa sortie ou l’absence d’erreurs de compilation.
+  >
+  > **Sur le plan méthodologique**, ce projet m’a surtout appris à distinguer clairement **ce que je sais de ce que je suppose**, puis à l’écrire explicitement. Cette idée est progressivement devenue le principe central de Muse : trois statuts sont affichés et les incertitudes sont conservées avec la raison pour laquelle elles existent, au lieu d’être effacées pour donner au contenu une apparence de certitude.
+  >
+  > L’une des meilleures leçons est d’ailleurs venue d’une erreur du projet contre ses propres principes. Le statut « vérifié » indiquait initialement **« guitare en main »**, alors que les cinq cas portant cette mention avaient en réalité été vérifiés par une analyse logicielle.
+  >
+  > J’ai corrigé cela en indiquant désormais **le moyen de vérification exact dans chaque cas**, plutôt qu’un simple statut ambigu.
+  >
+  > J’ai également appris à **découper le développement en tranches**, à terminer et fermer proprement une étape avant d’en commencer une autre, et à refuser qu’un outil produise quelque chose qui semble crédible à partir d’une information qu’il ne possède pas réellement. »
+
+* **Retours utilisateurs** :
+
+Nope
+
+**État des ressources :**
+
+* [ ] **Démo en ligne existante ?** (https://oopslurp.github.io/Muse/)
+* [ ] **Code sur GitHub ?** (https://github.com/Oopslurp/Muse)
+* [x] **Captures d’écran disponibles (3–5) ?** Oui. Le projet les génère automatiquement dans `.captures/` : accueil, fiche, accordeur, arbre et atelier, chacun en thème clair et sombre.
+* [ ] **Courte vidéo de démonstration ?** Pas encore.
+
+
 Ordre du portfolio: APPA, Science Lab, Paperweight, Plume, Site Python, Tiny Chaos Town, Portfolio photo.
 ---
 
