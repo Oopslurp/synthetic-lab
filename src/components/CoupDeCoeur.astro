@@ -3,24 +3,48 @@
  * Petite étoile « coup de cœur », posée légèrement de travers comme un
  * autocollant. Reprend la pastille et l'accent déjà utilisés ailleurs :
  * aucun nouveau matériau visuel, juste l'inclinaison qui signale l'ajout
- * à la main. Se redresse au survol de la ligne projet.
+ * à la main.
+ *
+ * Deux réactions, volontairement distinctes :
+ *  - survol de la ligne projet → l'étoile se redresse ;
+ *  - survol de l'étoile        → quelques étincelles filantes s'échappent.
  */
 interface Props {
   /** taille du disque, en em (relative au texte qui l'entoure) */
   taille?: number;
 }
 const { taille = 1.5 } = Astro.props;
+
+// Angle, portée et retard de chaque étincelle — irréguliers à dessein.
+// La portée est un multiple de la taille de l'étoile : elles doivent
+// s'échapper franchement du disque, sinon l'effet ressemble à un hérisson.
+const ETINCELLES = [
+  { a: -26, d: 1.5, t: 0 },
+  { a: 22, d: 1.15, t: 70 },
+  { a: -66, d: 1.0, t: 130 },
+  { a: 72, d: 1.35, t: 45 },
+  { a: 158, d: 1.05, t: 100 },
+  { a: -144, d: 1.25, t: 175 },
+];
 ---
 
 <span class="coeur" style={`--taille:${taille}em`}>
   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
     <path d="M12 2.6l2.72 6.06 6.6.62-4.96 4.4 1.45 6.48L12 16.75 6.19 20.16l1.45-6.48-4.96-4.4 6.6-.62z" />
   </svg>
+  <span class="etincelles" aria-hidden="true">
+    {
+      ETINCELLES.map((e) => (
+        <i style={`--a:${e.a}deg; --d:${e.d}; --t:${e.t}ms`} />
+      ))
+    }
+  </span>
   <span class="lecteur-ecran">— coup de cœur</span>
 </span>
 
 <style>
   .coeur {
+    position: relative;
     display: inline-grid;
     place-items: center;
     width: var(--taille);
@@ -42,6 +66,52 @@ const { taille = 1.5 } = Astro.props;
   :global(.row:hover) .coeur {
     transform: rotate(0deg) scale(1.06);
   }
+
+  /* ── Étincelles ────────────────────────────────────────────── */
+  .etincelles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .etincelles i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0.36em;
+    height: 1.5px;
+    margin: -0.75px 0 0 -0.18em;
+    border-radius: 1px;
+    background: var(--accent);
+    opacity: 0;
+    /* pivot au centre du disque : chaque étincelle part droit devant elle */
+    transform: rotate(var(--a)) translateX(0);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .coeur:hover .etincelles i {
+      animation: filante 900ms var(--ease) var(--t) both;
+    }
+  }
+  /* Départ au bord du disque (0.45 × taille), puis fuite vers l'extérieur
+     en s'étirant — la traînée d'une étoile filante. */
+  @keyframes filante {
+    0% {
+      opacity: 0;
+      transform: rotate(var(--a)) translateX(calc(var(--taille) * 0.45))
+        scaleX(0.3);
+    }
+    20% {
+      opacity: 1;
+      transform: rotate(var(--a)) translateX(calc(var(--taille) * 0.7))
+        scaleX(1);
+    }
+    100% {
+      opacity: 0;
+      transform: rotate(var(--a)) translateX(calc(var(--taille) * var(--d)))
+        scaleX(1.5);
+    }
+  }
+
   .lecteur-ecran {
     position: absolute;
     width: 1px;
