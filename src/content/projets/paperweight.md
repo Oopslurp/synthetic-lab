@@ -1,6 +1,6 @@
 ---
 titre: "Paperweight"
-ordre: 4
+ordre: 5
 categorie: "Application de bureau · local-first"
 periode: "2026 · T3"
 statut: "termine"

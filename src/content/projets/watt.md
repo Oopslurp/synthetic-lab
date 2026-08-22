@@ -1,6 +1,6 @@
 ---
 titre: "WATT — Réseau sous tension"
-ordre: 3
+ordre: 4
 categorie: "Jeu de gestion · simulation énergétique"
 periode: "2026 · T3"
 statut: "termine"

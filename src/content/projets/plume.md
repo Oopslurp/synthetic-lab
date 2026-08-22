@@ -1,6 +1,6 @@
 ---
 titre: "Plume"
-ordre: 5
+ordre: 6
 categorie: "Outil d'écriture · dictée intelligente"
 periode: "2026"
 statut: "en-cours"

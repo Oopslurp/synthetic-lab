@@ -1,6 +1,6 @@
 ---
 titre: "Muse"
-ordre: 9
+ordre: 10
 categorie: "Application web · référence & pratique"
 periode: "2026 · T3"
 statut: "en-cours"
