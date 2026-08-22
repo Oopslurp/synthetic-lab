@@ -29,6 +29,8 @@ const projets = defineCollection({
       .array(z.object({ src: z.string(), alt: z.string() }))
       .default([]), // vide = section galerie masquée
     brouillon: z.boolean().default(false), // true = invisible sur le site
+    // true = petite étoile « coup de cœur » sur la ligne projet et la fiche
+    coup_de_coeur: z.boolean().default(false),
     ia: z
       .object({
         outils: z.string(),

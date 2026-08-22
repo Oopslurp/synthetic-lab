@@ -3,6 +3,7 @@ titre: "Science Lab"
 ordre: 2
 categorie: "Simulations scientifiques interactives"
 periode: "2026 · T1"
+coup_de_coeur: true
 statut: "termine"
 resume: "Un laboratoire en ligne pour explorer des notions de mathématiques, de physique et de chimie en manipulant des simulations interactives."
 notions:

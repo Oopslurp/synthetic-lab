@@ -4,6 +4,7 @@ import Base from '../layouts/Base.astro';
 import ProjectRow from '../components/ProjectRow.astro';
 import ParticleLogo from '../components/ParticleLogo.astro';
 import ConsoleVibe from '../components/ConsoleVibe.astro';
+import CoupDeCoeur from '../components/CoupDeCoeur.astro';
 import { url } from '../lib/paths';
 
 const projets = (
@@ -50,7 +51,12 @@ const pad = (n: number) => String(n).padStart(2, '0');
   <section id="projets" class="projets container">
     <div class="section-head" data-reveal>
       <h2>Projets <span class="count">({pad(projets.length)})</span></h2>
-      <p class="mono-label">Numériques, scientifiques & créatifs</p>
+      <div class="section-meta">
+        <p class="mono-label">Numériques, scientifiques & créatifs</p>
+        <p class="mono-label legende">
+          <CoupDeCoeur taille={1.45} /> Coup de cœur
+        </p>
+      </div>
     </div>
     <div class="rows">
       {
@@ -62,6 +68,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
             categorie={p.data.categorie}
             periode={p.data.periode}
             statut={p.data.statut}
+            coupDeCoeur={p.data.coup_de_coeur}
           />
         ))
       }
@@ -139,6 +146,22 @@ const pad = (n: number) => String(n).padStart(2, '0');
     font-weight: 500;
     color: var(--accent);
     vertical-align: super;
+  }
+  .section-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.4rem;
+  }
+  .legende {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--muted);
+  }
+
+  @media (max-width: 640px) {
+    .section-meta { align-items: flex-start; }
   }
 
   .demarche { padding-top: clamp(5rem, 12vh, 8rem); }

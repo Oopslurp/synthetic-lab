@@ -3,6 +3,7 @@ titre: "Immunostrat"
 ordre: 3
 categorie: "Jeu de stratégie 2D · simulation pédagogique"
 periode: "2026 · juin – août"
+coup_de_coeur: true
 statut: "termine"
 resume: "Un jeu de stratégie 2D où l'on coordonne les défenses de l'organisme pour contenir une infection — sans détruire les tissus qu'on cherche à protéger."
 notions:

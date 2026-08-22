@@ -3,6 +3,7 @@ titre: "WATT — Réseau sous tension"
 ordre: 4
 categorie: "Jeu de gestion · simulation énergétique"
 periode: "2026 · T3"
+coup_de_coeur: true
 statut: "termine"
 resume: "Un jeu de gestion en pixel art : 365 jours pour alimenter une ville en pleine croissance — produire, stocker, s'endetter, traverser des crises — sans blackout ni faillite."
 notions:

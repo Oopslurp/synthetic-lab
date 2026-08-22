@@ -51,6 +51,7 @@ npm run medias    # convertit Screenshots/ → public/images/projets/ (webp + mp
 | `note_projet` | slug d'une autre fiche, ou `""` | Ajoute le nom de ce projet en lien cliquable à la fin de la `note` (rédiger la note pour qu'elle se termine par « … : ») |
 | `captures` | liste de `{ src, alt }` | Colonne médias de droite. ⚠️ `alt` est une **légende visible** sous le média (pas qu'un attribut) : la rédiger en vrai français soigné |
 | `brouillon` | booléen (défaut `false`) | `true` = fiche invisible partout (liste, pages, compteur) |
+| `coup_de_coeur` | booléen (défaut `false`) | `true` = petite étoile inclinée posée sur le nom du projet (liste + fiche). Une légende apparaît d'elle-même en tête de la liste. À garder rare — 3 ou 4 projets — sinon le repère ne veut plus rien dire |
 | `ia` | objet `{ outils, genere, humain, verification }` | Bloc « Transparence — rôle de l'IA ». Obligatoire dans l'esprit du site : ne jamais le retirer |
 
 Corps de la fiche : sections `##` auto-numérotées (01, 02…) dans l'ordre

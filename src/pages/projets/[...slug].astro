@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import ConsoleVibe from '../../components/ConsoleVibe.astro';
 import Visionneuse from '../../components/Visionneuse.astro';
+import CoupDeCoeur from '../../components/CoupDeCoeur.astro';
 import { url } from '../../lib/paths';
 
 export async function getStaticPaths() {
@@ -41,6 +42,13 @@ const d = entry.data;
       <a class="retour mono-label" href={url('/#projets')} data-reveal>← Tous les projets</a>
       <p class="mono-label chemin" data-reveal>
         {numero}&nbsp;/&nbsp;{total} · {d.periode}
+        {
+          d.coup_de_coeur && (
+            <span class="chemin-coeur">
+              · <CoupDeCoeur taille={1.45} /> Coup de cœur
+            </span>
+          )
+        }
       </p>
       <h1 data-split>{d.titre}</h1>
       <p class="lead" data-split="0.25">{d.resume}</p>
@@ -247,6 +255,13 @@ const d = entry.data;
   }
   .retour:hover { color: var(--accent); }
   .chemin { color: var(--accent); }
+  .chemin-coeur {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+    margin-left: 0.3em;
+    color: var(--muted);
+  }
   .entete h1 {
     font-size: clamp(2.6rem, 8vw, 5.5rem);
     font-weight: 700;

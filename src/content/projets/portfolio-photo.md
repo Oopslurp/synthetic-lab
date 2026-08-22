@@ -3,6 +3,7 @@ titre: "Spring26"
 ordre: 9
 categorie: "Site créatif · photographie"
 periode: "2026"
+coup_de_coeur: true
 statut: "termine"
 resume: "Une galerie web sobre et immersive pour présenter une sélection de photographies comme on accrocherait une exposition."
 notions:

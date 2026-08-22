@@ -1,0 +1,53 @@
+---
+/**
+ * Petite étoile « coup de cœur », posée légèrement de travers comme un
+ * autocollant. Reprend la pastille et l'accent déjà utilisés ailleurs :
+ * aucun nouveau matériau visuel, juste l'inclinaison qui signale l'ajout
+ * à la main. Se redresse au survol de la ligne projet.
+ */
+interface Props {
+  /** taille du disque, en em (relative au texte qui l'entoure) */
+  taille?: number;
+}
+const { taille = 1.5 } = Astro.props;
+---
+
+<span class="coeur" style={`--taille:${taille}em`}>
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M12 2.6l2.72 6.06 6.6.62-4.96 4.4 1.45 6.48L12 16.75 6.19 20.16l1.45-6.48-4.96-4.4 6.6-.62z" />
+  </svg>
+  <span class="lecteur-ecran">— coup de cœur</span>
+</span>
+
+<style>
+  .coeur {
+    display: inline-grid;
+    place-items: center;
+    width: var(--taille);
+    height: var(--taille);
+    margin-left: 0.26em;
+    /* remontée en coin du mot : l'étoile est posée dessus, pas alignée */
+    vertical-align: 0.34em;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--accent) 18%, transparent);
+    color: var(--accent);
+    transform: rotate(-14deg);
+    transition: transform 0.4s var(--ease);
+  }
+  .coeur svg {
+    width: 66%;
+    height: 66%;
+  }
+  /* la ligne projet redresse l'étoile au survol */
+  :global(.row:hover) .coeur {
+    transform: rotate(0deg) scale(1.06);
+  }
+  .lecteur-ecran {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+</style>

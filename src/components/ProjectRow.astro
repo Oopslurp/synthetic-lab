@@ -1,5 +1,6 @@
 ---
 import { url } from '../lib/paths';
+import CoupDeCoeur from './CoupDeCoeur.astro';
 
 interface Props {
   numero: string;
@@ -8,14 +9,23 @@ interface Props {
   categorie: string;
   periode: string;
   statut: 'termine' | 'en-cours';
+  coupDeCoeur?: boolean;
 }
 
-const { numero, slug, titre, categorie, periode, statut } = Astro.props;
+const {
+  numero,
+  slug,
+  titre,
+  categorie,
+  periode,
+  statut,
+  coupDeCoeur = false,
+} = Astro.props;
 ---
 
 <a class="row" href={url(`/projets/${slug}/`)} data-reveal>
   <span class="numero mono-label">{numero}</span>
-  <span class="titre">{titre}</span>
+  <span class="titre">{titre}{coupDeCoeur && <CoupDeCoeur taille={1.28} />}</span>
   <span class="categorie">{categorie}</span>
   <span class="meta">
     <span class="mono-label periode">{periode}</span>
