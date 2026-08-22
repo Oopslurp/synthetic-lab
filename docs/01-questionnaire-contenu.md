@@ -721,6 +721,108 @@ Nope
 * [x] **Captures d’écran disponibles (3–5) ?** Oui. Le projet les génère automatiquement dans `.captures/` : accueil, fiche, accordeur, arbre et atelier, chacun en thème clair et sombre.
 * [ ] **Courte vidéo de démonstration ?** Pas encore.
 
+# Projet : Immunostrat
+
+* **Nom du projet** : Immunostrat
+
+* **Catégorie** : jeu de stratégie 2D / simulation pédagogique
+
+* **Année / période** : juin–août 2026
+
+* **Résumé en une phrase** :
+
+  > « Un jeu de stratégie 2D dans lequel le joueur coordonne les défenses immunitaires pour contenir une infection et l’inflammation, sans détruire les tissus qu’il cherche à protéger. »
+
+* **Contexte & objectif — pourquoi ce projet existe** :
+
+  > « J’ai créé Immunostrat parce que je voulais transformer le fonctionnement du système immunitaire en quelque chose de concret et de jouable.
+  >
+  > L’idée était de montrer qu’une bonne réponse immunitaire ne consiste pas simplement à “tuer les microbes”. Il faut aussi contrôler l’inflammation, préserver les cellules saines, gérer des ressources limitées et adapter sa stratégie selon la menace rencontrée.
+  >
+  > Je voulais donc garder les grands mécanismes biologiques, tout en les transformant en choix suffisamment clairs pour fonctionner dans un vrai jeu de stratégie. »
+
+* **Notions scientifiques / mathématiques mobilisées** :
+
+  > Le projet mobilise plusieurs notions d’immunologie : **immunité innée et adaptative, phagocytose, présentation d’antigènes, cytokines, inflammation, anticorps, mémoire immunitaire, cellules NK et lymphocytes T cytotoxiques**.
+  >
+  > Le jeu représente également plusieurs types de menaces : **bactéries, virus, champignons, parasites et cellules anormales**, avec des comportements et des réponses immunitaires différents.
+
+* **Choix techniques & stack** :
+
+  > Immunostrat est développé avec **TypeScript, React 19, Phaser 3, Vite et Vitest**, avec CSS et la Web Audio API pour l’interface et le son. La progression est enregistrée localement avec `localStorage` et le jeu est publié sur GitHub Pages.
+  >
+  > Un choix important a été de **séparer la simulation du rendu graphique**. Les règles du jeu ne sont donc pas directement enfermées dans les scènes Phaser : elles peuvent fonctionner indépendamment de l’affichage.
+  >
+  > Cela me permet de tester et d’équilibrer le jeu sans devoir lancer toute la partie graphique, et de reproduire plus facilement certains bugs.
+  >
+  > React gère surtout les menus et le HUD, tandis que Phaser s’occupe du terrain, des unités, des animations et des commandes du joueur.
+
+* **Rôle de l’IA** :
+
+  > « L’IA, principalement **ChatGPT et OpenAI Codex**, a produit une partie importante de l’implémentation TypeScript, React et Phaser. Elle m’a aussi aidé à créer des tests, diagnostiquer des bugs, documenter certains systèmes et produire une partie des ressources visuelles.
+  >
+  > J’ai moi-même défini le concept du jeu, les mécaniques, les modes de jeu, la direction artistique et les priorités de développement. J’ai choisi les propositions à garder ou à rejeter, dirigé l’équilibrage et demandé les corrections lorsque le résultat ne correspondait pas à ce que je voulais.
+  >
+  > J’ai ensuite vérifié le jeu en essayant plusieurs stratégies, plusieurs niveaux de difficulté et des situations extrêmes. Les problèmes importants découverts pendant ces parties ont ensuite été protégés par des tests automatiques pour éviter qu’ils réapparaissent. »
+
+* **Difficultés rencontrées et résolution** :
+
+  > **1. Trouver un bon équilibre entre difficulté, lisibilité et stratégie.**
+  >
+  > L’une des principales difficultés a été de rendre le jeu suffisamment exigeant pour être intéressant, sans qu’il devienne injuste ou impossible à comprendre.
+  >
+  > J’ai progressivement centralisé les valeurs d’équilibrage, adapté certains paramètres à la taille des cartes, limité le nombre d’ennemis simultanés et ajusté les vagues, les objectifs et les revenus passifs.
+  >
+  > J’ai aussi constaté qu’un bon équilibre ne suffit pas si le joueur ne comprend pas ce qui se passe. J’ai donc ajouté des contours, des anneaux de sélection, des alertes, des effets d’attaque et d’impact ainsi que des signaux sonores pour attirer son attention sur les événements importants.
+  >
+  > **2. Une carte pouvait sembler guérie alors qu’elle était impossible à terminer.**
+  >
+  > Sur certaines cartes du corps, une région paraissait visuellement saine mais son taux d’infection restait légèrement supérieur au seuil nécessaire pour gagner. Le problème était qu’aucune nouvelle bataille ne pouvait être lancée : le joueur se retrouvait donc bloqué sans comprendre pourquoi.
+  >
+  > J’ai modifié la règle pour qu’une bataille de nettoyage reste possible tant que l’infection dépasse le seuil de victoire. J’ai ensuite ajouté des tests sur plusieurs cartes générées pour éviter que ce blocage ne réapparaisse.
+
+* **Tests effectués** :
+
+  > Le projet possède **plus de 250 cas de test automatisés répartis dans 44 fichiers**.
+  >
+  > Ils couvrent notamment le comportement des unités immunitaires, les ressources, les vagues ennemies, les infections, l’inflammation, la régénération des tissus et les conditions de victoire ou de défaite.
+  >
+  > Les différents modes de jeu, les cartes générées à partir d’une seed, l’équilibrage des grandes cartes et plusieurs interactions avec les unités sont également testés.
+  >
+  > J’ai notamment vérifié qu’une même seed produit toujours la même carte, que le nombre d’entités reste contrôlé et qu’aucune situation ne peut bloquer définitivement la progression.
+  >
+  > Ces tests automatiques sont complétés par mes propres parties, avec différentes stratégies, difficultés et situations extrêmes.
+
+* **Limites connues** :
+
+  > « Immunostrat reste avant tout **un jeu pédagogique**, et non une simulation médicale réaliste. Les réactions biologiques sont accélérées et certains mécanismes complexes sont regroupés sous forme de ressources ou de jauges pour que le jeu reste compréhensible.
+  >
+  > Il n’existe actuellement ni multijoueur, ni compte utilisateur, ni sauvegarde dans le cloud : la progression reste enregistrée directement dans le navigateur. Une partie en mode infini interrompue n’est pas forcément récupérée après un rechargement.
+  >
+  > Certains états visuels n’ont pas encore leur propre animation et utilisent donc une animation approchée ou un rendu procédural de secours.
+  >
+  > Enfin, les performances reposent en partie sur un plafond du nombre d’entités. Si le jeu devait gérer beaucoup plus d’unités simultanément, certaines recherches de cibles devraient être optimisées. »
+
+* **Ce que ce projet m’a appris** :
+
+  > **Techniquement**, Immunostrat m’a appris à structurer une application interactive assez complexe en séparant clairement **les règles de simulation, les données d’équilibrage, le rendu graphique et l’interface**.
+  >
+  > J’ai également mieux compris la génération déterministe de cartes, la gestion d’état, les tests de non-régression et l’intégration de sprites, d’animations et d’effets sonores.
+  >
+  > **Méthodologiquement**, ce projet m’a surtout appris à découper un projet très ambitieux en versions successives. Au lieu de vouloir tout construire d’un coup, j’ai avancé par étapes : gameplay, carte, interface, direction artistique, effets visuels, son, puis polish.
+  >
+  > J’ai aussi appris à donner à l’IA des critères d’acceptation beaucoup plus précis, à tester les cas limites et à ne pas considérer qu’une fonctionnalité est terminée simplement parce qu’elle fonctionne dans le scénario le plus évident. »
+
+* **Retours utilisateurs** :
+
+  > nope
+## État des ressources
+
+* [x] **Démo en ligne existante** : [Jouer à Immunostrat](https://oopslurp.github.io/immunostrat/)
+* [x] **Code sur GitHub** : [github.com/Oopslurp/immunostrat](https://github.com/Oopslurp/immunostrat)
+* [ ] **Captures d’écran disponibles (3–5)** : tu peux aller prendre?
+* [ ] **Courte vidéo de démonstration** : à compléter
+
 
 Ordre du portfolio: APPA, Science Lab, Paperweight, Plume, Site Python, Tiny Chaos Town, Portfolio photo.
 ---

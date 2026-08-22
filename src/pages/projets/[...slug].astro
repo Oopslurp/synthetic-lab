@@ -66,17 +66,24 @@ const d = entry.data;
       </div>
       {
         d.note && (
-          <p class="note-liens" data-reveal="0.45">
-            {d.note}
-            {lie && (
-              <>
-                {' '}
-                <a class="link-accent" href={url(`/projets/${lie.id}/`)}>
-                  {lie.titre}&nbsp;→
-                </a>
-              </>
-            )}
-          </p>
+          <aside class="note-projet" data-reveal="0.45">
+            <p class="mono-label note-titre">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="9" />
+                <path d="M12 11v5M12 7.6v.1" />
+              </svg>
+              À savoir
+            </p>
+            <p class="note-texte">
+              {d.note}
+              {lie && (
+                <>
+                  {' '}
+                  <a href={url(`/projets/${lie.id}/`)}>{lie.titre}&nbsp;→</a>
+                </>
+              )}
+            </p>
+          </aside>
         )
       }
       <ConsoleVibe scene="projet" sujet={d.titre.split(' —')[0]} slug={entry.id} />
@@ -261,17 +268,37 @@ const d = entry.data;
   }
   .actions:empty { margin-top: 0; }
 
-  /* Explication qui remplace les boutons « à venir » */
-  .note-liens {
+  /* Encadré « À savoir » : état du projet, ou raison d'une absence de
+     démo / de dépôt. Doit se remarquer sans crier — d'où le cadre. */
+  .note-projet {
     margin-top: 2rem;
-    padding-left: 1rem;
-    border-left: 2px solid var(--line);
-    max-width: 46em;
-    color: var(--muted);
-    font-size: 0.95rem;
+    max-width: 44em;
+    padding: clamp(0.95rem, 2vw, 1.3rem) clamp(1.1rem, 2.2vw, 1.5rem);
+    border: 1px solid color-mix(in srgb, var(--accent) 34%, transparent);
+    border-radius: 12px;
+    background: var(--accent-soft);
+  }
+  .note-titre {
+    display: flex;
+    align-items: center;
+    gap: 0.45em;
+    color: var(--accent);
+    margin-bottom: 0.6rem;
+  }
+  .note-texte {
+    color: var(--ink);
+    font-size: 0.97rem;
     line-height: 1.65;
   }
-  .note-liens a { text-decoration: none; white-space: nowrap; }
+  .note-texte a {
+    color: var(--accent);
+    font-weight: 500;
+    text-decoration: none;
+    white-space: nowrap;
+    border-bottom: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+    transition: border-color 0.3s var(--ease);
+  }
+  .note-texte a:hover { border-bottom-color: var(--accent); }
 
   .meta {
     display: grid;

@@ -47,7 +47,7 @@ npm run medias    # convertit Screenshots/ → public/images/projets/ (webp + mp
 | `notions` | liste de textes (facultatif) | Puces « Notions mobilisées ». Omettre le champ masque toute la rubrique — c'est le cas de Paperweight, où la liste faisait étalage |
 | `stack` | liste de textes | Puces accentuées « Stack » |
 | `demo` / `github` | URL, ou `""` | `""` → bouton « à venir » ; URL → vrai bouton. Rien d'autre à changer |
-| `note` | phrase, ou `""` | Explication affichée sous les boutons (ex. : projet volontairement non publié). **Si `demo` et `github` sont vides, elle remplace les boutons « à venir »** |
+| `note` | phrase, ou `""` | Encadré « À savoir » sous les boutons : état du projet, ou raison d'une absence de démo / de dépôt. **Si `demo` et `github` sont vides, il remplace les boutons « à venir »** |
 | `note_projet` | slug d'une autre fiche, ou `""` | Ajoute le nom de ce projet en lien cliquable à la fin de la `note` (rédiger la note pour qu'elle se termine par « … : ») |
 | `captures` | liste de `{ src, alt }` | Colonne médias de droite. ⚠️ `alt` est une **légende visible** sous le média (pas qu'un attribut) : la rédiger en vrai français soigné |
 | `brouillon` | booléen (défaut `false`) | `true` = fiche invisible partout (liste, pages, compteur) |
