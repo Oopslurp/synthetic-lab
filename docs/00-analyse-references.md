@@ -75,7 +75,7 @@ mais chaque projet a une **vraie fiche** structurée (voir §5), et le site a un
 
 ```
 /                     Accueil : nom, phrase de positionnement (2 lignes max),
-                      sélection de projets numérotés, lien méthode + contact
+                      sélection de projets numérotés, lien méthode + dépôts GitHub
 /projets/<slug>       Fiche projet (structure fixe) :
                         contexte & objectif → notions scientifiques →
                         choix techniques & stack → rôle de l'IA (généré / adapté / écrit) →
@@ -83,7 +83,7 @@ mais chaque projet a une **vraie fiche** structurée (voir §5), et le site a un
                         captures (3–5) + démo + GitHub
 /methode              Comment je travaille : démarrage d'un projet, tests,
                       correction des erreurs, vérification des réponses de l'IA
-/a-propos             Court : qui, spécialités, objectif d'études, contact, GitHub
+/a-propos             Court : qui, spécialités, objectif d'études, liens GitHub
 ```
 
 La page « ce que j'ai appris » du plan ChatGPT est distribuée **par projet** (plus crédible)
@@ -114,7 +114,7 @@ Alternative plus simple si Astro intimide : Vite + HTML/CSS/JS vanilla (mais fic
 - **Phase 3** — Pages : accueil, fiches projets, méthode, à-propos avec le vrai contenu.
 - **Phase 4** — Motion : Lenis + GSAP selon le budget défini en §3.
 - **Phase 5** — Finitions : performance, responsive, accessibilité, mise en ligne, README GitHub.
-- **Phase 6** — Test utilisateur : retour du fils, itération, puis duplication pour votre propre version.
+- **Phase 6** — Test utilisateur : retour de Mathieu, itération, puis duplication pour une autre version si nécessaire.
 
 ---
 

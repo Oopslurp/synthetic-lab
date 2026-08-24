@@ -2,7 +2,7 @@
 
 > Remplissez directement dans ce fichier. Les `______` sont des trous à compléter,
 > les questions numérotées demandent une réponse ou un choix.
-> Version « fils » d'abord ; vous dupliquerez ce fichier pour votre propre version ensuite.
+> Version de Mathieu ; dupliquez ce fichier pour une autre version si nécessaire.
 
 ---
 
@@ -17,13 +17,13 @@
   > « Élève de terminale, spécialités Mathematiques et physique-chimie, je développe des projets
   > pour apprendre en réalisant, approfondir les sciences par la création, et mobiliser l’IA comme un outil au service du raisonnement, du prototypage et de l’expérimentation. . »
 - Ligne « à propos » courte (footer / page à-propos) :
-  > « Lycéen en terminale à Shanghai (je mets ca au pif, j'ai pas envie de divulguer mes infos personnelles, mais Shanghai ira) *(ville suffit — pas besoin du nom du lycée si vous préférez)*,
+  > « Lycéen en terminale, spécialités mathématiques et physique-chimie,
   > je vise CPGE scientifique, ecole d'ingenieur (mines ou centrales) *(ex. : une CPGE scientifique / des études en informatique / à préciser ou omettre)*. »
 
 **Questions :**
 
 1. Photo sur le site : non, peut-etre apres
-2. Nom d'utilisateur GitHub du fils (ou faut-il en créer un ?) : Oopslurp
+2. Nom d'utilisateur GitHub de Mathieu : Oopslurp
 3. Contact a afficher : GitHub uniquement, pour eviter de publier une adresse e-mail personnelle.
 4. Mentionner explicitement l'objectif CPGE/Parcoursup sur le site, ou rester neutre ? oui, l'objectif est deja mentionne jsute avant: Cpge,ecole d'ingenieur
 
@@ -478,7 +478,7 @@ L’idée a donc été de les séparer dès le modèle de données. Un modèle n
 
 Je ne les réunis qu’à un seul endroit : l’écran Aujourd’hui, parce que c’est finalement le seul moment où j’ai besoin de voir toutes ces choses ensemble.
 
-J’avais aussi une contrainte dès le départ, que j’ai conservée jusqu’au bout : aucune donnée ne doit quitter la machine, et l’application doit pouvoir s’ouvrir immédiatement même hors ligne. »
+J’avais aussi une contrainte dès le départ, que j’ai conservée jusqu’au bout : les données de planning restent locales et l’application doit pouvoir s’ouvrir immédiatement même hors ligne. Seules la synchronisation de calendrier et la génération facultative de jeux de mots utilisent le réseau lorsque l’utilisateur les déclenche. »
 
 Notions scientifiques / mathématiques mobilisées :
 
@@ -570,7 +570,7 @@ J’ai aussi testé plusieurs cas limites : des domaines volontairement trompeur
 
 Le code a également été audité en lecture seule par Codex, avec ses propres bancs d’essai.
 
-Enfin, l’application a aussi été testée par un utilisateur réel : mon fils s’en est servi.
+Enfin, j’ai aussi utilisé l’application moi-même au quotidien, dans des conditions réelles.
 
 Limites connues :
 
@@ -670,7 +670,7 @@ J’ai surtout vérifié le résultat en utilisant réellement Muse. C’est ain
   >
   > C’était un très bon document de référence, mais un mauvais outil de pratique. Si j’arrivais avec ma guitare et dix minutes devant moi, le site ne répondait pas à la question la plus simple : **« je commence par quoi ? »**
   >
-  > J’ai donc ajouté en haut de chaque fiche un bloc **« Commencer »**, volontairement très simple. Il ne donne qu’une seule action : le premier palier à travailler, l’exercice correspondant avec son tempo, la durée maximale conseillée et le premier signal qui indique qu’il faut s’arrêter.
+  > J’ai donc ajouté en haut de chaque fiche un bloc **« Commencer »**, volontairement très simple. Il ne donne qu’une seule action : le premier palier à travailler, l’exercice correspondant avec son tempo, un repère de séance prudent et le premier signal qui indique qu’il faut s’arrêter.
   >
   > Surtout, ces informations ne sont pas recopiées à la main. Elles sont **dérivées automatiquement du contenu déjà présent dans la fiche**, ce qui évite de saisir deux fois la même donnée et de créer de nouvelles incohérences. »
 
@@ -686,7 +686,7 @@ Enfin, j’ai volontairement fait échouer chaque garde-fou au moins une fois av
 
 * **Limites connues** :
 
-  > « **L’accordeur n’a pour l’instant été essayé que sous Chrome**, avec un signal synthétique. Son comportement sous Firefox et Safari, ainsi que son utilisation réelle avec une guitare, restent donc à confirmer.
+  > « **L’accordeur a été essayé sous Chrome**, avec des signaux synthétiques et une guitare réelle. Son comportement sous Firefox et Safari reste à confirmer.
   >
   > **Aucun utilisateur de lecteur d’écran n’a encore testé Muse.** Les contrastes et la taille des cibles tactiles sont mesurés automatiquement, mais cela ne remplace pas l’expérience réelle d’une personne utilisant ces outils d’accessibilité.
   >
@@ -783,7 +783,7 @@ Nope
 
 * **Tests effectués** :
 
-  > Le projet possède **plus de 250 cas de test automatisés répartis dans 44 fichiers**.
+  > Le projet possède **272 cas de test automatisés répartis dans 45 fichiers**.
   >
   > Ils couvrent notamment le comportement des unités immunitaires, les ressources, les vagues ennemies, les infections, l’inflammation, la régénération des tissus et les conditions de victoire ou de défaite.
   >
@@ -864,6 +864,6 @@ Outils utilisés :
 
 1. Combien de projets réels existent aujourd'hui, même inachevés ? Listez-les tous en une ligne chacun : c'est avant, ordre portfolio
 2. Y a-t-il des projets **en cours** qu'on pourrait afficher « en construction » ? (ça montre l'activité) oui, y a que science lab qu iest termine
-3. Le fils a-t-il déjà un avis sur ce qu'il aime visuellement ? avis de mon fils: [vshslv.com](https://vshslv.com/) est tres style, on peut ajouter un peu de real time effect, mais c'est tres tres chaotique, on se perd, pas bien hierarchise et [kaiseisadatoki-v4.vercel.app](https://kaiseisadatoki-v4.vercel.app/) ca va, mais un peu trop simple
+3. Quel style visuel est-ce que j'aime ? Mon avis : [vshslv.com](https://vshslv.com/) est très stylé, avec des effets en temps réel intéressants, mais aussi très chaotique et peu hiérarchisé ; [kaiseisadatoki-v4.vercel.app](https://kaiseisadatoki-v4.vercel.app/) fonctionne bien, mais me paraît un peu trop simple.
 4. Échéance : quand le dossier Parcoursup doit-il être prêt ? pas d'impact non?
 5. Pour VOTRE version future : même structure mais quel angle ? *(portfolio de vibecoding / reconversion / hobby — juste pour anticiper)* portfolio de vibecoding+hobby, mais c'estplus tard, oublie ca pour l'instant, on fait bien ce site

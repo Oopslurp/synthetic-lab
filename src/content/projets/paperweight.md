@@ -4,7 +4,7 @@ ordre: 5
 categorie: "Application de bureau · local-first"
 periode: "2026 · T3"
 statut: "termine"
-resume: "Un planificateur de bureau pensé pour remplacer un mur de post-it : pas de compte, pas de serveur, pas de réseau — tout tient dans un seul fichier SQLite qui m'appartient."
+resume: "Un planificateur de bureau pensé pour remplacer un mur de post-it : pas de compte ni de télémétrie, avec un fonctionnement principal hors ligne et un fichier SQLite qui m'appartient."
 # notions : volontairement absentes ici — la liste faisait étalage.
 # Les notions restent expliquées dans le corps de la fiche.
 stack:
@@ -38,7 +38,7 @@ Le vrai problème est apparu là : sur un mur, toutes les notes sont traitées d
 
 D'où l'idée de les **séparer dès le modèle de données**. Un modèle d'étape n'a pas de date : il se déclenche quand un projet atteint un certain point. Une routine, elle, dépend d'un jour de la semaine, se régénère indéfiniment et n'est jamais « en retard ». Les deux ne se rejoignent qu'à un seul endroit : l'écran **Aujourd'hui** — le seul moment où j'ai besoin de tout voir ensemble.
 
-Une contrainte tenue du début à la fin : aucune donnée ne quitte la machine, et l'application s'ouvre immédiatement même hors ligne.
+Une contrainte tenue du début à la fin : les données de planning restent sur la machine, et l'application s'ouvre immédiatement même hors ligne. Seules la synchronisation de calendrier et la génération facultative de jeux de mots utilisent le réseau lorsque l'utilisateur les déclenche.
 
 ## Choix techniques
 

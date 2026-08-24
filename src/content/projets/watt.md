@@ -70,10 +70,10 @@ Aucun framework, aucune bibliothèque, aucun fichier externe : le jeu entier tie
 
 ## Limites connues
 
-La stratégie 100 % renouvelable reste extrêmement difficile : mes robots ne la gagnent qu'une fois sur deux. C'est voulu, mais la frontière entre difficulté et injustice est fine. Le jeu n'a pas de système de sauvegarde : une partie se joue d'une traite, environ quarante minutes à la vitesse ×3. La simulation suppose un réseau isolé — pas d'échanges avec les régions voisines, pas de pertes de transport, prix de marché simplifié. Enfin, l'interface n'est pas adaptée aux écrans tactiles.
+La stratégie 100 % renouvelable reste extrêmement difficile : mes robots ne la gagnent qu'une fois sur deux. C'est voulu, mais la frontière entre difficulté et injustice est fine. Le jeu n'a pas de système de sauvegarde : une partie se joue d'une traite, environ quarante minutes à la vitesse ×3. La simulation suppose un réseau isolé — pas d'échanges avec les régions voisines, pas de pertes de transport, prix de marché simplifié. La séquence « Tchernobyl » est un easter egg volontairement exagéré, pas un modèle statistique du risque réel. Enfin, l'interface n'est pas adaptée aux écrans tactiles.
 
 ## Ce que ce projet m'a appris
 
-Techniquement, comment fonctionne réellement un réseau électrique : le principe de l'ordre de mérite, pourquoi l'intermittence pose d'abord un problème de **puissance** plutôt que d'énergie, et ce que le stockage peut faire — et ne pas faire. Et qu'on peut produire toute la bande-son d'un jeu directement en code, avec la Web Audio API.
+Techniquement, quelques contraintes de gestion d'un réseau électrique : le principe de l'ordre de mérite, pourquoi l'intermittence pose d'abord un problème de **puissance** plutôt que d'énergie, et ce que le stockage peut faire — et ne pas faire. Et qu'on peut produire toute la bande-son d'un jeu directement en code, avec la Web Audio API.
 
 Méthodologiquement, à avancer par petites étapes enregistrées avec Git pour toujours pouvoir revenir en arrière, et à ne jamais considérer un équilibrage comme valide avant de l'avoir vérifié par des tests automatiques. Enfin, à formuler des retours précis à l'IA : pas « ça ne marche pas bien », mais « je fais faillite au jour 20 » ou « je n'ai pas le temps de lire les messages à la vitesse ×6 ».

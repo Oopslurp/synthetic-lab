@@ -58,7 +58,7 @@ Le partage des rôles suit la même logique : **React** s'occupe des menus et du
 
 ## Tests & vérifications
 
-- **Plus de 250 cas de test automatisés, répartis dans 44 fichiers.**
+- **272 cas de test automatisés, répartis dans 45 fichiers.**
 - Ils couvrent le comportement des unités, les ressources, les vagues, l'infection, l'inflammation, la régénération des tissus et les conditions de victoire ou de défaite.
 - Les modes de jeu, les cartes générées à partir d'une seed et l'équilibrage des grandes cartes sont testés aussi : j'ai notamment vérifié qu'**une même seed produit toujours la même carte**, que le nombre d'entités reste sous contrôle, et qu'aucune situation ne peut bloquer définitivement la progression.
 - Le tout complété par mes propres parties, avec différentes stratégies, difficultés et cas extrêmes.

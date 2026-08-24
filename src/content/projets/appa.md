@@ -1,7 +1,7 @@
 ---
 titre: "APPA"
-ordre: 1
-categorie: "Outil d'apprentissage · IA locale"
+ordre: 11
+categorie: "Expérimentation non publiée · IA locale"
 periode: "2026 · T1"
 statut: "termine"
 resume: "Une application locale qui transforme cours et PDF en fiches, cartes de révision, exercices et plannings — avec des modèles d'IA qui tournent entièrement sur ma machine."

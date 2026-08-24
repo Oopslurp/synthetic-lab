@@ -43,7 +43,7 @@ Science Lab transforme des concepts du programme de lycée en expériences inter
 
 ## Choix techniques
 
-Le site est construit avec React et TypeScript, les visualisations en SVG ou Canvas selon les besoins de chaque simulation. J'ai choisi une application web plutôt qu'un document statique précisément pour l'interactivité : changer une constante de temps, une concentration ou une excentricité et voir la courbe réagir, c'est là que la compréhension se joue.
+Le site est construit avec React et TypeScript, les visualisations en SVG ou Canvas selon les besoins de chaque simulation. J'ai choisi une application web plutôt qu'un document statique précisément pour l'interactivité : changer une constante de temps, une concentration, une distance initiale ou une vitesse orbitale et voir la courbe réagir, c'est là que la compréhension se joue.
 
 Le code de chaque simulation est organisé en trois parties indépendantes : le **calcul** (le modèle scientifique), l'**affichage** (la visualisation) et l'**explication pédagogique**. Cette séparation permet de vérifier chaque partie isolément.
 

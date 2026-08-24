@@ -1,7 +1,7 @@
 ---
 titre: "Plume"
-ordre: 6
-categorie: "Outil d'écriture · dictée intelligente"
+ordre: 12
+categorie: "Expérimentation en cours · dictée intelligente"
 periode: "2026"
 statut: "en-cours"
 resume: "Un outil de capture d'idées qui transforme des notes orales ou brutes en texte clair et structuré, fidèle à l'intention de départ."

@@ -27,19 +27,6 @@ document.getElementById('theme-toggle')?.addEventListener('click', () => {
   localStorage.setItem('theme', next);
 });
 
-/* ── Heure locale (Shanghai) dans le footer ───────────────────── */
-const heureEl = document.getElementById('heure-locale');
-if (heureEl) {
-  const fmt = new Intl.DateTimeFormat('fr-FR', {
-    hour: '2-digit',
-    minute: '2-digit',
-    timeZone: 'Asia/Shanghai',
-  });
-  const tick = () => (heureEl.textContent = fmt.format(new Date()));
-  tick();
-  setInterval(tick, 30_000);
-}
-
 /* ── Bordure du header au scroll ──────────────────────────────── */
 const header = document.getElementById('site-header');
 const onScroll = () =>

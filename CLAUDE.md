@@ -151,7 +151,7 @@ Si seul le nom affiché change, modifier `titre:` et ne pas toucher au fichier.
   fois, jamais en boucle. Pas de 3D, pas de curseur custom. `prefers-reduced-motion`
   doit rester respecté (les animations sont déjà conditionnées).
 - **Palette** : 2 neutres + 1 accent (`--accent`). Ne pas ajouter de couleurs
-  ni de polices. Exception voulue (demande du fils) : les logos en particules —
+  ni de polices. Exception voulue (demande de Mathieu) : les logos en particules —
   `--particules` (ChatGPT : vert en clair / blanc en sombre) et
   `--particules-claude` (Claude Code : orange en clair / blanc en sombre).
 - **Ton des textes** : factuel, première personne, ni promesse ni superlatif.
