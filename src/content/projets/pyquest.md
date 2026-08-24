@@ -14,9 +14,10 @@ notions:
   - "Logique booléenne"
   - "Décomposition de problèmes"
 stack:
-  - "HTML · CSS · JavaScript"
-  - "React"
-  - "Python"
+  - "HTML · CSS · JavaScript vanilla"
+  - "Pyodide"
+  - "Web Worker"
+  - "Monaco Editor"
 demo: "https://oopslurp.github.io/pyquest/"
 github: "https://github.com/Oopslurp/pyquest"
 captures:

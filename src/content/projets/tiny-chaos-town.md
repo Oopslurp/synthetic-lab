@@ -12,8 +12,10 @@ notions:
   - "Coordonnées dans le plan"
   - "Gestion d'états"
 stack:
-  - "JavaScript / TypeScript"
-  - "Canvas"
+  - "Next.js 15"
+  - "React 19"
+  - "TypeScript"
+  - "Tailwind CSS 4"
 demo: "https://oopslurp.github.io/tiny-chaos-town/"
 github: "https://github.com/Oopslurp/tiny-chaos-town"
 captures:
@@ -38,7 +40,7 @@ L'objectif réel derrière le jeu : apprendre à créer une expérience interact
 
 ## Choix techniques
 
-Du JavaScript/TypeScript et un rendu Canvas, avec une logique de jeu en boucles d'actualisation. J'ai choisi le format « petit jeu » délibérément : il permet de tester une idée en quelques heures, de voir immédiatement le résultat, et d'apprendre par itération — chaque version est un peu moins cassée et un peu plus drôle que la précédente.
+Une application Next.js/React en TypeScript, mise en forme avec Tailwind CSS. L'interface est composée de panneaux et de composants React pilotés par l'état du jeu, sans rendu Canvas. J'ai choisi le format « petit jeu » délibérément : il permet de tester rapidement une idée, de voir immédiatement le résultat, et d'apprendre par itération — chaque version est un peu moins cassée et un peu plus drôle que la précédente.
 
 ## Difficultés & résolutions
 

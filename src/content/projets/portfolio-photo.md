@@ -15,9 +15,9 @@ notions:
   - "Responsive design"
 stack:
   - "HTML · CSS · JavaScript"
-  - "React"
-  - "GSAP"
-  - "Compression d'images"
+  - "Vite"
+  - "GSAP · Lenis"
+  - "WebGL"
 demo: "https://oopslurp.github.io/pf-photo-spring26/"
 github: "https://github.com/Oopslurp/pf-photo-spring26"
 captures:
