@@ -1,9 +1,9 @@
-import { drawCursorMotif, CURSOR_SPEEDS, MOTIF_COUNT } from './cursor-motifs';
 /** Quiet selection choreography shared by every page. At most three cursors,
  * two on small screens. Rectangles are remeasured while their content moves. */
 export const READING_DURATION = 3400;
 export const readingLimit = (width: number) => width < 700 ? 2 : 3;
-type Selection = { el: HTMLElement; elapsed: number; color: number; speed: number; motif: number };
+type Selection = { el: HTMLElement; elapsed: number; color: number };
+const ease = (n: number) => { const p = Math.max(0, Math.min(1, n)); return p * p * (3 - 2 * p); };
 
 export function initReadingCanvas() {
   const canvas = document.querySelector<HTMLCanvasElement>('.reading-canvas');
@@ -58,10 +58,28 @@ export function initReadingCanvas() {
     // An inset frame follows the component without touching its neighbours.
     const x = r.left + 2.5, y = r.top + 2.5, w = r.width - 5, h = r.height - 5;
     if (w < 10 || h < 10) return;
+    const t = s.elapsed;
+    const alpha = ease(t / 380) * (1 - ease((t - 2450) / 950));
+    const trace = ease((t - 250) / 1500);
     const color = colors[s.color % colors.length]!;
-    const tip = drawCursorMotif(ctx!, { x, y, w, h }, s.elapsed / READING_DURATION, s.motif, color);
-    ctx!.save(); ctx!.globalAlpha = tip.alpha;
-    ctx!.translate(tip.x, tip.y); ctx!.rotate(tip.angle);
+    ctx!.save(); ctx!.globalAlpha = alpha; ctx!.strokeStyle = color; ctx!.lineWidth = 1;
+    // A continuous path gives the cursor an exact position on the drawn edge.
+    const perimeter = 2 * (w + h), distance = trace * perimeter;
+    let remaining = distance, px = x, py = y;
+    ctx!.beginPath(); ctx!.moveTo(x, y);
+    for (const [dx, dy, length] of [[1, 0, w], [0, 1, h], [-1, 0, w], [0, -1, h]]) {
+      const step = Math.min(remaining, length!);
+      px += dx! * step; py += dy! * step; ctx!.lineTo(px, py); remaining -= step;
+      if (remaining <= 0) break;
+    }
+    ctx!.globalAlpha = alpha * .6; ctx!.stroke();
+    for (const [hx, hy] of [[x, y], [x + w, y], [x + w, y + h], [x, y + h]]) {
+      ctx!.fillStyle = paper; ctx!.fillRect(hx! - 2, hy! - 2, 4, 4); ctx!.strokeRect(hx! - 2, hy! - 2, 4, 4);
+    }
+    // Approach, trace, then leave the component with a short outward glide.
+    const approach = 1 - ease(t / 450), leave = ease((t - 2300) / 1100);
+    px += -18 * approach + 24 * leave; py += -12 * approach + 16 * leave;
+    ctx!.globalAlpha = alpha; ctx!.translate(px, py); ctx!.rotate(-.12 + .18 * leave);
     ctx!.fillStyle = color; ctx!.strokeStyle = paper; ctx!.lineWidth = 1.2;
     ctx!.beginPath(); ctx!.moveTo(0, 0); ctx!.lineTo(2.8, 17); ctx!.lineTo(7.5, 11.8); ctx!.lineTo(13.8, 10.8); ctx!.closePath(); ctx!.fill(); ctx!.stroke();
     ctx!.restore();
@@ -79,18 +97,13 @@ export function initReadingCanvas() {
       if (played.has(el) || !inFrame(el)) continue;
       const style = getComputedStyle(el);
       if (Number(style.opacity) < .25 || style.visibility === 'hidden') continue;
-      played.add(el);
-      const index = serial++;
-      active.push({ el, elapsed: -active.length * 140, color: index,
-        speed: CURSOR_SPEEDS[index % CURSOR_SPEEDS.length]!, motif: index % MOTIF_COUNT });
+      played.add(el); active.push({ el, elapsed: -active.length * 140, color: serial++ });
     }
     clear(); ctx!.save(); ctx!.beginPath();
     const top = Math.max(0, header?.getBoundingClientRect().bottom ?? 0);
     ctx!.rect(0, top, width, height - top); ctx!.clip();
-    active.forEach(s => { s.elapsed += dt * s.speed; draw(s); }); ctx!.restore();
+    active.forEach(s => { s.elapsed += dt; draw(s); }); ctx!.restore();
     canvas!.dataset.activeCursors = String(active.length);
-    canvas!.dataset.motifs = active.map(s => String(s.motif)).join(',');
-    canvas!.dataset.speeds = active.map(s => String(s.speed)).join(',');
     if (!active.length && ![...visible].some(el => !played.has(el) && inFrame(el))) { last = 0; return; }
     wake();
   }

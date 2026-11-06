@@ -1,20 +1,5 @@
 # Atelier animé — accueil
 
-## Gestes décoratifs et rythmes variés
-
-Le module partagé `cursor-motifs.ts` propose trois gestes, utilisés aussi bien
-sur l'accueil que pendant la lecture : ruban entrelacé, constellation de points
-avec petites ondes, et orbite en croissant avec étincelles. Le choix du geste
-alterne entre les composants. Les vitesses individuelles alternent entre
-1× (rythme conservé), 1,25×, 1,45× et 1,85×. Le cycle des vitesses et celui des
-trois gestes ont des longueurs différentes : chaque geste peut donc adopter
-plusieurs rythmes. Les curseurs plus rapides terminent leur geste plus tôt.
-Les limites de trois curseurs sur ordinateur et deux sur mobile sont conservées.
-
-Les étiquettes de curseurs, noms de composants et dimensions ont été retirés.
-Le survol de l'accueil reste purement décoratif, avec une petite onde sans texte.
-Checkpoint avant cette diversification : `539a4c6`.
-
 ## Extension aux pages et à la lecture
 
 `ReadingCanvas.astro`, intégré dans `Base.astro`, et `reading-canvas.ts`

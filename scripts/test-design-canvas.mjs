@@ -1,12 +1,11 @@
-import { fileURLToPath } from 'node:url';
 // Lifecycle checks for the animation controller. Visual QA remains in-browser.
 import { readFile } from 'node:fs/promises';
 import { runInNewContext } from 'node:vm';
 import { strict as assert } from 'node:assert';
-import { build } from 'esbuild';
+import { transform } from 'esbuild';
 
-const result = await build({ entryPoints: [fileURLToPath(new URL('../src/scripts/design-canvas.ts', import.meta.url))], bundle: true, write: false, format: 'cjs', platform: 'browser' });
-const code = result.outputFiles[0].text;
+const source = await readFile(new URL('../src/scripts/design-canvas.ts', import.meta.url), 'utf8');
+const { code } = await transform(source, { loader: 'ts', format: 'cjs' });
 
 async function fixture({ reduced = false, scrollY = 0 } = {}) {
   const listeners = new Map();
