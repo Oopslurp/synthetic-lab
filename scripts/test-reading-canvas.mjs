@@ -1,8 +1,11 @@
+import { fileURLToPath } from 'node:url';
 import { strict as assert } from 'node:assert';
 import { readFile } from 'node:fs/promises';
 import { runInNewContext } from 'node:vm';
-import { transform } from 'esbuild';
-const { code } = await transform(await readFile(new URL('../src/scripts/reading-canvas.ts', import.meta.url), 'utf8'), { loader: 'ts', format: 'cjs' });
+import { build } from 'esbuild';
+const result = await build({ entryPoints: [fileURLToPath(new URL('../src/scripts/reading-canvas.ts', import.meta.url))], bundle: true, write: false, format: 'cjs', platform: 'browser' });
+const code = result.outputFiles[0].text;
+
 async function fixture(width = 1280, reduced = false) {
   const events = new Map(), frames = new Map(); let id = 0, now = 0, observe;
   const node = name => ({ dataset: {}, hidden: false, setAttribute() {}, addEventListener(k, fn) { events.set(name + ':' + k, fn); } });
@@ -26,6 +29,8 @@ async function fixture(width = 1280, reduced = false) {
 }
 const desktop = await fixture(); desktop.advance(1200);
 assert.equal(desktop.maximum(), 3);
+assert.equal(desktop.canvas.dataset.motifs, '0,1,2', 'three different gestures share the page');
+assert.equal(desktop.canvas.dataset.speeds, '1,1.45,1.85', 'baseline and faster cursors run together');
 desktop.emit('button:click'); assert.equal(desktop.frames.size, 0);
 desktop.emit('button:click'); desktop.advance(100);
 desktop.emit('document:visionneuse', {detail:true}); assert.equal(desktop.frames.size, 0, 'viewer suspends decorations');

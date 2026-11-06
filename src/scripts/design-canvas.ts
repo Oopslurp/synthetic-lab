@@ -1,3 +1,4 @@
+import { drawCursorMotif, CURSOR_SPEEDS } from './cursor-motifs';
 /** A finite, local design performance. No network, no actual collaborators.
  * All coordinates come from the page's real layout. The canvas stops at rest,
  * offscreen, while paused, and while the tab is hidden. Scroll always wins.
@@ -22,7 +23,6 @@ export function initDesignCanvas(stage: HTMLElement) {
   const coarse = matchMedia('(pointer: coarse)');
   const targets = [...stage.querySelectorAll<HTMLElement>('[data-canvas-target]')];
   const colors = ['#6993ff', '#de9b61', '#67bda3', '#b199e0', '#de879c', '#78b9dc'];
-  const names = ['Imaginer', 'Dessiner', 'Coder', 'Explorer', 'Tester', 'Affiner'];
   let width = 0, height = 0, stageTop = 0, boxes: Box[] = [];
   let elapsed = 0, last = 0, raf = 0, paused = false, inView = true;
   let visibility = 1, energy = 1, hover = -1, interaction = 0;
@@ -70,31 +70,11 @@ export function initDesignCanvas(stage: HTMLElement) {
     } else wake();
     document.documentElement.style.setProperty('--atelier-ambient', String(visibility));
   }
-  function label(text: string, x: number, y: number, color = blue) {
-    ctx!.font = '9px "JetBrains Mono Variable", monospace';
-    const w = ctx!.measureText(text).width + 12;
-    x = clamp(x, 3, width - w - 3); y = clamp(y, 3, height - 20);
-    ctx!.fillStyle = color; ctx!.fillRect(x, y, w, 17);
-    ctx!.fillStyle = '#fff'; ctx!.fillText(text, x + 6, y + 11.5);
-  }
-  function frame(b: Box, amount: number, alpha: number, index: number) {
-    if (alpha <= .005) return;
-    ctx!.save(); ctx!.globalAlpha = alpha; ctx!.strokeStyle = blue; ctx!.lineWidth = 1;
-    const x = b.x, y = b.y, w = b.w;
-    ctx!.strokeRect(x, y, w, b.h);
-    for (const [hx, hy] of [[x, y], [x + w, y], [x, y + b.h], [x + w, y + b.h]]) {
-      ctx!.fillStyle = paper; ctx!.fillRect(hx! - 2.5, hy! - 2.5, 5, 5); ctx!.strokeRect(hx! - 2.5, hy! - 2.5, 5, 5);
-    }
-    label(b.name, x, y - 19);
-    if (width > 700 && (index === 0 || index === 3)) label(`${Math.round(b.w)} × ${Math.round(b.h)}`, x + w / 2 - 30, y + b.h + 4);
-    ctx!.restore();
-  }
-  function cursor(p: Point, color: string, name: string, alpha: number, angle: number, tag: boolean) {
+  function cursor(p: Point, color: string, alpha: number, angle: number) {
     ctx!.save(); ctx!.globalAlpha = alpha; ctx!.translate(p.x, p.y); ctx!.rotate(angle);
     ctx!.beginPath(); ctx!.moveTo(0, 0); ctx!.lineTo(3, 19); ctx!.lineTo(8, 13); ctx!.lineTo(15, 12); ctx!.closePath();
     ctx!.fillStyle = color; ctx!.strokeStyle = paper; ctx!.lineWidth = 1.4; ctx!.fill(); ctx!.stroke();
     ctx!.restore();
-    if (tag) { ctx!.save(); ctx!.globalAlpha = alpha; label(name, p.x + 12, p.y + 19, color); ctx!.restore(); }
   }
   function position(i: number, t: number): Point {
     const b = boxes[i % boxes.length]!;
@@ -134,15 +114,16 @@ export function initDesignCanvas(stage: HTMLElement) {
         if (width > 700 && i < 2) { ctx!.setLineDash([3, 5]); ctx!.strokeRect(b.x + 10, b.y + 10, b.w - 20, b.h - 20); ctx!.setLineDash([]); }
       });
       ctx!.restore();
-      boxes.forEach((b, i) => {
-        const entry = smooth((t - .4 - i * .32) / 1.1);
-        const exit = 1 - smooth((t - 7.1 - i * .23) / 2);
-        frame(b, entry, entry * exit * .8, i);
-      });
       const count = width < 600 || coarse.matches ? 5 : 12;
       for (let i = 0; i < count; i++) {
-        const p = position(i, t), color = colors[i % colors.length]!;
-        const alpha = smooth((t - i * .11) / .6) * (1 - smooth((t - 9.2 - i * .1) / 1.8));
+        const speed = CURSOR_SPEEDS[i % CURSOR_SPEEDS.length]!;
+        const localTime = t * speed;
+        const color = colors[i % colors.length]!;
+        const motif = i < boxes.length
+          ? drawCursorMotif(ctx!, boxes[i]!, (localTime - .5 - i * .18) / 9.5, i % 3, color)
+          : null;
+        const p = motif ?? position(i, localTime);
+        const alpha = motif?.alpha ?? (smooth((localTime - i * .11) / .6) * (1 - smooth((localTime - 9.2 - i * .1) / 1.8)));
         const trail = trails[i]!;
         if (!paused) { trail.push(p); if (trail.length > 13) trail.shift(); }
         trail.forEach((s, j) => {
@@ -150,13 +131,15 @@ export function initDesignCanvas(stage: HTMLElement) {
           ctx!.save(); ctx!.globalAlpha = alpha * j / trail.length * .23; ctx!.strokeStyle = color;
           ctx!.beginPath(); ctx!.moveTo(s.x - 3, s.y); ctx!.lineTo(s.x + 3, s.y); ctx!.moveTo(s.x, s.y - 3); ctx!.lineTo(s.x, s.y + 3); ctx!.stroke(); ctx!.restore();
         });
-        cursor(p, color, names[i % names.length]!, alpha, Math.sin(t + i) * .16, i < (width < 600 ? 2 : 4));
+        cursor(p, color, alpha, motif?.angle ?? Math.sin(localTime + i) * .16);
       }
     } else if (hover >= 0 && interaction > 0) {
       const fade = Math.min(1, interaction / 350);
-      frame(boxes[hover]!, 1, .5 * fade, hover);
       const b = boxes[hover]!;
-      cursor({ x: b.x + b.w, y: b.y + b.h }, blue, 'Explorer', .75 * fade, -.12, width > 600);
+      // A short, silent ripple; hovering never reveals labels or dimensions.
+      ctx!.save(); ctx!.strokeStyle = blue; ctx!.globalAlpha = fade * .25;
+      ctx!.beginPath(); ctx!.arc(b.x + b.w - 10, b.y + 10, 5 + (1 - fade) * 16, 0, Math.PI * 2); ctx!.stroke();
+      ctx!.restore();
     }
   }
   function tick(now: number) {
