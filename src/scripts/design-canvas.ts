@@ -80,14 +80,13 @@ export function initDesignCanvas(stage: HTMLElement) {
   function frame(b: Box, amount: number, alpha: number, index: number) {
     if (alpha <= .005) return;
     ctx!.save(); ctx!.globalAlpha = alpha; ctx!.strokeStyle = blue; ctx!.lineWidth = 1;
-    const drift = (1 - smooth(amount)) * (index % 2 ? 22 : -22);
-    const x = b.x + drift, y = b.y - drift * .3, w = b.w * (.94 + .06 * smooth(amount));
+    const x = b.x, y = b.y, w = b.w;
     ctx!.strokeRect(x, y, w, b.h);
     for (const [hx, hy] of [[x, y], [x + w, y], [x, y + b.h], [x + w, y + b.h]]) {
       ctx!.fillStyle = paper; ctx!.fillRect(hx! - 2.5, hy! - 2.5, 5, 5); ctx!.strokeRect(hx! - 2.5, hy! - 2.5, 5, 5);
     }
     label(b.name, x, y - 19);
-    if (width > 700) label(`${Math.round(b.w)} × ${Math.round(b.h)}`, x + w / 2 - 30, y + b.h + 4);
+    if (width > 700 && (index === 0 || index === 3)) label(`${Math.round(b.w)} × ${Math.round(b.h)}`, x + w / 2 - 30, y + b.h + 4);
     ctx!.restore();
   }
   function cursor(p: Point, color: string, name: string, alpha: number, angle: number, tag: boolean) {
@@ -116,6 +115,13 @@ export function initDesignCanvas(stage: HTMLElement) {
   function draw() {
     ctx!.clearRect(0, 0, width, height);
     if (!boxes.length || reduced.matches) return;
+    // Follow GSAP translations and console reflow even when stage size is unchanged.
+    const stageRect = stage.getBoundingClientRect();
+    boxes = targets.map(el => {
+      const r = el.getBoundingClientRect();
+      return { x: r.left - stageRect.left - 7, y: r.top - stageRect.top - 7,
+        w: r.width + 14, h: r.height + 14, name: el.dataset.canvasTarget! };
+    });
     const t = elapsed / 1000;
     energy = elapsed < DURATION ? (1 - smooth((t - 9) / 3.5)) : 0;
     stage.style.setProperty('--canvas-energy', String(energy));

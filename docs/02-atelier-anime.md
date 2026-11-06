@@ -1,5 +1,21 @@
 # Atelier animé — accueil
 
+## Extension aux pages et à la lecture
+
+`ReadingCanvas.astro`, intégré dans `Base.astro`, et `reading-canvas.ts`
+accompagnent les composants visibles sur toutes les pages : projets, méthode,
+à propos, textes, métadonnées, captures et contact. Trois curseurs au maximum
+sur ordinateur, deux en dessous de 700 px. Chaque sélection dure 3,4 secondes,
+trace le contour puis disparaît. Un composant ne rejoue pas à chaque passage.
+Les rectangles sont remesurés à chaque image pour suivre le scroll, les
+révélations GSAP et le chargement des médias. Aucun effet n'intercepte les clics.
+Le bouton « Animations » permet de suspendre ces effets de lecture.
+La visionneuse, un onglet masqué et la préférence de mouvement réduit les
+suspendent également. Le relais attend la disparition du décor d'accueil.
+
+Vérification supplémentaire : `node scripts/test-reading-canvas.mjs`.
+Le checkpoint précédent, avant cette extension, est `f78a1e5`.
+
 L'accueil reprend le vocabulaire visuel des deux captures de référence :
 curseurs colorés, cadres de sélection, poignées, guides d'alignement et
 étiquettes de dimensions. Il s'agit d'une chorégraphie locale, sans session
