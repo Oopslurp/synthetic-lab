@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import ReadingCanvas from '../../components/ReadingCanvas.astro';
 import ConsoleVibe from '../../components/ConsoleVibe.astro';
 import Visionneuse from '../../components/Visionneuse.astro';
 import CoupDeCoeur from '../../components/CoupDeCoeur.astro';
@@ -36,7 +37,7 @@ const d = entry.data;
 ---
 
 <Base title={`${d.titre} — Synthetic Lab`} description={d.resume}>
-  <article class="container">
+  <article class="container" data-cursor-project>
     <!-- ── En-tête ────────────────────────────────────────────── -->
     <header class="entete">
       <a class="retour mono-label" href={url('/#projets')} data-reveal>← Tous les projets</a>
@@ -235,6 +236,7 @@ const d = entry.data;
       }
     </nav>
   </article>
+  <ReadingCanvas />
 </Base>
 
 <script>

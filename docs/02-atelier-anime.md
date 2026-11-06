@@ -1,5 +1,14 @@
 # Atelier animé — accueil
 
+## Périmètre actuel
+
+Les animations de curseurs sont conservées uniquement pour l'entrée de
+l'accueil, la section `#projets` et les fiches projets. `ReadingCanvas` est
+chargé par ces pages, et non plus par le layout commun. Aucun curseur de
+lecture sur l'introduction, la démarche, le pied de page, Méthode ou À propos.
+Le bouton de contrôle disparaît lorsque les projets ne sont plus visibles.
+Les sections ci-dessous décrivent aussi les étapes historiques de conception.
+
 ## Extension aux pages et à la lecture
 
 `ReadingCanvas.astro`, intégré dans `Base.astro`, et `reading-canvas.ts`

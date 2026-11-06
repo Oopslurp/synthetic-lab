@@ -6,7 +6,6 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import PluieCode from '../components/PluieCode.astro';
-import ReadingCanvas from '../components/ReadingCanvas.astro';
 import { url } from '../lib/paths';
 
 interface Props {
@@ -50,7 +49,6 @@ const { title, description } = Astro.props;
       <slot />
     </main>
     <Footer />
-    <ReadingCanvas />
     <script>
       import '../scripts/motion';
     </script>

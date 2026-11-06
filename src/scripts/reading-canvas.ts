@@ -1,4 +1,4 @@
-/** Quiet selection choreography shared by every page. At most three cursors,
+/** Selection choreography limited to the project list and project articles. At most three cursors,
  * two on small screens. Rectangles are remeasured while their content moves. */
 export const READING_DURATION = 3400;
 export const readingLimit = (width: number) => width < 700 ? 2 : 3;
@@ -14,12 +14,12 @@ export function initReadingCanvas() {
   const hero = document.querySelector<HTMLElement>('[data-design-stage]');
   const header = document.querySelector<HTMLElement>('#site-header');
   const candidates = [...document.querySelectorAll<HTMLElement>([
-    'main .row', 'main .etape', 'main .fiche', 'main .texte', 'main .outils',
-    'main .site-note', 'main .ia', 'main article > .meta', 'main .note-projet',
-    'main .actions', 'main .media-eau .cadre', 'main .prose > h2', 'main .prose > p',
-    'main .entete h1', 'main .entete .lead', 'main .entete .console-vibe',
-    'main .intro', 'main .section-head', 'main .demarche-texte h2',
-    'main .demarche-texte p', 'footer h2', 'footer a',
+    '#projets .row', '#projets .section-head',
+    '[data-cursor-project] .ia', '[data-cursor-project] > .meta', '[data-cursor-project] .note-projet',
+    '[data-cursor-project] .actions', '[data-cursor-project] .media-eau .cadre',
+    '[data-cursor-project] .prose > h2', '[data-cursor-project] .prose > p',
+    '[data-cursor-project] .entete h1', '[data-cursor-project] .entete .lead',
+    '[data-cursor-project] .entete .console-vibe',
   ].join(','))].filter(el => !el.closest('[data-design-stage]'));
   const visible = new Set<HTMLElement>();
   const played = new WeakSet<HTMLElement>();
@@ -36,7 +36,7 @@ export function initReadingCanvas() {
     return r.width > 0 && r.height > 0 && r.bottom > (header?.getBoundingClientRect().bottom ?? 64) + 15 && r.top < height * .87;
   }
   function wake() {
-    button!.hidden = reduced.matches || busyHero() || modal;
+    button!.hidden = reduced.matches || busyHero() || modal || ![...visible].some(inFrame);
     if (!allowed()) { stop(); return; }
     if (!raf && (active.length || [...visible].some(el => !played.has(el) && inFrame(el)))) raf = requestAnimationFrame(tick);
   }

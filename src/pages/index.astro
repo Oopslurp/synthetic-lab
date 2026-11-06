@@ -6,6 +6,7 @@ import ParticleLogo from '../components/ParticleLogo.astro';
 import ConsoleVibe from '../components/ConsoleVibe.astro';
 import CoupDeCoeur from '../components/CoupDeCoeur.astro';
 import DesignCanvas from '../components/DesignCanvas.astro';
+import ReadingCanvas from '../components/ReadingCanvas.astro';
 import { url } from '../lib/paths';
 
 const projets = (
@@ -105,6 +106,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
       <ParticleLogo />
     </div>
   </section>
+  <ReadingCanvas />
 </Base>
 
 <style>
