@@ -1,0 +1,18 @@
+<canvas class="reading-canvas" aria-hidden="true"></canvas>
+<button class="reading-motion" type="button" aria-label="Désactiver les animations de lecture" aria-pressed="false" hidden>
+  <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" aria-hidden="true"><path d="m3 2 3 15 4-5 6-2Z" /></svg>
+  <span>Animations</span>
+</button>
+<style>
+  :global([data-cursor-project] .entete h1) { width: fit-content; max-width: 100%; }
+  .reading-canvas { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 35; pointer-events: none; }
+  .reading-motion { position: fixed; bottom: 16px; right: 18px; z-index: 40; display: flex; align-items: center; gap: 7px; padding: 9px 12px; border: 1px solid var(--line); border-radius: 30px; background: var(--bg); color: var(--muted); font: 10px var(--font-mono); }
+  .reading-motion[hidden] { display: none; }
+  .reading-motion:hover { color: var(--accent); }
+  .reading-motion[aria-pressed='true'] { opacity: .6; }
+  @media (prefers-reduced-motion: reduce) { .reading-canvas, .reading-motion { display: none !important; } }
+</style>
+<script>
+  import { initReadingCanvas } from '../scripts/reading-canvas';
+  initReadingCanvas();
+</script>

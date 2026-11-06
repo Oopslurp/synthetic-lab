@@ -67,7 +67,7 @@ if (!reduced) {
     // Titres : révélation ligne par ligne, masquée
     document.querySelectorAll<HTMLElement>('[data-split]').forEach((el) => {
       try {
-        const split = new SplitText(el, { type: 'lines', mask: 'lines' });
+        const split = new SplitText(el, { type: 'lines', mask: 'lines', autoSplit: true });
         gsap.set(el, { visibility: 'visible' });
         gsap.from(split.lines, {
           yPercent: 115,

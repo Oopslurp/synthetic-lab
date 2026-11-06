@@ -87,8 +87,16 @@ import { url } from '../lib/paths';
   :global([data-theme='dark']) .icon-lune { display: none; }
 
   @media (max-width: 560px) {
+    .inner {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      height: auto;
+      padding-block: .7rem;
+      gap: .65rem;
+    }
     .wordmark { font-size: 0.92rem; }
-    nav { gap: 0.9rem; }
-    nav a { font-size: 0.68rem; }
+    nav { grid-column: 1 / -1; grid-row: 2; gap: 1.6rem; }
+    nav a { font-size: 0.68rem; white-space: nowrap; }
+    #theme-toggle { grid-column: 2; grid-row: 1; width: 32px; height: 32px; }
   }
 </style>
