@@ -1,10 +1,10 @@
 ---
 titre: "Tiny Chaos Town"
-ordre: 8
+ordre: 7
 categorie: "Jeu expérimental · créatif"
 periode: "2026 · T2"
 statut: "termine"
-resume: "Un petit jeu volontairement chaotique où une ville miniature devient un terrain d'expérimentation visuelle et interactive."
+resume: "Un petit jeu où l'on observe une ville miniature et ses habitants, puis où l'on intervient pour voir ce qui se passe."
 notions:
   - "Boucles de jeu"
   - "Gestion d'événements"
@@ -27,37 +27,39 @@ captures:
     alt: "La galerie des habitants : chacun a son métier loufoque, son humeur, sa fortune et ses amitiés ou rancunes"
 ia:
   outils: "Claude et Codex"
-  genere: "Les premières structures de code, des idées de mécaniques et certaines fonctions interactives."
-  humain: "J'ai choisi le concept, ajusté le ton du jeu, testé les comportements et retravaillé tout ce qui rendait l'expérience plus amusante."
-  verification: "En jouant, tout simplement : plusieurs versions testées, les bugs observés un par un, les interactions ajustées jusqu'à ce que le chaos reste drôle — et compréhensible."
+  genere: "Les premières structures du code, des idées de mécaniques et certaines fonctions interactives."
+  humain: "J'ai choisi le concept et le ton du jeu. J'ai essayé les comportements et repris les interactions au fil des parties."
+  verification: "J'ai testé plusieurs versions en jouant, puis demandé des corrections pour les bugs observés et ajusté les interactions."
 ---
 
 ## Contexte & objectif
 
-Après des projets très « scolaires », j'avais envie d'un projet libre, centré sur le plaisir de construire, de tester et d'observer des interactions amusantes. Tiny Chaos Town est une ville miniature où il se passe des choses — pas toujours prévues, c'est le principe.
+Après plusieurs projets liés aux cours, j'avais envie de faire un jeu plus libre. Tiny Chaos Town est une petite ville où l'on observe les habitants et où l'on intervient sur ce qui se passe.
 
-L'objectif réel derrière le jeu : apprendre à créer une expérience interactive simple, expressive et fun, sans cahier des charges imposé.
+Je voulais essayer des idées de mécaniques, voir comment elles se combinaient et garder celles qui rendaient le jeu amusant.
 
 ## Choix techniques
 
-Une application Next.js/React en TypeScript, mise en forme avec Tailwind CSS. L'interface est composée de panneaux et de composants React pilotés par l'état du jeu, sans rendu Canvas. J'ai choisi le format « petit jeu » délibérément : il permet de tester rapidement une idée, de voir immédiatement le résultat, et d'apprendre par itération — chaque version est un peu moins cassée et un peu plus drôle que la précédente.
+Le jeu utilise Next.js, React et TypeScript, avec Tailwind CSS pour la mise en page. Les panneaux de l'interface se mettent à jour en fonction de l'état du jeu.
+
+Le format d'un petit jeu me permettait d'essayer une idée rapidement, puis de la modifier en fonction de mes parties.
 
 ## Difficultés & résolutions
 
-> Le plus difficile a été de transformer une idée volontairement chaotique en jeu **compréhensible**. Le chaos sans lisibilité, c'est juste du bruit. Je l'ai résolu en gardant des règles simples et en limitant le nombre d'actions possibles au départ.
+> Le jeu devait rester compréhensible malgré les événements chaotiques. J'ai gardé des règles simples et limité les actions disponibles au début pour que l'on puisse comprendre leurs effets.
 
-> Les comportements imprévus étaient l'autre défi — certains voulus, d'autres non. J'ai appris à les trier : tester les situations une par une, isoler l'élément responsable, garder les accidents heureux et corriger les vrais bugs.
+> Certains comportements imprévus étaient amusants, d'autres empêchaient de jouer. J'ai testé les situations une par une pour trouver leur cause et décider de ce qu'il fallait garder ou corriger.
 
 ## Tests & vérifications
 
-- Sessions de jeu répétées sur chaque version.
-- Chasse aux bugs visuels et aux comportements incohérents.
-- Ajustement des interactions en fonction de ce qui est réellement amusant à jouer.
+- Plusieurs parties à chaque version.
+- Recherche des bugs visuels et des comportements incohérents.
+- Ajustement des interactions après les essais en jeu.
 
 ## Limites connues
 
-Le jeu reste volontairement simple et expérimental : pas de progression complète, de niveaux avancés ni de système d'objectifs très développé. Il assume son format de bac à sable — un jouet numérique à observer plus qu'un jeu à campagne.
+Le jeu reste un petit bac à sable. Il n'a pas de campagne, de progression complète ni d'objectifs très développés. On y joue surtout pour observer la ville et essayer différentes interventions.
 
 ## Ce que ce projet m'a appris
 
-Techniquement, à gérer des événements et des états dans un jeu en temps réel. Méthodologiquement, qu'un projet créatif peut commencer par un prototype imparfait — et devenir intéressant précisément grâce aux tests successifs.
+J'ai appris à gérer les événements et les états d'un jeu en temps réel. Ce projet m'a aussi permis de travailler avec une idée de départ assez ouverte, en précisant les mécaniques au fil des essais.

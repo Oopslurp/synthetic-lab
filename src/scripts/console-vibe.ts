@@ -29,7 +29,7 @@ const SCENARIOS: Record<string, Scenario[]> = {
       tokens: 1284,
       lignes: [
         { t: 'outil', c: 'Write  src/scripts/eau.ts', d: 'shader WebGL · 240 lignes' },
-        { t: 'outil', c: 'Bash   npm run build', d: '10 pages · build vert' },
+        { t: 'outil', c: 'Bash   npm run build', d: 'Compilation réussie' },
         { t: 'texte', c: 'Ondulation au repos, déformation liquide au survol.' },
       ],
     },

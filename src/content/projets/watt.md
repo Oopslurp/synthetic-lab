@@ -1,11 +1,11 @@
 ---
 titre: "WATT — Réseau sous tension"
-ordre: 4
+ordre: 3
 categorie: "Jeu de gestion · simulation énergétique"
 periode: "2026 · T3"
 coup_de_coeur: true
 statut: "termine"
-resume: "Un jeu de gestion en pixel art : 365 jours pour alimenter une ville en pleine croissance — produire, stocker, s'endetter, traverser des crises — sans blackout ni faillite."
+resume: "365 jours pour gérer le réseau électrique d'une ville, choisir ses moyens de production et éviter les coupures comme la faillite."
 notions:
   - "Puissance vs énergie (MW · MWh)"
   - "Intermittence & facteur de charge"
@@ -36,44 +36,47 @@ captures:
     alt: "Année bouclée : double score Écologie / Fortune, intensité carbone et mix produit"
 ia:
   outils: "Claude Code, avec Codex en relecture croisée"
-  genere: "La quasi-totalité du code, ainsi que le harnais de tests automatiques et les robots de simulation."
-  humain: "Toute la conception : les mécaniques, le double score écologie-fortune, l'accélération des chantiers, la dette de départ, l'événement Tchernobyl et l'équilibrage — nourris par mes parties réelles."
-  verification: "De nombreuses parties complètes selon plusieurs styles de jeu (fossile, mixte, renouvelable), des cas extrêmes, et après chaque réglage, des simulations automatiques couvrant une année entière."
+  genere: "La quasi-totalité du code, les tests automatiques et les programmes qui simulent des parties."
+  humain: "J'ai conçu les mécaniques et les scores écologie et fortune. Mes parties ont guidé les réglages des chantiers, de la dette de départ, de l'événement Tchernobyl et de la difficulté."
+  verification: "J'ai fait plusieurs parties complètes avec différentes stratégies. Après les réglages, des simulations automatiques rejouent aussi une année entière, avec des essais dans des situations extrêmes."
 ---
 
 ## Contexte & objectif
 
-Les questions d'énergie m'intéressent depuis le lycée : les formes de production, l'efficacité des transformations, et pourquoi il n'est pas possible de tout faire fonctionner au solaire. WATT transforme ces questions en choix de jeu : pendant 365 jours, on gère le réseau électrique d'une ville en pleine croissance — produire, stocker, s'endetter, traverser des crises — en évitant à la fois le blackout et la faillite.
+Les questions d'énergie m'intéressent, notamment les différences entre les moyens de production et les contraintes du solaire ou de l'éolien. J'ai voulu en faire un jeu où ces questions auraient des conséquences sur les décisions du joueur.
 
-Le parti pris central : **il n'existe pas une seule stratégie valable**. Une voie fossile, un mix énergétique ou du tout-renouvelable peuvent tous gagner, mais chacun a ses coûts et ses contraintes. Le joueur ressent concrètement l'intermittence, le rôle du stockage, le coût du nucléaire et la dépendance aux combustibles fossiles.
+Dans WATT, on gère pendant 365 jours le réseau électrique d'une ville qui grandit. Il faut construire, stocker de l'énergie, gérer la dette et faire face aux crises, tout en évitant les coupures et la faillite. Plusieurs stratégies sont possibles, avec des compromis entre coût, fiabilité et écologie.
 
 ## Choix techniques
 
-HTML5, JavaScript vanilla et Canvas 2D : résolution logique de 480 × 270 pixels en nearest-neighbor, police bitmap 3 × 5 dessinée sur mesure. Toute la partie sonore — musique et bruitages — est générée en code par la Web Audio API, en synthèse chiptune 8 bits.
+Le jeu utilise HTML5, JavaScript et Canvas 2D, avec un affichage en pixel art de 480 × 270 pixels. La musique et les bruitages sont générés par la Web Audio API.
 
-Aucun framework, aucune bibliothèque, aucun fichier externe : le jeu entier tient dans un seul `index.html` qu'on ouvre dans n'importe quel navigateur, sans installation ni compilation. L'architecture orientée données a permis d'ajouter des mécaniques sans casser le reste : les dix sources d'énergie et la quinzaine d'événements sont de simples tables de données.
+Tout tient dans un seul fichier index.html, sans bibliothèque externe ni compilation. Les dix sources d'énergie et la quinzaine d'événements sont décrits dans des tables de données, ce qui facilite l'ajout et le réglage des mécaniques.
 
 ## Difficultés & résolutions
 
-> Le vrai sujet a été l'équilibrage. Dans les premières versions, je faisais faillite au bout d'une vingtaine de jours, quelle que soit ma stratégie. J'ai aussi dû accepter qu'une simulation parfaitement réaliste ne fait pas forcément un bon jeu : l'objectif est devenu de conserver les principes essentiels d'un réseau électrique tout en donnant au joueur des choix lisibles et plusieurs chemins de réussite.
+> Dans les premières versions, je faisais faillite vers le vingtième jour, quelle que soit ma stratégie. J'ai dû reprendre l'équilibrage et accepter de simplifier certains aspects du réseau pour laisser au joueur le temps de réagir.
 
-> Pour équilibrer sérieusement, j'ai fait construire un harnais de simulation avec trois robots-joueurs — stratégie fossile, mixte, renouvelable — qui rejouent l'année entière à chaque modification, avec des règles invariantes : un joueur passif doit perdre, un bon joueur doit pouvoir gagner de plusieurs façons, et la richesse ne doit jamais devenir infinie.
+> Pour comparer les réglages, j'ai demandé des simulations automatiques avec trois stratégies : fossile, mixte et renouvelable. Elles rejouent une année entière après les modifications. Je les complète avec mes propres parties, car elles ne disent pas si les choix sont agréables à jouer ou si les messages sont lisibles.
 
-> La découverte la plus importante concerne le blackout. Binaire au départ — toute la production coupée dès que la capacité ne couvrait plus 100 % de la demande —, il rendait trois jours sans vent presque toujours fatals. Je l'ai remplacé par un **délestage progressif** : le réseau alimente ce qu'il peut, la fiabilité baisse proportionnellement au manque, puis se rétablit. Le jeu est devenu gagnable, sans devenir facile.
+> Au départ, dès que la production ne couvrait plus toute la demande, le réseau se coupait entièrement. Quelques jours sans vent suffisaient à perdre. J'ai remplacé ce fonctionnement par un délestage progressif : le réseau fournit ce qu'il peut, sa fiabilité baisse selon le manque, puis peut remonter.
 
 ## Tests & vérifications
 
-- Un harnais de tests automatiques **déterministe** (graine aléatoire fixe), environ soixante vérifications.
-- Des scénarios types : joueur passif dépassé par la croissance de la ville, stratège sur-endetté, stratégie tout-renouvelable.
-- Des cas limites : banque saturée, trois jours sans soleil ni vent, crise du gaz — et des mécaniques testées unitairement (montée en puissance, stockage, délestage, événement Tchernobyl).
-- Après chaque réglage d'équilibrage : simulations d'une année complète, trois stratégies, deux graines différentes — complétées par mes propres parties.
+- Environ soixante vérifications automatiques avec une graine aléatoire fixe pour reproduire les résultats.
+- Des scénarios comme un joueur passif, un joueur trop endetté et une stratégie entièrement renouvelable.
+- Des essais sans soleil ni vent, pendant une crise du gaz ou avec une banque saturée.
+- Des simulations d'une année avec trois stratégies et deux graines, après les réglages d'équilibrage.
+- Mes propres parties pour vérifier le rythme et la lisibilité du jeu.
 
 ## Limites connues
 
-La stratégie 100 % renouvelable reste extrêmement difficile : mes robots ne la gagnent qu'une fois sur deux. C'est voulu, mais la frontière entre difficulté et injustice est fine. Le jeu n'a pas de système de sauvegarde : une partie se joue d'une traite, environ quarante minutes à la vitesse ×3. La simulation suppose un réseau isolé — pas d'échanges avec les régions voisines, pas de pertes de transport, prix de marché simplifié. La séquence « Tchernobyl » est un easter egg volontairement exagéré, pas un modèle statistique du risque réel. Enfin, l'interface n'est pas adaptée aux écrans tactiles.
+Le tout-renouvelable reste difficile : les joueurs automatiques ne gagnent qu'environ une fois sur deux avec cette stratégie. L'équilibrage peut donc encore être amélioré.
+
+Il n'y a pas de sauvegarde. Une partie demande environ quarante minutes à la vitesse ×3. Le réseau est isolé, sans échanges avec les régions voisines ni pertes de transport, et les prix sont simplifiés. La séquence « Tchernobyl » est volontairement exagérée pour le jeu et ne représente pas le risque réel. L'interface n'est pas adaptée aux écrans tactiles.
 
 ## Ce que ce projet m'a appris
 
-Techniquement, quelques contraintes de gestion d'un réseau électrique : le principe de l'ordre de mérite, pourquoi l'intermittence pose d'abord un problème de **puissance** plutôt que d'énergie, et ce que le stockage peut faire — et ne pas faire. Et qu'on peut produire toute la bande-son d'un jeu directement en code, avec la Web Audio API.
+WATT m'a permis de mieux comprendre l'ordre de mérite, la différence entre puissance et énergie, ainsi que les possibilités et les limites du stockage. J'ai aussi découvert qu'on pouvait générer une bande-son directement en code.
 
-Méthodologiquement, à avancer par petites étapes enregistrées avec Git pour toujours pouvoir revenir en arrière, et à ne jamais considérer un équilibrage comme valide avant de l'avoir vérifié par des tests automatiques. Enfin, à formuler des retours précis à l'IA : pas « ça ne marche pas bien », mais « je fais faillite au jour 20 » ou « je n'ai pas le temps de lire les messages à la vitesse ×6 ».
+Pour le développement, j'ai pris l'habitude d'enregistrer de petites étapes avec Git et de donner des retours précis à l'IA. Dire à quel jour je perds ou quel message je n'ai pas le temps de lire permet d'obtenir des corrections plus utiles.

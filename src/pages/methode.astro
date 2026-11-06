@@ -5,37 +5,34 @@ import ConsoleVibe from '../components/ConsoleVibe.astro';
 
 const etapes = [
   {
-    titre: 'Démarrer',
-    texte: `Chaque projet commence sur le papier : je clarifie l'idée, les
-    objectifs et les fonctionnalités principales avant d'écrire la moindre
-    ligne de code. Je confronte ensuite ce brouillon à une IA (Claude,
-    ChatGPT) pour comparer plusieurs pistes et aboutir à un plan cohérent.
-    Le travail est toujours découpé en trois temps : analyse et exploration,
-    réalisation, puis audit et amélioration.`,
+    titre: 'Poser mes idées',
+    texte: `Je commence avec un stylo et des feuilles. Je note les idées que
+    j'ai en tête et ce que j'aimerais obtenir. Ensuite, j'en discute avec
+    l'IA pour définir le cadre du projet et voir ce qui semble faisable ou
+    risque de le compliquer. Je lui demande un plan avec des étapes pour
+    construire le projet petit à petit.`,
   },
   {
-    titre: 'Tester',
-    texte: `J'essaie les cas simples, les cas extrêmes et les situations où
-    l'application pourrait se tromper. Pour les projets scientifiques, je
-    compare les résultats avec le cours, des calculs faits à la main ou les
-    comportements attendus des modèles. Pour les sites et les jeux, je teste
-    l'interface, les interactions et l'expérience utilisateur.`,
+    titre: 'Essayer au fur et à mesure',
+    texte: `Pendant le développement, je vérifie régulièrement ce qui a été
+    produit. J'essaie les fonctions, je regarde si l'interface correspond à
+    mon idée et je note ce qui pose problème. Pour les projets scientifiques,
+    je compare aussi les résultats avec le cours ou des calculs à la main.`,
   },
   {
-    titre: 'Déboguer',
-    texte: `Quand ça ne marche pas, je commence par lire le message d'erreur
-    et j'identifie le moment où le problème apparaît. J'isole ensuite la
-    partie du code concernée et je teste une version simplifiée. Si je fais
-    appel à l'IA, je lui donne le contexte, le message d'erreur et ce que
-    j'ai déjà essayé — pas seulement « ça ne marche pas ».`,
+    titre: 'Reprendre ce qui bloque',
+    texte: `Quand quelque chose ne marche pas, je cherche à préciser le
+    problème : ce que j'ai fait, ce qui s'est passé et ce que j'attendais.
+    Je transmets ces éléments à l'IA, avec le message d'erreur s'il y en a un.
+    Ensuite, j'essaie la correction pour voir si le problème est bien réglé.`,
   },
   {
-    titre: "Vérifier l'IA",
-    texte: `Je ne fais pas confiance aveuglément aux réponses générées : je
-    croise avec mes cours, je recalcule certains résultats à la main, je
-    teste le code étape par étape et je compare plusieurs réponses quand le
-    sujet est important. C'est la règle commune à tous mes projets — et la
-    raison d'être de la section « Transparence » de chaque fiche.`,
+    titre: 'Vérifier les réponses',
+    texte: `Je fais des recherches en parallèle pour guider l'IA et vérifier
+    ses propositions. Selon le projet, je m'appuie sur mes cours, la
+    documentation des outils ou des essais concrets. Il m'arrive aussi de
+    demander une relecture à une autre IA. Sur chaque fiche, j'explique
+    ce que l'IA a produit, ce que j'ai fait et comment je l'ai vérifié.`,
   },
 ];
 
@@ -64,9 +61,9 @@ const outils = [
       <p class="mono-label" data-reveal>Méthode de travail</p>
       <h1 data-split>Comment je travaille<span class="dot">.</span></h1>
       <p class="lead" data-split="0.25">
-        Utiliser l'IA ne dispense ni de comprendre, ni de vérifier.
-        Voici, concrètement, comment un projet avance — du brouillon
-        papier à la mise en ligne.
+        Je commence par un brouillon, puis j'avance avec l'aide de l'IA.
+        Entre les deux, il y a beaucoup d'essais, de recherches et de
+        corrections. Voici comment je m'y prends.
       </p>
       <ConsoleVibe scene="methode" />
     </header>
@@ -102,8 +99,9 @@ const outils = [
 
     <blockquote class="credo">
       <p data-split>
-        «&nbsp;L'IA est un outil de travail. La responsabilité de vérifier —
-        et de comprendre — reste humaine.&nbsp;»
+        «&nbsp;Je pose mes idées sur le papier, puis je les construis avec
+        l'IA. Au fur et à mesure, je teste et je reprends ce qui ne me
+        convient pas.&nbsp;»
       </p>
     </blockquote>
   </section>

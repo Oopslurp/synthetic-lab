@@ -1,10 +1,10 @@
 ---
 titre: "Plume"
-ordre: 12
+ordre: 5
 categorie: "Expérimentation en cours · dictée intelligente"
 periode: "2026"
 statut: "en-cours"
-resume: "Un outil de capture d'idées qui transforme des notes orales ou brutes en texte clair et structuré, fidèle à l'intention de départ."
+resume: "Un outil pour dicter ou noter mes idées, puis les clarifier, les résumer ou les organiser avec l'aide de l'IA."
 notions:
   - "Traitement du langage naturel"
   - "Transcription vocale"
@@ -18,7 +18,7 @@ stack:
   - "Modèle d'IA pour la reformulation"
 demo: ""
 github: ""
-note: "Rien n'est publié pour l'instant, et c'est volontaire : j'ai encore la performance à régler. Entre le moment où je parle et celui où le texte s'affiche, l'attente est trop longue pour un outil censé attraper une idée au vol — et l'ordinateur chauffe. Tant que ce n'est pas réglé, je préfère continuer à travailler dessus plutôt que de mettre le code en ligne."
+note: "Le projet n'est pas encore publié. La transcription est trop lente et fait chauffer l'ordinateur. Je continue à travailler sur ces problèmes avant de mettre le code en ligne."
 captures:
   - src: "/images/projets/plume/01.mp4"
     alt: "Démonstration en vidéo : dicter, transcrire, reformuler"
@@ -26,41 +26,41 @@ captures:
     alt: "Réglages : choix du modèle Whisper exécuté en local"
 ia:
   outils: "Claude pour le développement ; Whisper (OpenAI) pour la transcription ; un modèle de langage pour la reformulation"
-  genere: "L'interface, certaines fonctions de traitement du texte et les prompts de reformulation."
-  humain: "J'ai défini l'usage principal, testé différents formats de sortie et corrigé les textes produits pour qu'ils soient plus naturels et réellement utiles."
-  verification: "Chaque texte généré est comparé à l'intention initiale : il doit rester fidèle à l'idée de départ, sans rien inventer."
+  genere: "L'interface, certaines fonctions de traitement du texte et les consignes de reformulation."
+  humain: "J'ai défini l'usage, essayé plusieurs formats de sortie et repris les textes pour qu'ils soient plus naturels et utiles."
+  verification: "Je compare le texte produit avec la note de départ pour vérifier que le sens est conservé et qu'aucune idée n'est ajoutée."
 ---
 
 ## Contexte & objectif
 
-Beaucoup d'idées se perdent parce qu'elles ne sont pas notées à temps. Plume est un outil de capture rapide, inspiré des applications de dictée intelligente : on parle ou on jette quelques mots bruts, et l'outil en fait un texte clair, structuré, exploitable.
+J'ai commencé Plume pour pouvoir noter une idée rapidement, à l'oral ou avec quelques mots écrits. L'outil transcrit la voix puis propose de clarifier, résumer ou organiser le texte.
 
-L'objectif n'est pas d'écrire à ma place, mais de **ne pas perdre le fil** : capturer une pensée, une note ou un brouillon sans interrompre ce qu'on est en train de faire, puis le retravailler.
+Je voulais pouvoir garder une idée sans interrompre trop longtemps ce que je fais, puis revenir dessus pour la retravailler.
 
 ## Choix techniques
 
-Une application web volontairement simple : une zone de saisie rapide, la reconnaissance vocale (Whisper) pour l'entrée orale, et un modèle d'IA pour transformer le texte. J'ai choisi une interface minimale plutôt qu'un outil chargé de fonctions, parce que le but premier est la vitesse — capturer l'idée avant qu'elle ne s'échappe.
+L'application associe une zone de saisie, Whisper pour la transcription vocale et un modèle de langage pour la reformulation. L'interface se limite à quelques actions pour rester rapide à utiliser.
 
-Les transformations proposées sont réduites à l'essentiel : **clarifier**, **résumer**, **structurer**. Trois verbes, trois boutons.
+Les trois transformations principales sont clarifier, résumer et structurer. J'ai préféré travailler ces fonctions avant d'ajouter d'autres options.
 
 ## Difficultés & résolutions
 
-> Le plus difficile a été de rendre l'outil rapide sans sacrifier la qualité du texte produit. Je l'ai résolu en limitant les fonctions principales à quelques transformations vraiment utiles, plutôt qu'en multipliant les options.
+> La vitesse reste mon principal problème. Même avec peu de fonctions, l'attente entre la dictée et l'affichage du texte est encore trop longue. Je continue à travailler dessus, car cela gêne l'usage que j'avais prévu au départ.
 
-> Autre difficulté : empêcher l'IA de reformuler trop librement. Un outil de dictée qui invente trahit son utilisateur. J'ai travaillé les consignes données au modèle pour qu'il conserve le sens original — quitte à produire un texte moins « brillant » mais plus fidèle.
+> J'ai aussi dû reprendre les consignes de reformulation. L'IA avait parfois tendance à trop changer le texte. Je compare donc ses propositions avec la note d'origine pour vérifier qu'elle conserve bien le sens et n'ajoute pas d'idées.
 
 ## Tests & vérifications
 
-- Essais avec des notes rapides, des idées désorganisées et des brouillons de messages.
-- Tests sur des textes courts et longs, à l'écrit comme à l'oral.
-- Comparaison systématique entre la version brute et la version reformulée : le sens doit être conservé.
+- Essais avec des notes rapides, des brouillons de messages et des idées désordonnées.
+- Tests de textes courts et longs, à l'écrit comme à l'oral.
+- Comparaison du texte d'origine et du texte reformulé.
 
 ## Limites connues
 
-La vraie limite aujourd'hui est la vitesse : la transcription met trop de temps à transformer ce que je dis en texte écrit, et la machine chauffe pendant ce temps. C'est gênant pour un outil dont l'intérêt est justement de ne pas interrompre le fil de la pensée — c'est donc le chantier en cours.
+La transcription est encore lente et fait chauffer l'ordinateur. C'est ce qui retarde la publication du projet.
 
-L'outil peut aussi mal interpréter certaines formulations orales ou ambiguës. Il ne remplace pas une relecture humaine, surtout pour les textes importants.
+Certaines phrases orales ou ambiguës peuvent aussi être mal comprises. Une relecture reste nécessaire, surtout pour un texte important.
 
 ## Ce que ce projet m'a appris
 
-Techniquement, à concevoir un outil centré sur l'expérience utilisateur et la rapidité d'usage. Méthodologiquement, à penser l'IA comme un **assistant de structuration** plutôt que comme un auteur à ma place.
+J'ai appris à partir d'un usage précis pour choisir les fonctionnalités. Ce projet m'a aussi amené à faire davantage attention aux reformulations de l'IA : un texte peut paraître plus clair tout en s'éloignant de ce que je voulais dire.

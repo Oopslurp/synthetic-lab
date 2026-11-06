@@ -1,11 +1,11 @@
 ---
 titre: "Science Lab"
-ordre: 2
+ordre: 1
 categorie: "Simulations scientifiques interactives"
 periode: "2026 · T1"
 coup_de_coeur: true
 statut: "termine"
-resume: "Un laboratoire en ligne pour explorer des notions de mathématiques, de physique et de chimie en manipulant des simulations interactives."
+resume: "Des simulations de maths, de physique et de chimie pour faire varier les paramètres et mieux comprendre les notions du cours."
 notions:
   - "Méthode d'Euler"
   - "Décroissance radioactive"
@@ -30,40 +30,40 @@ captures:
     alt: "Une autre simulation interactive du laboratoire"
 ia:
   outils: "Claude et Codex"
-  genere: "Une partie de la structure du site, des composants React et les premières versions des simulations."
-  humain: "J'ai adapté les contenus scientifiques, corrigé les formulations, choisi les notions à intégrer et vérifié que chaque simulation correspondait bien au programme."
-  verification: "Les résultats sont comparés aux formules du cours, à des cas simples calculables à la main et aux comportements attendus des modèles scientifiques."
+  genere: "Une partie de la structure du site, les composants React et les premières versions des simulations."
+  humain: "J'ai choisi les notions, adapté les contenus scientifiques et corrigé les explications pour qu'elles correspondent au programme."
+  verification: "Je compare les résultats avec les formules du cours, des calculs simples à la main et le comportement attendu des modèles."
 ---
 
 ## Contexte & objectif
 
-Certaines notions scientifiques restent abstraites tant qu'elles ne sont présentées que sous forme de formules. Une décroissance radioactive, un titrage, des interférences : on les comprend mieux en les **manipulant** qu'en les lisant.
+J'ai créé Science Lab pour reprendre des notions de maths, de physique et de chimie sous une autre forme. Avec une formule seule, j'ai parfois du mal à me représenter ce qui change quand on modifie une valeur.
 
-Science Lab transforme des concepts du programme de lycée en expériences interactives : on modifie les paramètres, on observe immédiatement l'effet sur le phénomène, et une explication accompagne chaque simulation.
+Le site permet de faire varier les paramètres d'un titrage, d'une décroissance radioactive ou d'interférences lumineuses, puis d'observer le résultat. Chaque simulation est accompagnée d'une explication pour faire le lien avec le cours.
 
 ## Choix techniques
 
-Le site est construit avec React et TypeScript, les visualisations en SVG ou Canvas selon les besoins de chaque simulation. J'ai choisi une application web plutôt qu'un document statique précisément pour l'interactivité : changer une constante de temps, une concentration, une distance initiale ou une vitesse orbitale et voir la courbe réagir, c'est là que la compréhension se joue.
+Le site utilise React et TypeScript, avec des graphiques en SVG ou Canvas selon les simulations. Le format web permet de modifier une valeur et de voir directement la courbe réagir.
 
-Le code de chaque simulation est organisé en trois parties indépendantes : le **calcul** (le modèle scientifique), l'**affichage** (la visualisation) et l'**explication pédagogique**. Cette séparation permet de vérifier chaque partie isolément.
+Les calculs, l'affichage et les explications sont séparés dans le code. Cela facilite les corrections : je peux vérifier un résultat sans avoir à reprendre toute la partie visuelle.
 
 ## Difficultés & résolutions
 
-> Le plus difficile a été de rendre les simulations à la fois visuelles, interactives et scientifiquement correctes. La séparation calcul / affichage / explication a été la clé : elle permet de tester la justesse du modèle indépendamment de son rendu.
+> Une simulation peut avoir l'air correcte alors que le calcul derrière est faux. J'ai donc comparé les résultats avec des formules du cours et des cas simples que je pouvais refaire à la main, avant de m'occuper du rendu.
 
-> Autre piège : les animations jolies mais trompeuses. Une visualisation peut être séduisante et fausse. J'ai privilégié des modèles simples, clairement expliqués, avec des limites assumées et affichées.
+> Il a aussi fallu choisir ce que je pouvais simplifier. J'ai gardé des modèles assez simples pour être expliqués, en précisant leurs limites dans le site.
 
 ## Tests & vérifications
 
-- Comparaison des résultats avec le cours et avec des calculs faits à la main.
-- Vérification des cas limites (valeurs nulles, extrêmes, temps longs).
-- Modification systématique des paramètres pour contrôler la cohérence du comportement.
-- Relecture des explications scientifiques et tests manuels de toutes les interactions.
+- Comparaison avec le cours et des calculs faits à la main.
+- Essais avec des valeurs nulles, extrêmes et sur des temps longs.
+- Modification des paramètres pour vérifier que le comportement reste cohérent.
+- Relecture des explications et essais manuels des interactions.
 
 ## Limites connues
 
-Les simulations utilisent des modèles simplifiés : elles ne reproduisent pas toute la complexité réelle des phénomènes. Le site ne remplace pas un cours — il sert à visualiser et à expérimenter ce qu'on y a appris.
+Les simulations reposent sur des modèles simplifiés. Elles permettent de visualiser les notions du cours, mais ne reproduisent pas tous les phénomènes réels.
 
 ## Ce que ce projet m'a appris
 
-Techniquement, à structurer une application web interactive et à séparer les calculs, l'interface et la visualisation. Méthodologiquement, à **vérifier** un résultat généré par l'IA au lieu de simplement lui faire confiance — c'est ce projet qui m'a imposé cette discipline.
+Ce projet m'a aidé à revoir les notions en cherchant à les expliquer et à les représenter. J'ai aussi appris à mieux organiser une application interactive, et à vérifier les calculs proposés par l'IA avant de les utiliser dans une simulation.

@@ -159,9 +159,9 @@ const d = entry.data;
       )
     }
 
-    <!-- ── Corps : fiche à gauche, captures « eau » à droite ──── -->
+    <!-- Corps sans animations : texte et captures restent stables pendant la lecture. -->
     <div class={d.captures.length > 0 ? 'corps corps--medias' : 'corps'}>
-      <div class="prose" data-reveal>
+      <div class="prose">
         <Content />
       </div>
       {
@@ -174,7 +174,6 @@ const d = entry.data;
                   <button
                     type="button"
                     class="cadre"
-                    data-reveal-img
                     data-ouvrir
                     data-src={url(c.src)}
                     data-alt={c.alt}
@@ -190,10 +189,9 @@ const d = entry.data;
                         playsinline
                         preload="metadata"
                         aria-hidden="true"
-                        data-eau
                       />
                     ) : (
-                      <img src={url(c.src)} alt="" loading="lazy" data-eau />
+                      <img src={url(c.src)} alt="" loading="lazy" />
                     )}
                     <span class="loupe" aria-hidden="true">
                       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
@@ -238,11 +236,6 @@ const d = entry.data;
   </article>
   <ReadingCanvas />
 </Base>
-
-<script>
-  import { initEaux } from '../../scripts/eau';
-  initEaux();
-</script>
 
 <style>
   .entete {
