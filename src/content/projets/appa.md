@@ -1,4 +1,5 @@
 ---
+brouillon: true
 titre: "APPA"
 ordre: 11
 categorie: "Expérimentation non publiée · IA locale"

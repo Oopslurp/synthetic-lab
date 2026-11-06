@@ -1,4 +1,4 @@
-/** Selection choreography limited to the project list and project articles. At most three cursors,
+/** Selection choreography limited to the project list and project introductions. At most three cursors,
  * two on small screens. Rectangles are remeasured while their content moves. */
 export const READING_DURATION = 3400;
 export const readingLimit = (width: number) => width < 700 ? 2 : 3;
@@ -16,8 +16,7 @@ export function initReadingCanvas() {
   const candidates = [...document.querySelectorAll<HTMLElement>([
     '#projets .row', '#projets .section-head',
     '[data-cursor-project] .ia', '[data-cursor-project] > .meta', '[data-cursor-project] .note-projet',
-    '[data-cursor-project] .actions', '[data-cursor-project] .media-eau .cadre',
-    '[data-cursor-project] .prose > h2', '[data-cursor-project] .prose > p',
+    '[data-cursor-project] .actions',
     '[data-cursor-project] .entete h1', '[data-cursor-project] .entete .lead',
     '[data-cursor-project] .entete .console-vibe',
   ].join(','))].filter(el => !el.closest('[data-design-stage]'));

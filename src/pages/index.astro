@@ -29,13 +29,13 @@ const pad = (n: number) => String(n).padStart(2, '0');
     <div class="hero-workspace">
     <div class="hero-description">
     <p class="lead" data-split="0.3" data-canvas-target="02 / Intentions">
-      Simulations, jeux, outils d'apprentissage et expérimentations web,
-      réalisés avec l'aide de l'intelligence artificielle.
+      Je crée des simulations, des jeux et des outils avec l'aide de l'IA,
+      pour essayer mes idées et apprendre au fil des projets.
     </p>
     <div class="hero-meta" data-reveal="0.55" data-canvas-target="03 / Repères">
       <span class="chip">Terminale · maths & physique-chimie</span>
       <span class="chip">Projets personnels</span>
-      <span class="chip chip--accent">{pad(projets.length)} projets · {pad(termines)} terminé</span>
+      <span class="chip chip--accent">{pad(projets.length)} projets · {pad(termines)} terminé{termines > 1 ? 's' : ''}</span>
     </div>
     </div>
     <div class="hero-terminal" data-canvas-target="04 / Expérimentations">
@@ -45,7 +45,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
     <div class="hero-bottom">
       <a class="explore-link" href={url('/#projets')}><span class="explore-arrow" aria-hidden="true">↓</span> Explorer les projets <span class="explore-count">/{pad(projets.length)}</span></a>
       <DesignCanvas />
-      <span class="hero-note">Une idée. Du code. Du concret.</span>
+      <span class="hero-note">Des idées que je prends le temps de construire.</span>
     </div>
   </div>
   </section>
@@ -54,11 +54,11 @@ const pad = (n: number) => String(n).padStart(2, '0');
   <section class="intro container" data-reveal>
     <hr class="rule" />
     <p>
-      Je développe ces projets pour <strong>apprendre en réalisant</strong> :
-      approfondir les sciences par la création, et mobiliser l'IA comme un
-      outil au service du raisonnement, du prototypage et de
-      l'expérimentation. Chaque fiche documente ce que l'IA a généré, ce que
-      j'ai fait moi-même — et comment je l'ai vérifié.
+      Je pars souvent d'une idée liée aux cours ou d'un outil dont j'aurais
+      besoin au quotidien. Ensuite, je la développe avec l'aide de l'IA,
+      en faisant des recherches et en testant les versions au fur et à mesure.
+      Je présente ici ce que j'ai réalisé, les difficultés rencontrées
+      et ce que chaque projet m'a appris.
     </p>
   </section>
 
@@ -95,11 +95,11 @@ const pad = (n: number) => String(n).padStart(2, '0');
     <div class="demarche-grille">
       <div class="demarche-texte">
         <p class="mono-label" data-reveal>Démarche</p>
-        <h2 data-split>L'IA est un outil,<br />pas un substitut au travail.</h2>
+        <h2 data-split>Du brouillon papier<br />aux premiers essais.</h2>
         <p data-reveal>
-          Brouillon papier, plan critiqué, code testé, résultats vérifiés contre
-          le cours ou à la main : ma façon de travailler est documentée,
-          étape par étape, sur une page dédiée.
+          Je commence avec un stylo et des feuilles pour poser mes idées.
+          Ensuite, j'en discute avec l'IA et je lui demande un plan pour
+          avancer étape par étape. J'explique cette façon de travailler ici.
         </p>
         <a class="btn" href={url('/methode/')} data-reveal>Lire ma méthode&nbsp;→</a>
       </div>

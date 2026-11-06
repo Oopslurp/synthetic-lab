@@ -100,7 +100,7 @@ const BLOCS: Bloc[] = [
       '$ npm run medias',
       '  ✓ 3.png → 03.webp  272 Ko → 77 Ko',
       '$ npm run build',
-      '  ✓ 10 pages · build vert',
+      '  ✓ Compilation réussie',
     ],
   },
   {

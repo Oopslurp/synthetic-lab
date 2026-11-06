@@ -1,10 +1,10 @@
 ---
 titre: "PyQuest"
-ordre: 7
+ordre: 6
 categorie: "Site pédagogique · programmation"
 periode: "2026 · T3"
 statut: "en-cours"
-resume: "L'aventure Python : un parcours progressif et ludique pour apprendre les bases — explications simples, exemples exécutés, exercices gradués."
+resume: "Un parcours pour découvrir Python avec des explications, des exemples courts et des exercices de difficulté progressive."
 notions:
   - "Variables & types"
   - "Conditions"
@@ -29,38 +29,40 @@ captures:
     alt: "Exercices pratiques intégrés au parcours"
 ia:
   outils: "Claude et Codex"
-  genere: "Des exemples de leçons, des exercices progressifs et certaines parties de l'interface."
-  humain: "J'ai sélectionné les notions, simplifié les explications, corrigé les exemples et ajusté le niveau pour qu'un débutant puisse suivre sans se décourager."
-  verification: "Tous les exemples de code sont exécutés avant publication, et chaque exercice est contrôlé pour correspondre exactement à la notion qu'il illustre."
+  genere: "Des propositions de leçons et d'exercices, ainsi que certaines parties de l'interface."
+  humain: "J'ai choisi les notions, repris les explications et corrigé les exemples. J'ai aussi ajusté la difficulté pour rendre le parcours accessible aux débutants."
+  verification: "J'exécute les exemples de code avant publication et je vérifie que chaque exercice porte sur la notion présentée."
 ---
 
 ## Contexte & objectif
 
-Apprendre à programmer est souvent rendu plus difficile qu'il ne devrait l'être — par le vocabulaire technique, par des exemples trop abstraits, par des marches trop hautes entre deux exercices. PyQuest propose un parcours clair pour comprendre les bases de Python **en pratiquant** : des explications simples, des exemples courts qu'on peut lire et exécuter, et des exercices dont la difficulté monte progressivement, comme dans un jeu d'aventure.
+Avec PyQuest, je voulais proposer une façon progressive d'apprendre les bases de Python. Le vocabulaire et les écarts de difficulté entre deux exercices peuvent vite décourager quand on débute.
+
+J'ai donc organisé le site comme un parcours, avec des explications, des exemples courts et des exercices de plus en plus difficiles. L'univers visuel reprend celui d'un jeu d'aventure.
 
 ## Choix techniques
 
-Un site web organisé par chapitres, qui combine dans un même espace le texte, les exemples de code et les exercices, avec une direction artistique rétro assumée. Le format web s'est imposé naturellement : pas d'installation, accessible partout, et la possibilité de rendre les exemples interactifs.
+Le site regroupe les leçons, les exemples de code et les exercices par chapitres, dans une interface au style rétro. Le format web permet de suivre le parcours sans installation et d'intégrer des exemples interactifs.
 
-La progression est le vrai « moteur » du site : chaque notion s'appuie sur la précédente, et les exercices sont rangés par paliers plutôt qu'en vrac.
+Chaque chapitre s'appuie sur les notions du précédent. J'ai accordé beaucoup d'attention à cet ordre pour ne pas demander d'utiliser une notion avant de l'avoir expliquée.
 
 ## Difficultés & résolutions
 
-> Le plus difficile a été d'expliquer simplement **sans devenir imprécis**. Simplifier une notion de programmation, c'est risquer de dire quelque chose de faux. Ma solution : des exemples très courts d'abord, puis de la complexité ajoutée couche par couche.
+> Expliquer simplement une notion m'a demandé plusieurs relectures. Une phrase courte pouvait devenir imprécise. Je suis donc parti d'exemples très simples, avant d'ajouter progressivement les détails.
 
-> Autre difficulté : calibrer les exercices, ni trop faciles ni décourageants. Je les ai organisés en progression stricte, testée du début à la fin.
+> J'ai aussi repris le niveau des exercices pour éviter des sauts de difficulté trop importants. J'ai testé le parcours dans l'ordre pour vérifier que les étapes s'enchaînaient correctement.
 
 ## Tests & vérifications
 
-- Exécution de tous les exemples Python avant intégration.
-- Vérification de chaque correction d'exercice.
-- Test de la progression complète des chapitres, dans l'ordre.
-- Relecture des explications, avec des tests prévus auprès de vrais débutants.
+- Exécution des exemples Python avant leur intégration.
+- Vérification des corrections d'exercices.
+- Essai du parcours complet, chapitre par chapitre.
+- Relecture des explications. Des essais avec de vrais débutants restent prévus.
 
 ## Limites connues
 
-Le site couvre les bases de Python. Il ne traite pas encore les bibliothèques avancées, les projets complexes ni les bonnes pratiques professionnelles — c'est un point de départ, pas une formation complète.
+PyQuest couvre les bases de Python. Les bibliothèques avancées et les projets plus complexes ne sont pas encore abordés. Le parcours doit aussi être essayé par des débutants pour mieux évaluer sa difficulté.
 
 ## Ce que ce projet m'a appris
 
-Techniquement, à organiser un contenu pédagogique dans une interface claire et engageante. Méthodologiquement, une leçon plus profonde : **enseigner une notion oblige à la comprendre vraiment** — chaque chapitre écrit a d'abord été un chapitre appris.
+En cherchant à expliquer Python, j'ai dû revenir sur des notions que je pensais avoir comprises. J'ai également appris à organiser du contenu pédagogique et à choisir des exemples qui aident à comprendre avant de passer à l'exercice.
