@@ -75,18 +75,19 @@ const {
 
   @media (max-width: 760px) {
     .row {
-      grid-template-columns: 3rem 1fr 2rem;
+      grid-template-columns: 2.4rem minmax(0, 1fr) 1.4rem;
       grid-template-areas:
         'numero titre fleche'
         'numero categorie fleche'
         'numero meta fleche';
       row-gap: 0.35rem;
+      column-gap: 0.75rem;
       padding: 1.3rem 0.4rem;
     }
     .numero { grid-area: numero; }
     .titre { grid-area: titre; }
     .categorie { grid-area: categorie; }
-    .meta { grid-area: meta; gap: 1rem; margin-top: 0.3rem; }
+    .meta { grid-area: meta; gap: .4rem 1rem; margin-top: 0.3rem; flex-wrap: wrap; white-space: normal; }
     .fleche { grid-area: fleche; }
     .periode { letter-spacing: 0.08em; }
   }
